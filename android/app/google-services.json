@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1049233353597",
+    "project_id": "myportfolio-d8c86",
+    "storage_bucket": "myportfolio-d8c86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049233353597:android:a026a0211ccdcf7d933a14",
+        "android_client_info": {
+          "package_name": "com.faisal.my_portfolio"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFSMcWi7wQ2u2UcKWSzAHlrP0OyUxLJE4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1049233353597:android:e7eaa4ca4b4134a9933a14",
+        "android_client_info": {
+          "package_name": "com.portfolio.portfolio_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFSMcWi7wQ2u2UcKWSzAHlrP0OyUxLJE4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
