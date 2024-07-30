@@ -1,6 +1,8 @@
 class AppImages {
   ///background images
   static String loginBackground = 'assets/backgrounds/login_background.jpg';
+  static String bg1 = 'assets/backgrounds/bg1.jpg';
+  static String bg2 = 'assets/backgrounds/bg2.jpg';
 
   ///my custom logos
   static String notFound = 'assets/logo/404.png';
