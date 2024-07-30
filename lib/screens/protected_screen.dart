@@ -16,7 +16,9 @@ class _ProtectedScreenState extends State<ProtectedScreen> {
   Widget build(BuildContext context) {
     return AuthController().userState() == true &&
             AuthController.userModel.isAdmin == true
-        ? widget.child
+        ? Scaffold(
+            body: widget.child,
+          )
         : const HomeScreen();
   }
 }
