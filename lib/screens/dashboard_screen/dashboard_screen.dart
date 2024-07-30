@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:portfolio_admin/controllers/dashboard_controller.dart';
+import 'package:portfolio_admin/screens/chats_screen/chats_view.dart';
+import 'package:portfolio_admin/screens/clients_screen/clients_view.dart';
+import 'package:portfolio_admin/screens/orders_screen/orders_view.dart';
+import 'package:portfolio_admin/screens/payments_screen/payments_view.dart';
+import 'package:portfolio_admin/screens/projects_screen/projects_view.dart';
 import 'package:portfolio_admin/screens/protected_screen.dart';
+import 'package:portfolio_admin/screens/stats_screen/stats_view.dart';
 import 'package:portfolio_admin/utilities/app_images.dart';
+
+import 'dashboard_view.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -14,8 +22,9 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
-    return ProtectedScreen(
-      child: Container(
+    return Scaffold(
+      body: Container(
+        color: const Color(0xfff3f5eb),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -130,13 +139,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       menuItems(
                           icon: Ionicons.cube_outline, view: Views.Orders),
                       menuItems(
-                          icon: Ionicons.person_outline, view: Views.Users),
+                          icon: Ionicons.person_outline, view: Views.Clients),
                       menuItems(
                           icon: Ionicons.book_outline, view: Views.Projects),
-                      menuItems(icon: Ionicons.mail_outline, view: Views.Chats),
                       menuItems(
-                        icon: Ionicons.calendar_number_outline,
-                        view: Views.Dashboard,
+                        icon: Ionicons.card_outline,
+                        view: Views.Payments,
+                      ),
+                      menuItems(
+                        icon: Ionicons.mail_outline,
+                        view: Views.Chats,
                         isLast: true,
                       ),
                     ],
@@ -145,19 +157,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 const SizedBox(
                   width: 20,
                 ),
-                const Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [],
-                      ),
-                    ],
-                  ),
-                ),
+                Expanded(child: selectedView()),
               ],
             ),
           ],
@@ -202,5 +202,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
       ),
     );
+  }
+
+  Widget selectedView() {
+    switch (DashboardController.selectedView) {
+      case Views.Dashboard:
+        return const DashboardView();
+      case Views.Stats:
+        return const StatsView();
+      case Views.Orders:
+        return const OrdersView();
+      case Views.Clients:
+        return const ClientsView();
+      case Views.Projects:
+        return const ProjectsView();
+      case Views.Payments:
+        return const PaymentsView();
+      case Views.Chats:
+        return const ChatsView();
+      default:
+        return const DashboardView();
+    }
   }
 }
