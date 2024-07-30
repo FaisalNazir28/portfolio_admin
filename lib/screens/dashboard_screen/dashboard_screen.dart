@@ -22,8 +22,8 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
+    return ProtectedScreen(
+      child: Container(
         color: const Color(0xfff3f5eb),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
