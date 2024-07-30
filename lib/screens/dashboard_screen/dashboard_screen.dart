@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio_admin/screens/protected_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -10,6 +11,8 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const ProtectedScreen(
+      child: Placeholder(),
+    );
   }
 }
