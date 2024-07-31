@@ -28,6 +28,7 @@ class _AddNewClientState extends State<AddNewClient> {
 
   final FirebaseStorage _storage = FirebaseStorage.instance;
   String? _imageUrl;
+  String? imageName;
   Uint8List? _imageData;
 
   @override
@@ -259,28 +260,37 @@ class _AddNewClientState extends State<AddNewClient> {
                               Stack(
                                 alignment: Alignment.bottomCenter,
                                 children: [
-                                  _imageData != null
-                                      ? Container(
-                                          width: 350,
-                                          height: 450,
-                                          color: Colors.white,
-                                          padding: const EdgeInsets.fromLTRB(
-                                              40, 40, 40, 100),
-                                          child: Container(
-                                            color: Colors.black,
-                                            child: Image.memory(_imageData!),
-                                          ),
-                                        )
-                                      : Container(
-                                          width: 350,
-                                          height: 450,
-                                          color: Colors.white,
-                                          padding: const EdgeInsets.fromLTRB(
-                                              40, 40, 40, 100),
-                                          child: Container(
-                                            color: Colors.black,
-                                          ),
-                                        ),
+                                  Column(
+                                    children: [
+                                      Container(
+                                        width: 350,
+                                        height: 450,
+                                        color: Colors.white,
+                                        padding: const EdgeInsets.fromLTRB(
+                                            40, 40, 40, 100),
+                                        child: _imageData != null
+                                            ? Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Image.memory(_imageData!),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Text(
+                                                    imageName!,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontStyle:
+                                                            FontStyle.italic),
+                                                  ),
+                                                ],
+                                              )
+                                            : Container(
+                                                color: Colors.black,
+                                              ),
+                                      ),
+                                    ],
+                                  ),
                                   Positioned(
                                     bottom: 35,
                                     child: InkWell(
@@ -402,6 +412,7 @@ class _AddNewClientState extends State<AddNewClient> {
 
         setState(() {
           _imageData = data;
+          imageName = file.name;
         });
 
         // Create a reference to the Firebase Storage location
