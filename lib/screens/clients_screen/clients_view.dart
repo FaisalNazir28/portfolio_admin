@@ -179,136 +179,257 @@ class _ClientsViewState extends State<ClientsView> {
                                         MediaQuery.of(context).size.height *
                                             0.65,
                                   ),
-                                  child: SingleChildScrollView(
-                                    child: Wrap(
-                                      alignment: WrapAlignment.start,
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.start,
-                                      runAlignment: WrapAlignment.start,
-                                      runSpacing: 50,
-                                      spacing: 80,
-                                      children: List.generate(
-                                          clientsList.length, (index) {
-                                        return Container(
-                                          decoration: BoxDecoration(
-                                            // color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            border: Border.all(
-                                                color: Colors.black45,
-                                                width: 1),
-                                          ),
-                                          padding: const EdgeInsets.all(20),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  CircleAvatar(
-                                                    radius: 30,
-                                                    backgroundImage:
-                                                        NetworkImage(
-                                                            clientsList[index]
-                                                                .profilePicture),
+                                  child: GridView.builder(
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3, // Number of columns
+                                      crossAxisSpacing: 25,
+                                      mainAxisSpacing: 25,
+                                      childAspectRatio:
+                                          2.5, // Aspect ratio for uniform size
+                                    ),
+                                    itemCount: clientsList.length,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          border: Border.all(
+                                              color: Colors.black45, width: 1),
+                                        ),
+                                        padding: const EdgeInsets.all(20),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                CircleAvatar(
+                                                  radius: 30,
+                                                  backgroundImage: NetworkImage(
+                                                      clientsList[index]
+                                                          .profilePicture),
+                                                ),
+                                                const SizedBox(
+                                                  width: 20,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      clientsList[index].name,
+                                                      style: const TextStyle(
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w500),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Text(
+                                                      clientsList[index].email,
+                                                      style: const TextStyle(
+                                                          fontSize: 12),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 30,
+                                            ),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Container(
+                                                  width: 8,
+                                                  height: 8,
+                                                  decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: clientsList[index]
+                                                            .isActive
+                                                        ? Colors.green
+                                                        : Colors.red,
                                                   ),
-                                                  const SizedBox(
-                                                    width: 20,
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        clientsList[index].name,
-                                                        style: const TextStyle(
-                                                            fontSize: 18,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 5,
-                                                      ),
-                                                      Text(
-                                                        clientsList[index]
-                                                            .email,
-                                                        style: const TextStyle(
-                                                            fontSize: 12),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 30,
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Container(
-                                                    width: 8,
-                                                    height: 8,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  clientsList[index].isActive
+                                                      ? 'Active'
+                                                      : 'Inactive',
+                                                  style: TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                       color: clientsList[index]
                                                               .isActive
                                                           ? Colors.green
-                                                          : Colors.red,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                  Text(
-                                                    clientsList[index].isActive
-                                                        ? 'Active'
-                                                        : 'Inactive',
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color:
-                                                            clientsList[index]
-                                                                    .isActive
-                                                                ? Colors.green
-                                                                : Colors.red),
-                                                  ),
-                                                ],
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              Row(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Text(
-                                                    clientsList[index]
-                                                        .designation,
-                                                    style: const TextStyle(
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                            FontWeight.w600),
-                                                  ),
-                                                  Text(
-                                                    " - ${clientsList[index].company}",
-                                                    style: const TextStyle(
-                                                        fontSize: 12),
-                                                  ),
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      }),
-                                    ),
+                                                          : Colors.red),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Text(
+                                                  clientsList[index]
+                                                      .designation,
+                                                  style: const TextStyle(
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.w600),
+                                                ),
+                                                Text(
+                                                  " - ${clientsList[index].company}",
+                                                  style: const TextStyle(
+                                                      fontSize: 12),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
+                                // child: SingleChildScrollView(
+                                //   child: Wrap(
+                                //     alignment: WrapAlignment.start,
+                                //     crossAxisAlignment:
+                                //         WrapCrossAlignment.start,
+                                //     runAlignment: WrapAlignment.start,
+                                //     runSpacing: 50,
+                                //     spacing: 80,
+                                //     children: List.generate(
+                                //         clientsList.length, (index) {
+                                //       return Container(
+                                //         decoration: BoxDecoration(
+                                //           // color: Colors.white,
+                                //           borderRadius:
+                                //               BorderRadius.circular(15),
+                                //           border: Border.all(
+                                //               color: Colors.black45,
+                                //               width: 1),
+                                //         ),
+                                //         padding: const EdgeInsets.all(20),
+                                //         child: Column(
+                                //           mainAxisSize: MainAxisSize.min,
+                                //           crossAxisAlignment:
+                                //               CrossAxisAlignment.end,
+                                //           children: [
+                                //             Row(
+                                //               mainAxisSize: MainAxisSize.min,
+                                //               mainAxisAlignment:
+                                //                   MainAxisAlignment.start,
+                                //               children: [
+                                //                 CircleAvatar(
+                                //                   radius: 30,
+                                //                   backgroundImage:
+                                //                       NetworkImage(
+                                //                           clientsList[index]
+                                //                               .profilePicture),
+                                //                 ),
+                                //                 const SizedBox(
+                                //                   width: 20,
+                                //                 ),
+                                //                 Column(
+                                //                   crossAxisAlignment:
+                                //                       CrossAxisAlignment
+                                //                           .start,
+                                //                   children: [
+                                //                     Text(
+                                //                       clientsList[index].name,
+                                //                       style: const TextStyle(
+                                //                           fontSize: 18,
+                                //                           fontWeight:
+                                //                               FontWeight
+                                //                                   .w500),
+                                //                     ),
+                                //                     const SizedBox(
+                                //                       height: 5,
+                                //                     ),
+                                //                     Text(
+                                //                       clientsList[index]
+                                //                           .email,
+                                //                       style: const TextStyle(
+                                //                           fontSize: 12),
+                                //                     ),
+                                //                   ],
+                                //                 ),
+                                //               ],
+                                //             ),
+                                //             const SizedBox(
+                                //               height: 30,
+                                //             ),
+                                //             Row(
+                                //               mainAxisSize: MainAxisSize.min,
+                                //               children: [
+                                //                 Container(
+                                //                   width: 8,
+                                //                   height: 8,
+                                //                   decoration: BoxDecoration(
+                                //                     shape: BoxShape.circle,
+                                //                     color: clientsList[index]
+                                //                             .isActive
+                                //                         ? Colors.green
+                                //                         : Colors.red,
+                                //                   ),
+                                //                 ),
+                                //                 const SizedBox(
+                                //                   width: 5,
+                                //                 ),
+                                //                 Text(
+                                //                   clientsList[index].isActive
+                                //                       ? 'Active'
+                                //                       : 'Inactive',
+                                //                   style: TextStyle(
+                                //                       fontSize: 12,
+                                //                       fontWeight:
+                                //                           FontWeight.bold,
+                                //                       color:
+                                //                           clientsList[index]
+                                //                                   .isActive
+                                //                               ? Colors.green
+                                //                               : Colors.red),
+                                //                 ),
+                                //               ],
+                                //             ),
+                                //             const SizedBox(
+                                //               height: 5,
+                                //             ),
+                                //             Row(
+                                //               mainAxisSize: MainAxisSize.min,
+                                //               children: [
+                                //                 Text(
+                                //                   clientsList[index]
+                                //                       .designation,
+                                //                   style: const TextStyle(
+                                //                       fontSize: 12,
+                                //                       fontWeight:
+                                //                           FontWeight.w600),
+                                //                 ),
+                                //                 Text(
+                                //                   " - ${clientsList[index].company}",
+                                //                   style: const TextStyle(
+                                //                       fontSize: 12),
+                                //                 ),
+                                //               ],
+                                //             )
+                                //           ],
+                                //         ),
+                                //       );
+                                //     }),
+                                //   ),
+                                // ),
                               ],
                             );
                           }
