@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'dart:html' as html;
@@ -27,8 +26,6 @@ class _AddNewClientState extends State<AddNewClient> {
   final TextEditingController _passwordController = TextEditingController();
   bool loading = false;
 
-  final FirebaseStorage _storage = FirebaseStorage.instance;
-  String? _imageUrl;
   String? imageName;
   Uint8List? _imageData;
 
@@ -296,7 +293,7 @@ class _AddNewClientState extends State<AddNewClient> {
                                     bottom: 35,
                                     child: InkWell(
                                       onTap: () async {
-                                        await uploadImage();
+                                        await selectImage();
                                       },
                                       overlayColor: WidgetStateProperty.all(
                                           Colors.transparent),
@@ -328,16 +325,18 @@ class _AddNewClientState extends State<AddNewClient> {
                                   email: _emailController.text,
                                   name: _nameController.text,
                                   phone: _phoneController.text,
-                                  profilePicture: "",
                                   designation: _designationController.text,
                                   company: _companyController.text,
                                 );
-                                if (_formKey.currentState!.validate()) {
+                                if (_formKey.currentState!.validate() &&
+                                    _imageData != null) {
                                   setState(() {
                                     loading = true;
                                     ClientController().registerUser(
                                       userModel: userModel,
                                       password: _passwordController.text,
+                                      imageData: _imageData!,
+                                      fileName: imageName!,
                                       onSuccess: () {
                                         setState(() {
                                           loading = false;
@@ -390,7 +389,7 @@ class _AddNewClientState extends State<AddNewClient> {
     );
   }
 
-  Future<void> uploadImage() async {
+  Future<void> selectImage() async {
     final html.FileUploadInputElement uploadInput =
         html.FileUploadInputElement();
     uploadInput.accept = 'image/*';
@@ -411,22 +410,6 @@ class _AddNewClientState extends State<AddNewClient> {
           _imageData = data;
           imageName = file.name;
         });
-
-        // Create a reference to the Firebase Storage location
-        // final storageRef = _storage.ref().child('userProfiles/${file.name}');
-
-        // Upload the image data
-        // final uploadTask = storageRef.putData(data);
-
-        // uploadTask.then((snapshot) async {
-        //   final downloadURL = await snapshot.ref.getDownloadURL();
-        //   setState(() {
-        //     _imageUrl = downloadURL;
-        //   });
-        //   print('File uploaded at $downloadURL');
-        // }).catchError((error) {
-        //   print('Upload failed: $error');
-        // });
       });
     });
 
