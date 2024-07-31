@@ -328,7 +328,11 @@ class _ClientsViewState extends State<ClientsView> {
                 newClientView = false;
               });
             },
-            onRegisterClient: () {},
+            onRegisterClient: () {
+              setState(() {
+                newClientView = false;
+              });
+            },
           ),
       ],
     );

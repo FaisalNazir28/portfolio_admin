@@ -1,9 +1,10 @@
 import 'dart:typed_data';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'dart:html' as html;
+import 'package:portfolio_admin/controllers/client_controller.dart';
+import 'package:portfolio_admin/models/user_model.dart';
 
 class AddNewClient extends StatefulWidget {
   final Function() onClose;
@@ -323,38 +324,34 @@ class _AddNewClientState extends State<AddNewClient> {
                         onTap: loading
                             ? () {}
                             : () async {
+                                UserModel userModel = UserModel(
+                                  email: _emailController.text,
+                                  name: _nameController.text,
+                                  phone: _phoneController.text,
+                                  profilePicture: "",
+                                  designation: _designationController.text,
+                                  company: _companyController.text,
+                                );
                                 if (_formKey.currentState!.validate()) {
-                                  // setState(() {
-                                  //   loading = true;
-                                  //   Authentication().loginUser(
-                                  //     email: _emailController.text,
-                                  //     password: _passwordController.text,
-                                  //     onSuccess: () {
-                                  //       Authentication.userModel.isActive ==
-                                  //               true
-                                  //           ? setState(() {
-                                  //               Navigator.pushNamed(
-                                  //                   context, Routes.client);
-                                  //               loading = false;
-                                  //               _emailController.clear();
-                                  //               _passwordController.clear();
-                                  //             })
-                                  //           : setState(() {
-                                  //               inActiveDialog = true;
-                                  //               loading = false;
-                                  //               Authentication.userModel =
-                                  //                   UserModel();
-                                  //               Authentication().logOutUser();
-                                  //             });
-                                  //     },
-                                  //     onError: () {
-                                  //       setState(() {
-                                  //         loading = false;
-                                  //         showError();
-                                  //       });
-                                  //     },
-                                  //   );
-                                  // });
+                                  setState(() {
+                                    loading = true;
+                                    ClientController().registerUser(
+                                      userModel: userModel,
+                                      password: _passwordController.text,
+                                      onSuccess: () {
+                                        setState(() {
+                                          loading = false;
+                                          widget.onRegisterClient();
+                                          clearValues();
+                                        });
+                                      },
+                                      onError: () {
+                                        setState(() {
+                                          loading = false;
+                                        });
+                                      },
+                                    );
+                                  });
                                 }
                               },
                         child: Container(
@@ -434,5 +431,14 @@ class _AddNewClientState extends State<AddNewClient> {
     });
 
     uploadInput.click(); // Trigger the file picker
+  }
+
+  void clearValues() {
+    _nameController.clear();
+    _emailController.clear();
+    _phoneController.clear();
+    _passwordController.clear();
+    _designationController.clear();
+    _companyController.clear();
   }
 }
