@@ -37,7 +37,10 @@ class _AddNewClientState extends State<AddNewClient> {
       children: [
         Expanded(
           child: Container(
-            height: MediaQuery.of(context).size.height - 200,
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.8,
+            ),
+            // height: MediaQuery.of(context).size.height - 200,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               border: Border.all(color: Colors.black45, width: 1),
