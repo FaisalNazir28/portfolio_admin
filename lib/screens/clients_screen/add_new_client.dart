@@ -1,5 +1,9 @@
+import 'dart:typed_data';
+
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'dart:html' as html;
 
 class AddNewClient extends StatefulWidget {
   final Function() onClose;
@@ -21,6 +25,10 @@ class _AddNewClientState extends State<AddNewClient> {
   final TextEditingController _designationController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool loading = false;
+
+  final FirebaseStorage _storage = FirebaseStorage.instance;
+  String? _imageUrl;
+  Uint8List? _imageData;
 
   @override
   Widget build(BuildContext context) {
@@ -251,20 +259,34 @@ class _AddNewClientState extends State<AddNewClient> {
                               Stack(
                                 alignment: Alignment.bottomCenter,
                                 children: [
-                                  Container(
-                                    width: 350,
-                                    height: 450,
-                                    color: Colors.white,
-                                    padding: const EdgeInsets.fromLTRB(
-                                        40, 40, 40, 100),
-                                    child: Container(
-                                      color: Colors.black,
-                                    ),
-                                  ),
+                                  _imageData != null
+                                      ? Container(
+                                          width: 350,
+                                          height: 450,
+                                          color: Colors.white,
+                                          padding: const EdgeInsets.fromLTRB(
+                                              40, 40, 40, 100),
+                                          child: Container(
+                                            color: Colors.black,
+                                            child: Image.memory(_imageData!),
+                                          ),
+                                        )
+                                      : Container(
+                                          width: 350,
+                                          height: 450,
+                                          color: Colors.white,
+                                          padding: const EdgeInsets.fromLTRB(
+                                              40, 40, 40, 100),
+                                          child: Container(
+                                            color: Colors.black,
+                                          ),
+                                        ),
                                   Positioned(
                                     bottom: 35,
                                     child: InkWell(
-                                      onTap: () {},
+                                      onTap: () async {
+                                        await uploadImage();
+                                      },
                                       overlayColor: WidgetStateProperty.all(
                                           Colors.transparent),
                                       child: const Text(
@@ -359,5 +381,47 @@ class _AddNewClientState extends State<AddNewClient> {
         ),
       ],
     );
+  }
+
+  Future<void> uploadImage() async {
+    final html.FileUploadInputElement uploadInput =
+        html.FileUploadInputElement();
+    uploadInput.accept = 'image/*';
+
+    uploadInput.onChange.listen((e) async {
+      final files = uploadInput.files!;
+      if (files.isEmpty) return;
+
+      final file = files[0];
+      final reader = html.FileReader();
+
+      reader.readAsArrayBuffer(file);
+
+      reader.onLoadEnd.listen((e) async {
+        Uint8List data = reader.result as Uint8List;
+
+        setState(() {
+          _imageData = data;
+        });
+
+        // Create a reference to the Firebase Storage location
+        // final storageRef = _storage.ref().child('userProfiles/${file.name}');
+
+        // Upload the image data
+        // final uploadTask = storageRef.putData(data);
+
+        // uploadTask.then((snapshot) async {
+        //   final downloadURL = await snapshot.ref.getDownloadURL();
+        //   setState(() {
+        //     _imageUrl = downloadURL;
+        //   });
+        //   print('File uploaded at $downloadURL');
+        // }).catchError((error) {
+        //   print('Upload failed: $error');
+        // });
+      });
+    });
+
+    uploadInput.click(); // Trigger the file picker
   }
 }
