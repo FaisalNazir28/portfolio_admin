@@ -25,6 +25,7 @@ class _AddNewClientState extends State<AddNewClient> {
   final TextEditingController _designationController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool loading = false;
+  bool? hasImage;
 
   String? imageName;
   Uint8List? _imageData;
@@ -40,13 +41,12 @@ class _AddNewClientState extends State<AddNewClient> {
             constraints: BoxConstraints(
               maxHeight: MediaQuery.of(context).size.height * 0.8,
             ),
-            // height: MediaQuery.of(context).size.height - 200,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               border: Border.all(color: Colors.black45, width: 1),
             ),
             padding: const EdgeInsets.all(30),
-            child: Expanded(
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -266,7 +266,16 @@ class _AddNewClientState extends State<AddNewClient> {
                                       Container(
                                         width: 350,
                                         height: 450,
-                                        color: Colors.white,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: hasImage != null &&
+                                                  hasImage == false
+                                              ? Border.all(
+                                                  color: Colors.red,
+                                                  width: 1,
+                                                )
+                                              : null,
+                                        ),
                                         padding: const EdgeInsets.fromLTRB(
                                             40, 40, 40, 100),
                                         child: _imageData != null
@@ -354,6 +363,10 @@ class _AddNewClientState extends State<AddNewClient> {
                                       },
                                     );
                                   });
+                                } else if (_imageData == null) {
+                                  setState(() {
+                                    hasImage = false;
+                                  });
                                 }
                               },
                         child: Container(
@@ -412,6 +425,7 @@ class _AddNewClientState extends State<AddNewClient> {
         setState(() {
           _imageData = data;
           imageName = file.name;
+          hasImage = true;
         });
       });
     });
