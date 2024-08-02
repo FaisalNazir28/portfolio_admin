@@ -50,16 +50,15 @@ class _ClientsViewState extends State<ClientsView> {
                                   constraints: BoxConstraints(
                                     maxHeight:
                                         MediaQuery.of(context).size.height *
-                                            0.65,
+                                            0.82,
                                   ),
                                   child: GridView.builder(
                                     gridDelegate:
                                         const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 4, // Number of columns
+                                      crossAxisCount: 4,
                                       crossAxisSpacing: 25,
                                       mainAxisSpacing: 25,
-                                      childAspectRatio:
-                                          2, // Aspect ratio for uniform size
+                                      childAspectRatio: 2,
                                     ),
                                     itemCount: clientsList.length,
                                     itemBuilder: (context, index) {
@@ -184,198 +183,216 @@ class _ClientsViewState extends State<ClientsView> {
               const SizedBox(
                 width: 40,
               ),
-              SizedBox(
+              Container(
                 width: MediaQuery.of(context).size.width * .15,
+                constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.82,
+                ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: Colors.black45, width: 1),
-                      ),
-                      padding: const EdgeInsets.all(20),
-                      child: const Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Total balance",
-                            style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.w600),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(color: Colors.black45, width: 1),
                           ),
-                          SizedBox(
-                            height: 10,
+                          padding: const EdgeInsets.all(20),
+                          child: const Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Total balance",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w600),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "\$0",
+                                style: TextStyle(
+                                    fontSize: 19,
+                                    color: Colors.green,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                            ],
                           ),
-                          Text(
-                            "\$0",
-                            style: TextStyle(
-                                fontSize: 19,
-                                color: Colors.green,
-                                fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(color: Colors.black45, width: 1),
                           ),
-                        ],
-                      ),
+                          padding: const EdgeInsets.all(20),
+                          child: FutureBuilder(
+                              future: ClientController().getAllClients(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Total Clients",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            "--",
+                                            style: TextStyle(fontSize: 19),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Active Clients",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            "--",
+                                            style: TextStyle(fontSize: 19),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            "Inactive Clients",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            "--",
+                                            style: TextStyle(fontSize: 19),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                } else {
+                                  var activeClients = snapshot.data!
+                                      .where((e) => e.isActive == true)
+                                      .toList();
+                                  var inActiveClients = snapshot.data!
+                                      .where((e) => e.isActive == false)
+                                      .toList();
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text(
+                                            "Total Clients",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            snapshot.data!.length.toString(),
+                                            style:
+                                                const TextStyle(fontSize: 19),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text(
+                                            "Active Clients",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            activeClients.length.toString(),
+                                            style:
+                                                const TextStyle(fontSize: 19),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          const Text(
+                                            "Inactive Clients",
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          Text(
+                                            inActiveClients.length.toString(),
+                                            style:
+                                                const TextStyle(fontSize: 19),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                }
+                              }),
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      height: 40,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        addButton(
+                            icon: Ionicons.person_add_outline,
+                            title: "New Client",
+                            onTap: () {
+                              newClientView = true;
+                            }),
+                        addButton(
+                            icon: Ionicons.code_working_outline,
+                            title: "New Project",
+                            onTap: () {}),
+                      ],
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(color: Colors.black45, width: 1),
-                      ),
-                      padding: const EdgeInsets.all(20),
-                      child: FutureBuilder(
-                          future: ClientController().getAllClients(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Total Clients",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        "--",
-                                        style: TextStyle(fontSize: 19),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Active Clients",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        "--",
-                                        style: TextStyle(fontSize: 19),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        "Inactive Clients",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        "--",
-                                        style: TextStyle(fontSize: 19),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              );
-                            } else {
-                              var activeClients = snapshot.data!
-                                  .where((e) => e.isActive == true)
-                                  .toList();
-                              var inActiveClients = snapshot.data!
-                                  .where((e) => e.isActive == false)
-                                  .toList();
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(
-                                        "Total Clients",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        snapshot.data!.length.toString(),
-                                        style: const TextStyle(fontSize: 19),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(
-                                        "Active Clients",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        activeClients.length.toString(),
-                                        style: const TextStyle(fontSize: 19),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text(
-                                        "Inactive Clients",
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600),
-                                      ),
-                                      Text(
-                                        inActiveClients.length.toString(),
-                                        style: const TextStyle(fontSize: 19),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              );
-                            }
-                          }),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                    addButton(
-                        icon: Ionicons.person_add_outline,
-                        title: "New Client",
-                        onTap: () {
-                          newClientView = true;
-                        }),
-                    addButton(
-                        icon: Ionicons.code_working_outline,
-                        title: "New Project",
-                        onTap: () {}),
+                    // const SizedBox(
+                    //   height: 40,
+                    // ),
                   ],
                 ),
               )
