@@ -3,6 +3,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:portfolio_admin/controllers/client_controller.dart';
 import 'package:portfolio_admin/models/user_model.dart';
 import 'package:portfolio_admin/screens/clients_screen/add_new_client.dart';
+import 'package:portfolio_admin/screens/clients_screen/client_details_view.dart';
 
 class ClientsView extends StatefulWidget {
   const ClientsView({super.key});
@@ -15,13 +16,16 @@ class _ClientsViewState extends State<ClientsView> {
   List<UserModel> clientsList = List<UserModel>.empty(growable: true);
   bool newClientView = false;
   bool newProjectView = false;
+  bool clientDetailsView = false;
+
+  int? selectedProjectIndex;
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       alignment: Alignment.topLeft,
       children: [
-        if (!newClientView)
+        if (!newClientView && !clientDetailsView)
           Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -62,112 +66,126 @@ class _ClientsViewState extends State<ClientsView> {
                                     ),
                                     itemCount: clientsList.length,
                                     itemBuilder: (context, index) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                          border: Border.all(
-                                              color: Colors.black45, width: 1),
-                                        ),
-                                        padding: const EdgeInsets.all(20),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: [
-                                                CircleAvatar(
-                                                  radius: 30,
-                                                  backgroundImage: NetworkImage(
-                                                      clientsList[index]
-                                                          .profilePicture),
-                                                ),
-                                                const SizedBox(
-                                                  width: 20,
-                                                ),
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      clientsList[index].name,
-                                                      style: const TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w500),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 5,
-                                                    ),
-                                                    Text(
-                                                      clientsList[index].email,
-                                                      style: const TextStyle(
-                                                          fontSize: 12),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 30,
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Container(
-                                                  width: 8,
-                                                  height: 8,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: clientsList[index]
-                                                            .isActive
-                                                        ? Colors.green
-                                                        : Colors.red,
+                                      return InkWell(
+                                        overlayColor: WidgetStateProperty.all(
+                                            Colors.transparent),
+                                        onTap: () => setState(() {
+                                          selectedProjectIndex = index;
+                                          clientDetailsView = true;
+                                        }),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            border: Border.all(
+                                                color: Colors.black45,
+                                                width: 1),
+                                          ),
+                                          padding: const EdgeInsets.all(20),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  CircleAvatar(
+                                                    radius: 30,
+                                                    backgroundImage:
+                                                        NetworkImage(
+                                                            clientsList[index]
+                                                                .profilePicture),
                                                   ),
-                                                ),
-                                                const SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Text(
-                                                  clientsList[index].isActive
-                                                      ? 'Active'
-                                                      : 'Inactive',
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                                  const SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        clientsList[index].name,
+                                                        style: const TextStyle(
+                                                            fontSize: 18,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w500),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 5,
+                                                      ),
+                                                      Text(
+                                                        clientsList[index]
+                                                            .email,
+                                                        style: const TextStyle(
+                                                            fontSize: 12),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 30,
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Container(
+                                                    width: 8,
+                                                    height: 8,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
                                                       color: clientsList[index]
                                                               .isActive
                                                           ? Colors.green
-                                                          : Colors.red),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Text(
-                                                  clientsList[index]
-                                                      .designation,
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      fontWeight:
-                                                          FontWeight.w600),
-                                                ),
-                                                Text(
-                                                  " - ${clientsList[index].company}",
-                                                  style: const TextStyle(
-                                                      fontSize: 12),
-                                                ),
-                                              ],
-                                            )
-                                          ],
+                                                          : Colors.red,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  Text(
+                                                    clientsList[index].isActive
+                                                        ? 'Active'
+                                                        : 'Inactive',
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color:
+                                                            clientsList[index]
+                                                                    .isActive
+                                                                ? Colors.green
+                                                                : Colors.red),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Text(
+                                                    clientsList[index]
+                                                        .designation,
+                                                    style: const TextStyle(
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w600),
+                                                  ),
+                                                  Text(
+                                                    " - ${clientsList[index].company}",
+                                                    style: const TextStyle(
+                                                        fontSize: 12),
+                                                  ),
+                                                ],
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       );
                                     },
@@ -390,9 +408,6 @@ class _ClientsViewState extends State<ClientsView> {
                             onTap: () {}),
                       ],
                     ),
-                    // const SizedBox(
-                    //   height: 40,
-                    // ),
                   ],
                 ),
               )
@@ -410,6 +425,15 @@ class _ClientsViewState extends State<ClientsView> {
                 newClientView = false;
               });
             },
+          ),
+        if (clientDetailsView)
+          ClientDetailsView(
+            onClose: () {
+              setState(() {
+                clientDetailsView = false;
+              });
+            },
+            clientDetails: clientsList[selectedProjectIndex!],
           ),
       ],
     );
