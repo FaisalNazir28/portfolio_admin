@@ -237,7 +237,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       case Views.Chats:
         return const ChatsView();
       case Views.Messages:
-        return const MessagesScreen();
+        return MessagesScreen();
       default:
         return const DashboardView();
     }
