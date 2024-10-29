@@ -1,5 +1,5 @@
 class DashboardController {
-  static Views selectedView = Views.Dashboard;
+  static Views selectedView = Views.Clients;
 }
 
 enum Views {
@@ -9,5 +9,6 @@ enum Views {
   Orders,
   Clients,
   Chats,
+  Messages,
   Payments,
 }

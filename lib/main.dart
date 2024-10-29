@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:portfolio_admin/controllers/messages_controller.dart';
 import 'package:portfolio_admin/services/firebase_options.dart';
 
 import 'routes/routes.dart';
@@ -12,6 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  initializeControllers();
   runApp(const MyApp());
 }
 
@@ -34,4 +37,8 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+}
+
+void initializeControllers() {
+  Get.lazyPut(() => MessagesController());
 }

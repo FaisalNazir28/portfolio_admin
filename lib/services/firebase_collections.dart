@@ -10,4 +10,5 @@ class FbCollections {
   static CollectionReference awardsAndRecognitions =
       db.collection("awardsAndRecognitions");
   static CollectionReference clientReviews = db.collection("clientReviews");
+  static CollectionReference contactMessages = db.collection("messages");
 }
