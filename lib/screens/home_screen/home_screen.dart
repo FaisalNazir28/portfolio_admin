@@ -42,8 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
               image: DecorationImage(
                 image: AssetImage(AppImages.bg2),
                 fit: BoxFit.cover,
-                colorFilter:
-                    const ColorFilter.mode(Colors.black45, BlendMode.darken),
+                colorFilter: const ColorFilter.mode(Colors.black45, BlendMode.darken),
               ),
             ),
             child: Center(
@@ -80,27 +79,23 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Colors.white,
                             ),
                             decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 25),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 25),
                               labelText: 'Email',
                               labelStyle: const TextStyle(
                                 fontSize: 16.0,
                                 color: Colors.white54,
                               ),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(100)),
+                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(100)),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100),
-                                borderSide: const BorderSide(
-                                    color: Colors.white70, width: 2.0),
+                                borderSide: const BorderSide(color: Colors.white70, width: 2.0),
                               ),
                             ),
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Email is missing';
                               }
-                              String emailPattern =
-                                  r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
+                              String emailPattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
                               RegExp regex = RegExp(emailPattern);
                               if (!regex.hasMatch(value)) {
                                 return 'Please enter valid Email';
@@ -120,8 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: Colors.white,
                             ),
                             decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 25),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 25),
                               labelText: 'Enter your password',
                               labelStyle: const TextStyle(
                                 fontSize: 16.0,
@@ -132,8 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(100),
-                                borderSide: const BorderSide(
-                                    color: Colors.white70, width: 2.0),
+                                borderSide: const BorderSide(color: Colors.white70, width: 2.0),
                               ),
                             ),
                             validator: (value) {
@@ -155,14 +148,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                           email: _emailController.text,
                                           password: _passwordController.text,
                                           onSuccess: () {
-                                            AuthController.userModel.isAdmin ==
-                                                        true &&
-                                                    AuthController.userModel
-                                                            .isActive ==
-                                                        true
+                                            AuthController.userModel.isAdmin == true &&
+                                                    AuthController.userModel.isActive == true
                                                 ? setState(() {
-                                                    Navigator.pushNamed(context,
-                                                        Routes.dashboard);
+                                                    Navigator.pushNamed(context, Routes.dashboard);
                                                     loading = false;
                                                     _emailController.clear();
                                                     _passwordController.clear();
@@ -170,10 +159,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 : setState(() {
                                                     loading = false;
                                                     showError();
-                                                    AuthController.userModel =
-                                                        UserModel();
-                                                    AuthController()
-                                                        .logOutUser();
+                                                    AuthController.userModel = UserModel();
+                                                    AuthController().logOutUser();
                                                   });
                                           },
                                           onError: () {
@@ -187,8 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     }
                                   },
                             child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 12),
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                               decoration: BoxDecoration(
                                 color: Colors.white54,
                                 borderRadius: BorderRadius.circular(100),
@@ -223,10 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   Text(
                                     "Invalid Credentials",
-                                    style: TextStyle(
-                                        color: Colors.white70,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16),
+                                    style: TextStyle(color: Colors.white70, fontWeight: FontWeight.w500, fontSize: 16),
                                   ),
                                 ],
                               ),

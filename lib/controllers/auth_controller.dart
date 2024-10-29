@@ -31,8 +31,8 @@ class AuthController {
   }
 
   Future<void> registerUser(UserModel userModel) async {
-    UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-        email: 'dummy@123.com', password: '123456789');
+    UserCredential userCredential =
+        await auth.createUserWithEmailAndPassword(email: 'dummy@123.com', password: '123456789');
 
     if (userCredential.user != null) {
       var userID = auth.currentUser!.uid;
@@ -51,11 +51,7 @@ class AuthController {
   Future<void> getImageUrl() async {
     try {
       // final ref = storage.ref().child('companyLogo').child('pieas.jpg');
-      final ref = storage
-          .ref()
-          .child('projectShowcase')
-          .child('restofe')
-          .child('restofe3.png');
+      final ref = storage.ref().child('projectShowcase').child('restofe').child('restofe3.png');
       final url = await ref.getDownloadURL();
       imager = url;
       print("URl===>>> $imager");

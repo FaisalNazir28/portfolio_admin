@@ -9,8 +9,7 @@ class AddNewClient extends StatefulWidget {
   final Function() onClose;
   final Function() onRegisterClient;
 
-  const AddNewClient(
-      {super.key, required this.onClose, required this.onRegisterClient});
+  const AddNewClient({super.key, required this.onClose, required this.onRegisterClient});
 
   @override
   State<AddNewClient> createState() => _AddNewClientState();
@@ -57,13 +56,11 @@ class _AddNewClientState extends State<AddNewClient> {
                     children: [
                       const Text(
                         "Add Client",
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
                       ),
                       InkWell(
                           onTap: () => widget.onClose(),
-                          overlayColor:
-                              WidgetStateProperty.all(Colors.transparent),
+                          overlayColor: WidgetStateProperty.all(Colors.transparent),
                           child: const Icon(
                             Ionicons.close_circle_outline,
                             size: 30,
@@ -92,12 +89,10 @@ class _AddNewClientState extends State<AddNewClient> {
                                     fontSize: 16.0,
                                     color: Colors.black54,
                                   ),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6)),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(6),
-                                    borderSide: const BorderSide(
-                                        color: Colors.black, width: 2.0),
+                                    borderSide: const BorderSide(color: Colors.black, width: 2.0),
                                   ),
                                 ),
                                 validator: (value) {
@@ -119,20 +114,17 @@ class _AddNewClientState extends State<AddNewClient> {
                                     fontSize: 16.0,
                                     color: Colors.black54,
                                   ),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6)),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(6),
-                                    borderSide: const BorderSide(
-                                        color: Colors.black, width: 2.0),
+                                    borderSide: const BorderSide(color: Colors.black, width: 2.0),
                                   ),
                                 ),
                                 validator: (value) {
                                   if (value!.isEmpty) {
                                     return 'Email is missing';
                                   }
-                                  String emailPattern =
-                                      r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
+                                  String emailPattern = r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$';
                                   RegExp regex = RegExp(emailPattern);
                                   if (!regex.hasMatch(value)) {
                                     return 'Please enter valid Email';
@@ -152,12 +144,10 @@ class _AddNewClientState extends State<AddNewClient> {
                                     fontSize: 16.0,
                                     color: Colors.black54,
                                   ),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6)),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(6),
-                                    borderSide: const BorderSide(
-                                        color: Colors.black, width: 2.0),
+                                    borderSide: const BorderSide(color: Colors.black, width: 2.0),
                                   ),
                                 ),
                                 validator: (value) {
@@ -179,12 +169,10 @@ class _AddNewClientState extends State<AddNewClient> {
                                     fontSize: 16.0,
                                     color: Colors.black54,
                                   ),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6)),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(6),
-                                    borderSide: const BorderSide(
-                                        color: Colors.black, width: 2.0),
+                                    borderSide: const BorderSide(color: Colors.black, width: 2.0),
                                   ),
                                 ),
                                 validator: (value) {
@@ -206,12 +194,10 @@ class _AddNewClientState extends State<AddNewClient> {
                                     fontSize: 16.0,
                                     color: Colors.black54,
                                   ),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6)),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(6),
-                                    borderSide: const BorderSide(
-                                        color: Colors.black, width: 2.0),
+                                    borderSide: const BorderSide(color: Colors.black, width: 2.0),
                                   ),
                                 ),
                                 validator: (value) {
@@ -234,12 +220,10 @@ class _AddNewClientState extends State<AddNewClient> {
                                     fontSize: 16.0,
                                     color: Colors.black54,
                                   ),
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(6)),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(6),
-                                    borderSide: const BorderSide(
-                                        color: Colors.black, width: 2.0),
+                                    borderSide: const BorderSide(color: Colors.black, width: 2.0),
                                   ),
                                 ),
                                 validator: (value) {
@@ -268,16 +252,14 @@ class _AddNewClientState extends State<AddNewClient> {
                                         height: 450,
                                         decoration: BoxDecoration(
                                           color: Colors.white,
-                                          border: hasImage != null &&
-                                                  hasImage == false
+                                          border: hasImage != null && hasImage == false
                                               ? Border.all(
                                                   color: Colors.red,
                                                   width: 1,
                                                 )
                                               : null,
                                         ),
-                                        padding: const EdgeInsets.fromLTRB(
-                                            40, 40, 40, 100),
+                                        padding: const EdgeInsets.fromLTRB(40, 40, 40, 100),
                                         child: _imageData != null
                                             ? Column(
                                                 mainAxisSize: MainAxisSize.min,
@@ -288,10 +270,7 @@ class _AddNewClientState extends State<AddNewClient> {
                                                   ),
                                                   Text(
                                                     imageName!,
-                                                    style: const TextStyle(
-                                                        fontSize: 15,
-                                                        fontStyle:
-                                                            FontStyle.italic),
+                                                    style: const TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
                                                   ),
                                                 ],
                                               )
@@ -307,13 +286,10 @@ class _AddNewClientState extends State<AddNewClient> {
                                       onTap: () async {
                                         await selectImage();
                                       },
-                                      overlayColor: WidgetStateProperty.all(
-                                          Colors.transparent),
+                                      overlayColor: WidgetStateProperty.all(Colors.transparent),
                                       child: const Text(
                                         "Upload Picture",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontStyle: FontStyle.italic),
+                                        style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
                                       ),
                                     ),
                                   ),
@@ -340,8 +316,7 @@ class _AddNewClientState extends State<AddNewClient> {
                                   designation: _designationController.text,
                                   company: _companyController.text,
                                 );
-                                if (_formKey.currentState!.validate() &&
-                                    _imageData != null) {
+                                if (_formKey.currentState!.validate() && _imageData != null) {
                                   setState(() {
                                     loading = true;
                                     ClientController().registerUser(
@@ -370,8 +345,7 @@ class _AddNewClientState extends State<AddNewClient> {
                                 }
                               },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 12),
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                           decoration: BoxDecoration(
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(100),
@@ -406,8 +380,7 @@ class _AddNewClientState extends State<AddNewClient> {
   }
 
   Future<void> selectImage() async {
-    final html.FileUploadInputElement uploadInput =
-        html.FileUploadInputElement();
+    final html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
     uploadInput.accept = 'image/*';
 
     uploadInput.onChange.listen((e) async {

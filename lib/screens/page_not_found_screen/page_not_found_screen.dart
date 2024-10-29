@@ -39,8 +39,7 @@ class _PageNotFoundState extends State<PageNotFound> {
                         children: [
                           const Text(
                             "Oops!",
-                            style: TextStyle(
-                                fontSize: 50, fontWeight: FontWeight.w600),
+                            style: TextStyle(fontSize: 50, fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(
                             height: 8,
@@ -58,14 +57,12 @@ class _PageNotFoundState extends State<PageNotFound> {
                             height: 20,
                           ),
                           InkWell(
-                            onTap: () =>
-                                Navigator.pushNamed(context, Routes.home),
+                            onTap: () => Navigator.pushNamed(context, Routes.home),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 8),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                                   decoration: BoxDecoration(
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(30),
@@ -118,30 +115,24 @@ class _PageNotFoundState extends State<PageNotFound> {
                         children: [
                           const Text(
                             "Oops!",
-                            style: TextStyle(
-                                fontSize: 60, fontWeight: FontWeight.w600),
+                            style: TextStyle(fontSize: 60, fontWeight: FontWeight.w600),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
                           const Text(
                             "We couldn't find the page\nyou were looking for",
-                            style: TextStyle(
-                                fontSize: 22,
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w500),
+                            style: TextStyle(fontSize: 22, color: Colors.grey, fontWeight: FontWeight.w500),
                           ),
                           const SizedBox(
                             height: 25,
                           ),
                           InkWell(
-                            onTap: () =>
-                                Navigator.pushNamed(context, Routes.home),
+                            onTap: () => Navigator.pushNamed(context, Routes.home),
                             child: Row(
                               children: [
                                 Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 8),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                                   decoration: BoxDecoration(
                                     color: Colors.black,
                                     borderRadius: BorderRadius.circular(30),

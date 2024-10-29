@@ -153,26 +153,16 @@ class AppImages {
   static String counterAppLogo = 'assets/showcase/counter/counter_logo.jpg';
 
   /// images for language translator app
-  static String translator1 =
-      'assets/showcase/language_translator/translator1.png';
-  static String translator2 =
-      'assets/showcase/language_translator/translator2.png';
-  static String translator3 =
-      'assets/showcase/language_translator/translator3.png';
-  static String translator4 =
-      'assets/showcase/language_translator/translator4.png';
-  static String translator5 =
-      'assets/showcase/language_translator/translator5.png';
-  static String translator6 =
-      'assets/showcase/language_translator/translator6.png';
-  static String translator7 =
-      'assets/showcase/language_translator/translator7.png';
-  static String translator8 =
-      'assets/showcase/language_translator/translator8.png';
-  static String translator9 =
-      'assets/showcase/language_translator/translator9.png';
-  static String translatorAppLogo =
-      'assets/showcase/language_translator/translator_logo.jpg';
+  static String translator1 = 'assets/showcase/language_translator/translator1.png';
+  static String translator2 = 'assets/showcase/language_translator/translator2.png';
+  static String translator3 = 'assets/showcase/language_translator/translator3.png';
+  static String translator4 = 'assets/showcase/language_translator/translator4.png';
+  static String translator5 = 'assets/showcase/language_translator/translator5.png';
+  static String translator6 = 'assets/showcase/language_translator/translator6.png';
+  static String translator7 = 'assets/showcase/language_translator/translator7.png';
+  static String translator8 = 'assets/showcase/language_translator/translator8.png';
+  static String translator9 = 'assets/showcase/language_translator/translator9.png';
+  static String translatorAppLogo = 'assets/showcase/language_translator/translator_logo.jpg';
 
   /// images for sceo vehicle portal app
   static String vp1 = 'assets/showcase/sceo_vp/vp1.png';
@@ -213,8 +203,7 @@ class AppImages {
   static String behance = 'assets/my_tools_icons/behance.png';
   static String behanceColored = 'assets/my_tools_icons/behance_colored.png';
   static String bitbucket = 'assets/my_tools_icons/bitbucket.png';
-  static String bitbucketColored =
-      'assets/my_tools_icons/bitbucket_colored.png';
+  static String bitbucketColored = 'assets/my_tools_icons/bitbucket_colored.png';
   static String canva = 'assets/my_tools_icons/canva.png';
   static String chatGPT = 'assets/my_tools_icons/chatgpt.png';
   static String chrome = 'assets/my_tools_icons/chrome.png';
@@ -247,11 +236,9 @@ class AppImages {
   static String gmail = 'assets/my_tools_icons/gmail.png';
   static String gmailColored = 'assets/my_tools_icons/gmail_colored.png';
   static String instagram = 'assets/my_tools_icons/instagram.png';
-  static String instagramColored =
-      'assets/my_tools_icons/instagram_colored.png';
+  static String instagramColored = 'assets/my_tools_icons/instagram_colored.png';
   static String javascript = 'assets/my_tools_icons/javascript.png';
-  static String javascriptColored =
-      'assets/my_tools_icons/javascript_colored.png';
+  static String javascriptColored = 'assets/my_tools_icons/javascript_colored.png';
   static String jira = 'assets/my_tools_icons/jira.png';
   static String jiraColored = 'assets/my_tools_icons/jira_colored.png';
   static String linkedin = 'assets/my_tools_icons/linkedin.png';
@@ -264,11 +251,9 @@ class AppImages {
   static String outlook = 'assets/my_tools_icons/outlook.png';
   static String outlookColored = 'assets/my_tools_icons/outlook_colored.png';
   static String photoshop = 'assets/my_tools_icons/photoshop.png';
-  static String photoshopColored =
-      'assets/my_tools_icons/photoshop_colored.png';
+  static String photoshopColored = 'assets/my_tools_icons/photoshop_colored.png';
   static String playStore = 'assets/my_tools_icons/playstore.png';
-  static String playStoreColored =
-      'assets/my_tools_icons/playstore_colored.png';
+  static String playStoreColored = 'assets/my_tools_icons/playstore_colored.png';
   static String postman = 'assets/my_tools_icons/postman.png';
   static String postmanColored = 'assets/my_tools_icons/postman_colored.png';
   static String skype = 'assets/my_tools_icons/skype.png';
@@ -278,24 +263,21 @@ class AppImages {
   static String sqlite = 'assets/my_tools_icons/sqlite.png';
   static String sqliteColored = 'assets/my_tools_icons/sqlite_colored.png';
   static String stackoverflow = 'assets/my_tools_icons/stackoverflow.png';
-  static String stackoverflowColored =
-      'assets/my_tools_icons/stackoverflow_colored.png';
+  static String stackoverflowColored = 'assets/my_tools_icons/stackoverflow_colored.png';
   static String teams = 'assets/my_tools_icons/teams.png';
   static String teamsColored = 'assets/my_tools_icons/teams_colored.png';
   static String teamviewer = 'assets/my_tools_icons/teamviewer.png';
   static String unsplash = 'assets/my_tools_icons/unsplash.png';
   static String upwork = 'assets/my_tools_icons/upwork.png';
   static String visualstudio = 'assets/my_tools_icons/visualstudio.png';
-  static String visualstudioColored =
-      'assets/my_tools_icons/visualstudio_colored.png';
+  static String visualstudioColored = 'assets/my_tools_icons/visualstudio_colored.png';
   static String vscode = 'assets/my_tools_icons/vscode.png';
   static String vscodeColored = 'assets/my_tools_icons/vscode_colored.png';
   static String whatsapp = 'assets/my_tools_icons/whatsapp.png';
   static String windows = 'assets/my_tools_icons/windows.png';
   static String windowsColored = 'assets/my_tools_icons/windows_colored.png';
   static String wordpress = 'assets/my_tools_icons/wordpress.png';
-  static String wordpressColored =
-      'assets/my_tools_icons/wordpress_colored.png';
+  static String wordpressColored = 'assets/my_tools_icons/wordpress_colored.png';
   static String xcode = 'assets/my_tools_icons/xcode.png';
   static String zoom = 'assets/my_tools_icons/zoom.png';
 }

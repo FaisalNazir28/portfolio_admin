@@ -6,8 +6,7 @@ class AppConstants {
 
   /// resume path
   static String resume = 'assets/resume/resume.pdf';
-  static String resumeWeb =
-      ui.assetManager.getAssetUrl('assets/resume/resume.pdf');
+  static String resumeWeb = ui.assetManager.getAssetUrl('assets/resume/resume.pdf');
 
   ///external links
   static String github = 'https://github.com/FaisalNazir28';

@@ -21,12 +21,11 @@ class ClientController {
     required String fileName,
   }) async {
     try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-          email: userModel.email, password: password);
+      UserCredential userCredential =
+          await auth.createUserWithEmailAndPassword(email: userModel.email, password: password);
 
       if (userCredential.user != null) {
-        final imageUrl =
-            await uploadProfile(data: imageData, fileName: fileName);
+        final imageUrl = await uploadProfile(data: imageData, fileName: fileName);
 
         var userID = auth.currentUser!.uid;
 
@@ -78,9 +77,7 @@ class ClientController {
     QuerySnapshot querySnapshot = await FbCollections.users.get();
 
     if (querySnapshot.size > 0) {
-      allClients = querySnapshot.docs
-          .map((doc) => UserModel.fromJson(doc.data()))
-          .toList();
+      allClients = querySnapshot.docs.map((doc) => UserModel.fromJson(doc.data())).toList();
     }
     return allClients;
   }
