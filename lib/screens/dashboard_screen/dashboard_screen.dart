@@ -163,8 +163,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         backgroundColor:
                             DashboardController.selectedView == Views.Messages ? Colors.black : Colors.white,
                         textColor: DashboardController.selectedView == Views.Messages ? Colors.white : Colors.black,
-                        count: messagesController.allMessages.isEmpty ? 00 : messagesController.allMessages.length,
-                        isLabelVisible: messagesController.allMessages.isEmpty ? false : true,
+                        count: messagesController.allMessages.where((e) => e.status == 'unread').length,
+                        isLabelVisible:
+                            messagesController.allMessages.where((e) => e.status == 'unread').isEmpty ? false : true,
                         child: menuItems(
                           icon: Ionicons.mail_outline,
                           view: Views.Messages,

@@ -2,11 +2,13 @@ class MessagesModel {
   String name;
   String email;
   String message;
+  String status;
 
   MessagesModel({
     this.name = "",
     this.email = "",
     this.message = "",
+    this.status = "",
   });
 
   Map<String, dynamic> toJson() {
@@ -14,6 +16,7 @@ class MessagesModel {
       'name': name,
       'email': email,
       'message': message,
+      'status': status,
     };
   }
 
@@ -22,11 +25,13 @@ class MessagesModel {
       final name = json['name'] ?? "";
       final email = json['email'] ?? "";
       final message = json['message'] ?? "";
+      final status = json['status'] ?? "";
 
       return MessagesModel(
         name: name,
         email: email,
         message: message,
+        status: status,
       );
     }
     return MessagesModel();
