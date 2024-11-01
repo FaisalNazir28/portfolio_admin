@@ -2,15 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:portfolio_admin/models/user_model.dart';
 import 'package:portfolio_admin/services/firebase_collections.dart';
 import 'dart:typed_data';
 
-class ClientController {
+class ClientController extends GetxController {
   final auth = FirebaseAuth.instance;
   static UserModel userModel = UserModel();
 
   final FirebaseStorage _storage = FirebaseStorage.instance;
+
+  RxList<UserModel> allClients = List<UserModel>.empty(growable: true).obs;
 
   Future<void> registerUser({
     required UserModel userModel,
@@ -72,13 +75,11 @@ class ClientController {
     }
   }
 
-  Future<List<UserModel>> getAllClients() async {
-    List<UserModel> allClients = List<UserModel>.empty(growable: true);
+  Future<void> getAllClients() async {
     QuerySnapshot querySnapshot = await FbCollections.users.get();
 
     if (querySnapshot.size > 0) {
-      allClients = querySnapshot.docs.map((doc) => UserModel.fromJson(doc.data())).toList();
+      allClients.value = querySnapshot.docs.map((doc) => UserModel.fromJson(doc.data())).toList();
     }
-    return allClients;
   }
 }

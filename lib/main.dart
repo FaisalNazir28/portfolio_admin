@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:portfolio_admin/controllers/client_controller.dart';
 import 'package:portfolio_admin/controllers/messages_controller.dart';
 import 'package:portfolio_admin/services/firebase_options.dart';
 
@@ -41,4 +42,5 @@ class MyApp extends StatelessWidget {
 
 void initializeControllers() {
   Get.lazyPut(() => MessagesController());
+  Get.lazyPut(() => ClientController());
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:portfolio_admin/controllers/client_controller.dart';
 import 'package:portfolio_admin/controllers/dashboard_controller.dart';
 import 'package:portfolio_admin/controllers/messages_controller.dart';
 import 'package:portfolio_admin/screens/chats_screen/chats_view.dart';
@@ -24,6 +25,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   final messagesController = Get.find<MessagesController>();
+  final clientController = Get.find<ClientController>();
 
   @override
   void initState() {
@@ -34,6 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initializeDataBuilders() async {
     await Future.wait([
       messagesController.getAllMessages(),
+      clientController.getAllClients(),
     ]);
     setState(() {});
   }
