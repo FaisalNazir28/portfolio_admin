@@ -140,44 +140,47 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    children: [
-                      menuItems(icon: Ionicons.pie_chart_outline, view: Views.Dashboard),
-                      menuItems(icon: Ionicons.filter_outline, view: Views.Stats),
-                      menuItems(icon: Ionicons.cube_outline, view: Views.Orders),
-                      menuItems(icon: Ionicons.person_outline, view: Views.Clients),
-                      menuItems(icon: Ionicons.book_outline, view: Views.Projects),
-                      menuItems(
-                        icon: Ionicons.card_outline,
-                        view: Views.Payments,
-                      ),
-                      menuItems(
-                        icon: Ionicons.chatbubbles_outline,
-                        view: Views.Chats,
-                      ),
-                      Badge.count(
-                        offset: const Offset(-3, 5),
-                        backgroundColor:
-                            DashboardController.selectedView == Views.Messages ? Colors.black : Colors.white,
-                        textColor: DashboardController.selectedView == Views.Messages ? Colors.white : Colors.black,
-                        count: messagesController.allMessages.where((e) => e.status == 'unread').length,
-                        isLabelVisible:
-                            messagesController.allMessages.where((e) => e.status == 'unread').isEmpty ? false : true,
-                        child: menuItems(
-                          icon: Ionicons.mail_outline,
-                          view: Views.Messages,
-                          isLast: true,
+                Obx(() {
+                  messagesController.allMessages;
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    padding: const EdgeInsets.all(15),
+                    child: Column(
+                      children: [
+                        menuItems(icon: Ionicons.pie_chart_outline, view: Views.Dashboard),
+                        menuItems(icon: Ionicons.filter_outline, view: Views.Stats),
+                        menuItems(icon: Ionicons.cube_outline, view: Views.Orders),
+                        menuItems(icon: Ionicons.person_outline, view: Views.Clients),
+                        menuItems(icon: Ionicons.book_outline, view: Views.Projects),
+                        menuItems(
+                          icon: Ionicons.card_outline,
+                          view: Views.Payments,
                         ),
-                      ),
-                    ],
-                  ),
-                ),
+                        menuItems(
+                          icon: Ionicons.chatbubbles_outline,
+                          view: Views.Chats,
+                        ),
+                        Badge.count(
+                          offset: const Offset(-3, 5),
+                          backgroundColor:
+                              DashboardController.selectedView == Views.Messages ? Colors.black : Colors.white,
+                          textColor: DashboardController.selectedView == Views.Messages ? Colors.white : Colors.black,
+                          count: messagesController.allMessages.where((e) => e.status == 'unread').length,
+                          isLabelVisible:
+                              messagesController.allMessages.where((e) => e.status == 'unread').isEmpty ? false : true,
+                          child: menuItems(
+                            icon: Ionicons.mail_outline,
+                            view: Views.Messages,
+                            isLast: true,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
                 const SizedBox(
                   width: 20,
                 ),
