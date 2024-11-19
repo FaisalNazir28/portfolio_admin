@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
@@ -49,7 +50,10 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           InkWell(
-                            onTap: () => widget.onClose(),
+                            onTap: () {
+                              clientController.isEditView.value = false;
+                              widget.onClose();
+                            },
                             overlayColor: WidgetStateProperty.all(Colors.transparent),
                             child: const Icon(
                               Ionicons.close_circle_outline,
@@ -68,160 +72,345 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                       const SizedBox(
                         height: 40,
                       ),
-                      Container(
-                        padding: const EdgeInsets.all(40),
-                        decoration: BoxDecoration(
-                          color: Colors.white60,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
+                      Obx(() {
+                        return Stack(
+                          alignment: Alignment.topRight,
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                    widget.clientDetails.profilePicture,
+                            Container(
+                              padding: const EdgeInsets.all(40),
+                              decoration: BoxDecoration(
+                                color: Colors.white60,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                          widget.clientDetails.profilePicture,
+                                        ),
+                                        radius: 50,
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          clientController.isEditView.value
+                                              ? TextField(
+                                                  cursorColor: Colors.black87,
+                                                  decoration: const InputDecoration(
+                                                    isCollapsed: true,
+                                                    constraints: BoxConstraints(maxWidth: 250),
+                                                    border: OutlineInputBorder(
+                                                      borderSide: BorderSide(color: Colors.grey),
+                                                    ),
+                                                    focusedBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(color: Colors.black54),
+                                                    ),
+                                                    contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                                                  ),
+                                                  controller: clientController.nameController,
+                                                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                                                )
+                                              : Text(
+                                                  widget.clientDetails.name,
+                                                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                                                ),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            widget.clientDetails.email,
+                                            style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w500,
+                                              color: Colors.black54,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          clientController.isEditView.value
+                                              ? Row(
+                                                  children: [
+                                                    const Text(
+                                                      "Phone: ",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Colors.black54,
+                                                      ),
+                                                    ),
+                                                    TextField(
+                                                      cursorColor: Colors.black87,
+                                                      decoration: const InputDecoration(
+                                                        isCollapsed: true,
+                                                        constraints: BoxConstraints(maxWidth: 200),
+                                                        border: OutlineInputBorder(
+                                                          borderSide: BorderSide(color: Colors.grey),
+                                                        ),
+                                                        focusedBorder: OutlineInputBorder(
+                                                          borderSide: BorderSide(color: Colors.black54),
+                                                        ),
+                                                        contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                                                      ),
+                                                      controller: clientController.phoneController,
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Colors.black54,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              : Text(
+                                                  "Phone: ${widget.clientDetails.phone}",
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Colors.black54,
+                                                  ),
+                                                ),
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      Row(
+                                        children: [
+                                          const Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Client UID: ",
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black54,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                "Client Designation: ",
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black54,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                "Client Company: ",
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black54,
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                "Client Status: ",
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Colors.black54,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(width: 30),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                widget.clientDetails.uid,
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  // color: Colors.black54,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              clientController.isEditView.value
+                                                  ? TextField(
+                                                      cursorColor: Colors.black87,
+                                                      decoration: const InputDecoration(
+                                                        isCollapsed: true,
+                                                        constraints: BoxConstraints(maxWidth: 200),
+                                                        border: OutlineInputBorder(
+                                                          borderSide: BorderSide(color: Colors.grey),
+                                                        ),
+                                                        focusedBorder: OutlineInputBorder(
+                                                          borderSide: BorderSide(color: Colors.black54),
+                                                        ),
+                                                        contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                                                      ),
+                                                      controller: clientController.designationController,
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w600,
+                                                      ),
+                                                    )
+                                                  : Text(
+                                                      widget.clientDetails.designation,
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w600,
+                                                      ),
+                                                    ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              clientController.isEditView.value
+                                                  ? TextField(
+                                                      cursorColor: Colors.black87,
+                                                      decoration: const InputDecoration(
+                                                        isCollapsed: true,
+                                                        constraints: BoxConstraints(maxWidth: 200),
+                                                        border: OutlineInputBorder(
+                                                          borderSide: BorderSide(color: Colors.grey),
+                                                        ),
+                                                        focusedBorder: OutlineInputBorder(
+                                                          borderSide: BorderSide(color: Colors.black54),
+                                                        ),
+                                                        contentPadding: EdgeInsets.symmetric(horizontal: 5),
+                                                      ),
+                                                      controller: clientController.companyController,
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w600,
+                                                      ),
+                                                    )
+                                                  : Text(
+                                                      widget.clientDetails.company,
+                                                      style: const TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.w600,
+                                                      ),
+                                                    ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              clientController.isEditView.value
+                                                  ? Row(
+                                                      children: [
+                                                        InkWell(
+                                                          onTap: () {
+                                                            clientController.statusController.value = true;
+                                                            Get.forceAppUpdate();
+                                                          },
+                                                          child: Opacity(
+                                                            opacity: clientController.statusController.value == true
+                                                                ? 1
+                                                                : 0.3,
+                                                            child: Container(
+                                                              padding: const EdgeInsets.symmetric(
+                                                                  horizontal: 10, vertical: 3),
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(12),
+                                                                color: Colors.green.shade100,
+                                                              ),
+                                                              child: const Text('Active'),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        const SizedBox(width: 15),
+                                                        InkWell(
+                                                          onTap: () {
+                                                            clientController.statusController.value = false;
+                                                            Get.forceAppUpdate();
+                                                          },
+                                                          child: Opacity(
+                                                            opacity: clientController.statusController.value != true
+                                                                ? 1
+                                                                : 0.3,
+                                                            child: Container(
+                                                              padding: const EdgeInsets.symmetric(
+                                                                  horizontal: 10, vertical: 3),
+                                                              decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(12),
+                                                                color: Colors.red.shade100,
+                                                              ),
+                                                              child: const Text('Inactive'),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    )
+                                                  : Text(
+                                                      widget.clientDetails.isActive ? "Active" : "Inactive",
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color:
+                                                            widget.clientDetails.isActive ? Colors.green : Colors.red,
+                                                        fontWeight: FontWeight.w600,
+                                                      ),
+                                                    ),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    ],
                                   ),
-                                  radius: 50,
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      widget.clientDetails.name,
-                                      style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
-                                    ),
-                                    const SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      widget.clientDetails.email,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black54,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      "Phone: ${widget.clientDetails.phone}",
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500,
-                                        color: Colors.black54,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const Spacer(),
-                                Row(
-                                  children: [
-                                    const Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          "Client UID: ",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Client Designation: ",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Client Company: ",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          "Client Status: ",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.black54,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(width: 30),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          widget.clientDetails.uid,
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                            // color: Colors.black54,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          widget.clientDetails.designation,
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          widget.clientDetails.company,
-                                          style: const TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                          widget.clientDetails.isActive ? "Active" : "Inactive",
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            color: widget.clientDetails.isActive ? Colors.green : Colors.red,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                )
-                              ],
+                                ],
+                              ),
                             ),
+                            Positioned(
+                              top: 12,
+                              right: 12,
+                              child: clientController.isEditView.value
+                                  ? Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            clientController.updateClientData(clientUid: widget.clientDetails.uid);
+                                            clientController.isEditView.value = false;
+                                          },
+                                          child: const Icon(
+                                            CupertinoIcons.checkmark_alt,
+                                            size: 20,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        InkWell(
+                                          onTap: () => clientController.isEditView.value = false,
+                                          child: const Icon(
+                                            CupertinoIcons.clear,
+                                            size: 20,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  : InkWell(
+                                      onTap: () {
+                                        clientController.nameController.text = widget.clientDetails.name;
+                                        clientController.phoneController.text = widget.clientDetails.phone;
+                                        clientController.designationController.text = widget.clientDetails.designation;
+                                        clientController.companyController.text = widget.clientDetails.company;
+                                        clientController.statusController.value = widget.clientDetails.isActive;
+                                        clientController.isEditView.value = true;
+                                      },
+                                      child: const Icon(
+                                        CupertinoIcons.square_pencil,
+                                        size: 20,
+                                      ),
+                                    ),
+                            )
                           ],
-                        ),
-                      )
+                        );
+                      }),
                     ],
                   ),
                 ),

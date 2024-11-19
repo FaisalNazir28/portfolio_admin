@@ -61,4 +61,25 @@ class UserModel {
       'isAdmin': isAdmin,
     };
   }
+
+  // The copyWith method allows creating a new instance with some updated fields
+  UserModel copyWith({
+    String? name,
+    String? phone,
+    String? designation,
+    String? company,
+    bool? status,
+  }) {
+    return UserModel(
+      uid: uid,
+      email: email,
+      name: name ?? this.name,
+      phone: phone ?? this.phone,
+      profilePicture: profilePicture,
+      designation: designation ?? this.designation,
+      company: company ?? this.company,
+      isActive: status ?? isActive,
+      isAdmin: isAdmin,
+    );
+  }
 }

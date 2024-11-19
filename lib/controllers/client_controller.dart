@@ -13,6 +13,14 @@ class ClientController extends GetxController {
 
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
+  RxBool isEditView = false.obs;
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController designationController = TextEditingController();
+  TextEditingController companyController = TextEditingController();
+  RxBool statusController = true.obs;
+
   RxList<UserModel> allClients = List<UserModel>.empty(growable: true).obs;
 
   Future<void> registerUser({
@@ -51,6 +59,41 @@ class ClientController extends GetxController {
     } on FirebaseAuthException catch (e) {
       onError();
       debugPrint(e.toString());
+    }
+  }
+
+  Future<void> updateClientData({required String clientUid}) async {
+    try {
+      String updatedName = nameController.text;
+      String updatedPhone = phoneController.text;
+      String updatedDesignation = designationController.text;
+      String updatedCompany = companyController.text;
+      bool updatedStatus = statusController.value;
+
+      Map<String, dynamic> updatedFields = {
+        'name': updatedName,
+        'phone': updatedPhone,
+        'designation': updatedDesignation,
+        'company': updatedCompany,
+        'status': updatedStatus,
+      };
+
+      await FbCollections.users.doc(clientUid).update(updatedFields);
+
+      int index = allClients.indexWhere((client) => client.uid == clientUid);
+
+      allClients[index] = allClients[index].copyWith(
+        name: updatedName,
+        phone: updatedPhone,
+        designation: updatedDesignation,
+        company: updatedCompany,
+        status: updatedStatus,
+      );
+      Get.forceAppUpdate();
+
+      debugPrint('Client data updated successfully.');
+    } catch (e) {
+      debugPrint("Error updating client data: $e");
     }
   }
 
