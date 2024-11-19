@@ -75,7 +75,7 @@ class ClientController extends GetxController {
         'phone': updatedPhone,
         'designation': updatedDesignation,
         'company': updatedCompany,
-        'status': updatedStatus,
+        'isActive': updatedStatus,
       };
 
       await FbCollections.users.doc(clientUid).update(updatedFields);
