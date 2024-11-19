@@ -80260,7 +80260,7 @@ m=o.cx.a.a
 l=o.cy.a.a
 k=o.db.a.a
 j=o.dx.gm(0)
-i=A.aF(["name",n,"phone",m,"designation",l,"company",k,"status",j],t.N,t.z)
+i=A.aF(["name",n,"phone",m,"designation",l,"company",k,"isActive",j],t.N,t.z)
 f=$.XL().hw(a7)
 e=A.aAg(i)
 e.toString
