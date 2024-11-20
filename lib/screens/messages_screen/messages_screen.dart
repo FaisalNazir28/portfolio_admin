@@ -58,9 +58,19 @@ class MessagesScreen extends StatelessWidget {
                                 const SizedBox(height: 10),
                                 Row(
                                   children: [
-                                    const Text("From: ", style: TextStyle(fontSize: 12)),
+                                    const Text("Email: ", style: TextStyle(fontSize: 12)),
                                     Text(
                                       messagesController.allMessages[index].email,
+                                      style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    const Text("Arrival time: ", style: TextStyle(fontSize: 12)),
+                                    Text(
+                                      messagesController.allMessages[index].time,
                                       style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 12),
                                     ),
                                   ],

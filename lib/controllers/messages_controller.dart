@@ -13,6 +13,7 @@ class MessagesController extends GetxController {
     if (querySnapshot.size > 0) {
       allMessages.value = querySnapshot.docs.map((doc) => MessagesModel.fromJson(doc.data())).toList();
     }
+    allMessages.sort((a, b) => b.time.compareTo(a.time));
     Future.delayed(const Duration(seconds: 30), () {
       getAllMessages();
     });

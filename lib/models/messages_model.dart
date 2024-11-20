@@ -3,6 +3,7 @@ class MessagesModel {
   String name;
   String email;
   String message;
+  String time;
   String status;
 
   MessagesModel({
@@ -10,6 +11,7 @@ class MessagesModel {
     this.name = "",
     this.email = "",
     this.message = "",
+    this.time = "",
     this.status = "",
   });
 
@@ -19,6 +21,7 @@ class MessagesModel {
       'name': name,
       'email': email,
       'message': message,
+      'time': time,
       'status': status,
     };
   }
@@ -29,6 +32,7 @@ class MessagesModel {
       final name = json['name'] ?? "";
       final email = json['email'] ?? "";
       final message = json['message'] ?? "";
+      final time = json['time'] ?? "";
       final status = json['status'] ?? "";
 
       return MessagesModel(
@@ -36,6 +40,7 @@ class MessagesModel {
         name: name,
         email: email,
         message: message,
+        time: time,
         status: status,
       );
     }
