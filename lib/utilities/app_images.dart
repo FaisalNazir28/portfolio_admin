@@ -6,6 +6,7 @@ class AppImages {
 
   ///my custom logos
   static String notFound = 'assets/logo/404.png';
+  static String noMessages = 'assets/logo/empty_inbox.png';
   static String artAcheMagazineLogo = 'assets/logo/artache.jfif';
   static String gdscLogo = 'assets/logo/gdsc.webp';
   static String gdscColoredLogo = 'assets/logo/gdscColored.webp';
