@@ -20,6 +20,7 @@ class AppImages {
   ///profiles images
   static String annaDel = 'assets/profiles/anna_del.jfif';
   static String faisal = 'assets/profiles/faisal.png';
+  static String faisalAdmin = 'assets/profiles/faisal_admin.png';
   static String kenderJohn = 'assets/profiles/kender_john.jpg';
   static String markLupher = 'assets/profiles/mark_lupher.jfif';
   static String steveJon = 'assets/profiles/steve_jon.jfif';
