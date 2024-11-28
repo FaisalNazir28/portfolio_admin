@@ -27,7 +27,7 @@ class UserModel {
       final email = json['email'] ?? "";
       final name = json['name'] ?? "";
       final phone = json['phone'] ?? "";
-      final profilePicture = json['profile'] ?? "";
+      final profilePicture = json['profilePicture'] ?? "";
       final designation = json['designation'] ?? "";
       final company = json['company'] ?? "";
       final isActive = json['isActive'] ?? false;
