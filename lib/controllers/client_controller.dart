@@ -62,7 +62,11 @@ class ClientController extends GetxController {
     }
   }
 
-  Future<void> updateClientData({required String clientUid}) async {
+  Future<void> updateClientData({
+    required String clientUid,
+    Uint8List? imageData,
+    String? fileName,
+  }) async {
     try {
       String updatedName = nameController.text;
       String updatedPhone = phoneController.text;
@@ -70,13 +74,26 @@ class ClientController extends GetxController {
       String updatedCompany = companyController.text;
       bool updatedStatus = statusController.value;
 
-      Map<String, dynamic> updatedFields = {
-        'name': updatedName,
-        'phone': updatedPhone,
-        'designation': updatedDesignation,
-        'company': updatedCompany,
-        'isActive': updatedStatus,
-      };
+      final imageUrl = await uploadProfile(data: imageData!, fileName: fileName!);
+      Map<String, dynamic> updatedFields;
+      if (imageUrl.isNotEmpty) {
+        updatedFields = {
+          'name': updatedName,
+          'phone': updatedPhone,
+          'designation': updatedDesignation,
+          'company': updatedCompany,
+          'isActive': updatedStatus,
+          'profilePicture': imageUrl,
+        };
+      } else {
+        updatedFields = {
+          'name': updatedName,
+          'phone': updatedPhone,
+          'designation': updatedDesignation,
+          'company': updatedCompany,
+          'isActive': updatedStatus,
+        };
+      }
 
       await FbCollections.users.doc(clientUid).update(updatedFields);
 
@@ -88,6 +105,7 @@ class ClientController extends GetxController {
         designation: updatedDesignation,
         company: updatedCompany,
         status: updatedStatus,
+        profilePicture: imageUrl,
       );
       Get.forceAppUpdate();
 

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:portfolio_admin/controllers/client_controller.dart';
 import 'package:portfolio_admin/models/user_model.dart';
+import 'dart:html' as html;
+import 'dart:typed_data';
 
 class ClientDetailsView extends StatefulWidget {
   final Function() onClose;
@@ -21,6 +23,12 @@ class ClientDetailsView extends StatefulWidget {
 
 class _ClientDetailsViewState extends State<ClientDetailsView> {
   final clientController = Get.find<ClientController>();
+  bool isHover = false;
+
+  bool? hasImage;
+
+  String? imageName;
+  Uint8List? _imageData;
 
   @override
   Widget build(BuildContext context) {
@@ -87,11 +95,60 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                   Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      CircleAvatar(
-                                        backgroundImage: NetworkImage(
-                                          widget.clientDetails.profilePicture,
+                                      InkWell(
+                                        onTap: clientController.isEditView.value ? () => selectImage() : null,
+                                        onHover: (hover) {
+                                          if (clientController.isEditView.value) {
+                                            setState(() {
+                                              isHover = hover;
+                                            });
+                                          }
+                                        },
+                                        child: Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            _imageData != null
+                                                ? Container(
+                                                    width: 100,
+                                                    height: 100,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(50),
+                                                    ),
+                                                    child: Image.memory(_imageData!),
+                                                  )
+                                                : CircleAvatar(
+                                                    backgroundImage: NetworkImage(
+                                                      widget.clientDetails.profilePicture,
+                                                    ),
+                                                    radius: 50,
+                                                  ),
+                                            if (isHover)
+                                              Container(
+                                                width: 100,
+                                                height: 100,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(50),
+                                                  color: Colors.black54.withOpacity(0.20),
+                                                ),
+                                                child: const Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                                  children: [
+                                                    Icon(
+                                                      CupertinoIcons.camera,
+                                                      size: 18,
+                                                    ),
+                                                    SizedBox(height: 5),
+                                                    Text(
+                                                      "Change Picture",
+                                                      style: TextStyle(fontSize: 12),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                          ],
                                         ),
-                                        radius: 50,
                                       ),
                                       const SizedBox(
                                         width: 20,
@@ -375,8 +432,16 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            clientController.updateClientData(clientUid: widget.clientDetails.uid);
+                                            if (_imageData != null) {
+                                              clientController.updateClientData(
+                                                  clientUid: widget.clientDetails.uid,
+                                                  imageData: _imageData,
+                                                  fileName: imageName);
+                                            } else {
+                                              clientController.updateClientData(clientUid: widget.clientDetails.uid);
+                                            }
                                             clientController.isEditView.value = false;
+                                            _imageData = null;
                                           },
                                           child: const Icon(
                                             CupertinoIcons.checkmark_alt,
@@ -385,7 +450,10 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                         ),
                                         const SizedBox(width: 10),
                                         InkWell(
-                                          onTap: () => clientController.isEditView.value = false,
+                                          onTap: () {
+                                            clientController.isEditView.value = false;
+                                            _imageData = null;
+                                          },
                                           child: const Icon(
                                             CupertinoIcons.clear,
                                             size: 20,
@@ -533,6 +601,33 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
         ),
       ),
     ]);
+  }
+
+  Future<void> selectImage() async {
+    final html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
+    uploadInput.accept = 'image/*';
+
+    uploadInput.onChange.listen((e) async {
+      final files = uploadInput.files!;
+      if (files.isEmpty) return;
+
+      final file = files[0];
+      final reader = html.FileReader();
+
+      reader.readAsArrayBuffer(file);
+
+      reader.onLoadEnd.listen((e) async {
+        Uint8List data = reader.result as Uint8List;
+
+        setState(() {
+          _imageData = data;
+          imageName = file.name;
+          hasImage = true;
+        });
+      });
+    });
+
+    uploadInput.click(); // Trigger the file picker
   }
 
   Widget addButton({

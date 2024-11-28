@@ -69,13 +69,14 @@ class UserModel {
     String? designation,
     String? company,
     bool? status,
+    String? profilePicture,
   }) {
     return UserModel(
       uid: uid,
       email: email,
       name: name ?? this.name,
       phone: phone ?? this.phone,
-      profilePicture: profilePicture,
+      profilePicture: profilePicture ?? this.profilePicture,
       designation: designation ?? this.designation,
       company: company ?? this.company,
       isActive: status ?? isActive,
