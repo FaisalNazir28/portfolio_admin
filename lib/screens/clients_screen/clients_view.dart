@@ -287,6 +287,7 @@ class _ClientsViewState extends State<ClientsView> {
               },
               onRegisterClient: () {
                 setState(() {
+                  clientController.getAllClients();
                   newClientView = false;
                 });
               },
