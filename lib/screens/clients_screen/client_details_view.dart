@@ -128,7 +128,7 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                                 height: 100,
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(50),
-                                                  color: Colors.black54.withOpacity(0.20),
+                                                  color: Colors.black54.withOpacity(0.40),
                                                 ),
                                                 child: const Column(
                                                   mainAxisSize: MainAxisSize.min,
@@ -138,11 +138,12 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                                     Icon(
                                                       CupertinoIcons.camera,
                                                       size: 18,
+                                                      color: Colors.white,
                                                     ),
                                                     SizedBox(height: 5),
                                                     Text(
                                                       "Change Picture",
-                                                      style: TextStyle(fontSize: 12),
+                                                      style: TextStyle(fontSize: 12, color: Colors.white),
                                                     ),
                                                   ],
                                                 ),
