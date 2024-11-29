@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portfolio_admin/models/user_model.dart';
 import 'package:portfolio_admin/services/firebase_collections.dart';
 import 'dart:typed_data';
+import 'package:portfolio_admin/utilities/custom_snack_bar.dart';
 
 class ClientController extends GetxController {
   final auth = FirebaseAuth.instance;
@@ -52,12 +53,14 @@ class ClientController extends GetxController {
           isAdmin: false,
         );
         FbCollections.users.doc(userID).set(client.toJson());
+        CustomSnackBar.showSnackBar(message: "Client Registered Successfully");
       } else {
         debugPrint("User empty!");
       }
       onSuccess();
     } on FirebaseAuthException catch (e) {
       onError();
+      CustomSnackBar.showSnackBar(message: e.toString(), color: Colors.red);
       debugPrint(e.toString());
     }
   }
@@ -108,9 +111,10 @@ class ClientController extends GetxController {
         profilePicture: imageUrl,
       );
       Get.forceAppUpdate();
-
+      CustomSnackBar.showSnackBar(message: "Client Details Updated Successfully");
       debugPrint('Client data updated successfully.');
     } catch (e) {
+      CustomSnackBar.showSnackBar(message: "Error updating client data: $e", color: Colors.red);
       debugPrint("Error updating client data: $e");
     }
   }
