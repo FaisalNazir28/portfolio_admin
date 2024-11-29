@@ -164,8 +164,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 isHoverProfile = value;
                               });
                             },
-                            child: Positioned(
-                              right: 3,
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 3),
                               child: CircleAvatar(
                                 radius: 20,
                                 backgroundImage: AssetImage(AppImages.faisal),
