@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:portfolio_admin/controllers/auth_controller.dart';
 import 'package:portfolio_admin/controllers/client_controller.dart';
 import 'package:portfolio_admin/controllers/dashboard_controller.dart';
 import 'package:portfolio_admin/controllers/messages_controller.dart';
+import 'package:portfolio_admin/routes/routes.dart';
 import 'package:portfolio_admin/screens/chats_screen/chats_view.dart';
 import 'package:portfolio_admin/screens/clients_screen/clients_view.dart';
 import 'package:portfolio_admin/screens/messages_screen/messages_screen.dart';
@@ -26,6 +28,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   final messagesController = Get.find<MessagesController>();
   final clientController = Get.find<ClientController>();
+  bool isHoverProfile = false;
 
   @override
   void initState() {
@@ -125,9 +128,51 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           )
                         ],
                       ),
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundImage: AssetImage(AppImages.faisal),
+                      Stack(
+                        alignment: Alignment.centerRight,
+                        children: [
+                          if (isHoverProfile)
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, Routes.home);
+                                AuthController().logOutUser();
+                              },
+                              onHover: (value) {
+                                setState(() {
+                                  isHoverProfile = value;
+                                });
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.only(left: 15),
+                                width: 120,
+                                height: 45,
+                                decoration:
+                                    BoxDecoration(color: Colors.grey.shade300, borderRadius: BorderRadius.circular(40)),
+                                child: const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Sign out",
+                                    textAlign: TextAlign.left,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          InkWell(
+                            onTap: () {},
+                            onHover: (value) {
+                              setState(() {
+                                isHoverProfile = value;
+                              });
+                            },
+                            child: Positioned(
+                              right: 3,
+                              child: CircleAvatar(
+                                radius: 20,
+                                backgroundImage: AssetImage(AppImages.faisal),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
