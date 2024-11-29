@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
@@ -85,9 +86,22 @@ class _ClientsViewState extends State<ClientsView> {
                                             Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                Text(
-                                                  clientController.allClients[index].name,
-                                                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                                                Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      clientController.allClients[index].name,
+                                                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                                                    ),
+                                                    const SizedBox(width: 5),
+                                                    if (clientController.allClients[index].isAdmin)
+                                                      const Icon(
+                                                        CupertinoIcons.checkmark_shield_fill,
+                                                        size: 22,
+                                                        color: Colors.blueAccent,
+                                                      )
+                                                  ],
                                                 ),
                                                 const SizedBox(
                                                   height: 5,

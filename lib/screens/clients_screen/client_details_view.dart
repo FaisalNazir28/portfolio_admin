@@ -175,9 +175,22 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                                   controller: clientController.nameController,
                                                   style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
                                                 )
-                                              : Text(
-                                                  widget.clientDetails.name,
-                                                  style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                                              : Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      widget.clientDetails.name,
+                                                      style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    if (widget.clientDetails.isAdmin)
+                                                      const Icon(
+                                                        CupertinoIcons.checkmark_shield_fill,
+                                                        size: 30,
+                                                        color: Colors.blueAccent,
+                                                      )
+                                                  ],
                                                 ),
                                           const SizedBox(
                                             height: 5,
