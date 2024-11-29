@@ -604,6 +604,14 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                       children: [
                         addButton(icon: Ionicons.link_outline, title: "Bind Project", onTap: () {}),
                         addButton(icon: Ionicons.code_working_outline, title: "New Project", onTap: () {}),
+                        InkWell(
+                            onTap: () {},
+                            child: Center(
+                              child: Text(
+                                'Delete Client Profile',
+                                style: TextStyle(color: Colors.red.shade900),
+                              ),
+                            )),
                       ],
                     ),
                   ],
