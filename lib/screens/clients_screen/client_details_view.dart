@@ -448,11 +448,11 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                           onTap: () {
                                             if (_imageData != null) {
                                               clientController.updateClientData(
-                                                  clientUid: widget.clientDetails.uid,
+                                                  userModel: widget.clientDetails,
                                                   imageData: _imageData,
                                                   fileName: imageName);
                                             } else {
-                                              clientController.updateClientData(clientUid: widget.clientDetails.uid);
+                                              clientController.updateClientData(userModel: widget.clientDetails);
                                             }
                                             clientController.isEditView.value = false;
                                             _imageData = null;

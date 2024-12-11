@@ -66,20 +66,22 @@ class ClientController extends GetxController {
   }
 
   Future<void> updateClientData({
-    required String clientUid,
+    required UserModel userModel,
     Uint8List? imageData,
     String? fileName,
   }) async {
-    try {
-      String updatedName = nameController.text;
-      String updatedPhone = phoneController.text;
-      String updatedDesignation = designationController.text;
-      String updatedCompany = companyController.text;
-      bool updatedStatus = statusController.value;
+    String updatedName = nameController.text;
+    String updatedPhone = phoneController.text;
+    String updatedDesignation = designationController.text;
+    String updatedCompany = companyController.text;
+    bool updatedStatus = statusController.value;
 
-      final imageUrl = await uploadProfile(data: imageData!, fileName: fileName!);
-      Map<String, dynamic> updatedFields;
-      if (imageUrl.isNotEmpty) {
+    Map<String, dynamic> updatedFields;
+
+    if (imageData != null) {
+      try {
+        final imageUrl = await uploadProfile(data: imageData, fileName: fileName!);
+
         updatedFields = {
           'name': updatedName,
           'phone': updatedPhone,
@@ -88,34 +90,58 @@ class ClientController extends GetxController {
           'isActive': updatedStatus,
           'profilePicture': imageUrl,
         };
-      } else {
+
+        await FbCollections.users.doc(userModel.uid).update(updatedFields);
+
+        int index = allClients.indexWhere((client) => client.uid == userModel.uid);
+
+        allClients[index] = allClients[index].copyWith(
+          name: updatedName,
+          phone: updatedPhone,
+          designation: updatedDesignation,
+          company: updatedCompany,
+          status: updatedStatus,
+          profilePicture: imageUrl,
+        );
+
+        Get.forceAppUpdate();
+        CustomSnackBar.showSnackBar(message: "Client Details Updated Successfully");
+        debugPrint('Client data updated successfully.');
+      } catch (e) {
+        CustomSnackBar.showSnackBar(message: "Error updating client data: $e", color: Colors.red);
+        debugPrint("Error updating client data: $e");
+      }
+    } else {
+      try {
         updatedFields = {
           'name': updatedName,
           'phone': updatedPhone,
           'designation': updatedDesignation,
           'company': updatedCompany,
           'isActive': updatedStatus,
+          'profilePicture': userModel.profilePicture,
         };
+
+        await FbCollections.users.doc(userModel.uid).update(updatedFields);
+
+        int index = allClients.indexWhere((client) => client.uid == userModel.uid);
+
+        allClients[index] = allClients[index].copyWith(
+          name: updatedName,
+          phone: updatedPhone,
+          designation: updatedDesignation,
+          company: updatedCompany,
+          status: updatedStatus,
+          profilePicture: userModel.profilePicture,
+        );
+
+        Get.forceAppUpdate();
+        CustomSnackBar.showSnackBar(message: "Client Details Updated Successfully");
+        debugPrint('Client data updated successfully.');
+      } catch (e) {
+        CustomSnackBar.showSnackBar(message: "Error updating client data: $e", color: Colors.red);
+        debugPrint("Error updating client data: $e");
       }
-
-      await FbCollections.users.doc(clientUid).update(updatedFields);
-
-      int index = allClients.indexWhere((client) => client.uid == clientUid);
-
-      allClients[index] = allClients[index].copyWith(
-        name: updatedName,
-        phone: updatedPhone,
-        designation: updatedDesignation,
-        company: updatedCompany,
-        status: updatedStatus,
-        profilePicture: imageUrl,
-      );
-      Get.forceAppUpdate();
-      CustomSnackBar.showSnackBar(message: "Client Details Updated Successfully");
-      debugPrint('Client data updated successfully.');
-    } catch (e) {
-      CustomSnackBar.showSnackBar(message: "Error updating client data: $e", color: Colors.red);
-      debugPrint("Error updating client data: $e");
     }
   }
 
