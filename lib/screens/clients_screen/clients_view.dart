@@ -5,6 +5,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:portfolio_admin/controllers/client_controller.dart';
 import 'package:portfolio_admin/screens/clients_screen/add_new_client.dart';
 import 'package:portfolio_admin/screens/clients_screen/client_details_view.dart';
+import 'package:portfolio_admin/utilities/custom_dialog_box.dart';
 
 class ClientsView extends StatefulWidget {
   const ClientsView({super.key});
@@ -312,6 +313,23 @@ class _ClientsViewState extends State<ClientsView> {
                 setState(() {
                   clientDetailsView = false;
                 });
+              },
+              onDeleteClient: () {
+                Get.dialog(
+                  CustomDialogBox(
+                    userModel: clientController.allClients[selectedProjectIndex!],
+                    onSuccess: () {
+                      clientController.deleteUser(clientController.allClients[selectedProjectIndex!].uid).then((v) {
+                        if (v == true) {
+                          setState(() {
+                            clientController.getAllClients();
+                            clientDetailsView = false;
+                          });
+                        }
+                      });
+                    },
+                  ),
+                );
               },
               clientDetails: clientController.allClients[selectedProjectIndex!],
             ),

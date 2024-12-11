@@ -145,6 +145,17 @@ class ClientController extends GetxController {
     }
   }
 
+  Future<bool> deleteUser(String userId) async {
+    try {
+      await FbCollections.users.doc(userId).delete();
+      CustomSnackBar.showSnackBar(message: "Client Deleted Successfully");
+      return true;
+    } catch (e) {
+      CustomSnackBar.showSnackBar(message: "Error Deleting Client: $e", color: Colors.red);
+      return false;
+    }
+  }
+
   Future<String> uploadProfile({
     required Uint8List data,
     required String fileName,

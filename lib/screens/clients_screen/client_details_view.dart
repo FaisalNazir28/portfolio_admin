@@ -9,11 +9,13 @@ import 'dart:typed_data';
 
 class ClientDetailsView extends StatefulWidget {
   final Function() onClose;
+  final Function() onDeleteClient;
   final UserModel clientDetails;
 
   const ClientDetailsView({
     super.key,
     required this.onClose,
+    required this.onDeleteClient,
     required this.clientDetails,
   });
 
@@ -606,7 +608,10 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                         addButton(icon: Ionicons.link_outline, title: "Bind Project", onTap: () {}),
                         addButton(icon: Ionicons.code_working_outline, title: "New Project", onTap: () {}),
                         InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              widget.onDeleteClient();
+                              clientController.isEditView.value = false;
+                            },
                             child: Center(
                               child: Text(
                                 'Delete Client Profile',
