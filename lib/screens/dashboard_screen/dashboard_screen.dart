@@ -5,6 +5,7 @@ import 'package:portfolio_admin/controllers/auth_controller.dart';
 import 'package:portfolio_admin/controllers/client_controller.dart';
 import 'package:portfolio_admin/controllers/dashboard_controller.dart';
 import 'package:portfolio_admin/controllers/messages_controller.dart';
+import 'package:portfolio_admin/controllers/projects_controller.dart';
 import 'package:portfolio_admin/routes/routes.dart';
 import 'package:portfolio_admin/screens/chats_screen/chats_view.dart';
 import 'package:portfolio_admin/screens/clients_screen/clients_view.dart';
@@ -28,6 +29,8 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   final messagesController = Get.find<MessagesController>();
   final clientController = Get.find<ClientController>();
+  final projectsController = Get.find<ProjectsController>();
+
   bool isHoverProfile = false;
 
   @override
@@ -40,6 +43,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     await Future.wait([
       messagesController.getAllMessages(),
       clientController.getAllClients(),
+      projectsController.getAllProjects(),
     ]);
     setState(() {});
   }
