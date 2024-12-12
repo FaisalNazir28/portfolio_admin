@@ -67,8 +67,10 @@ class _ProjectsViewState extends State<ProjectsView> {
                                         children: [
                                           CircleAvatar(
                                             radius: 30,
-                                            backgroundImage:
-                                                NetworkImage(projectsController.allProjects[index].mainImage),
+                                            backgroundImage: NetworkImage(
+                                              projectsController.allProjects[index].appIcon ??
+                                                  projectsController.allProjects[index].mainImage,
+                                            ),
                                           ),
                                           const SizedBox(
                                             width: 20,
