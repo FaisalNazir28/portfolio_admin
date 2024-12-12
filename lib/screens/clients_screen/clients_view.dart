@@ -53,7 +53,7 @@ class _ClientsViewState extends State<ClientsView> {
                                 crossAxisCount: 4,
                                 crossAxisSpacing: 25,
                                 mainAxisSpacing: 25,
-                                childAspectRatio: 2,
+                                childAspectRatio: 1.4775,
                               ),
                               itemCount: clientController.allClients.length,
                               itemBuilder: (context, index) {
@@ -115,9 +115,7 @@ class _ClientsViewState extends State<ClientsView> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(
-                                          height: 30,
-                                        ),
+                                        const SizedBox(height: 15),
                                         Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
@@ -145,9 +143,7 @@ class _ClientsViewState extends State<ClientsView> {
                                             ),
                                           ],
                                         ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
+                                        const SizedBox(height: 5),
                                         Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
@@ -160,7 +156,61 @@ class _ClientsViewState extends State<ClientsView> {
                                               style: const TextStyle(fontSize: 12),
                                             ),
                                           ],
-                                        )
+                                        ),
+                                        const SizedBox(height: 15),
+                                        const Divider(height: 5),
+                                        const SizedBox(height: 15),
+                                        const Center(
+                                          child: Text(
+                                            'Project not assigned yet!\nAssign new or bind the existing project!',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.black87,
+                                              fontStyle: FontStyle.normal,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                        // const Row(
+                                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        //   children: [
+                                        //     Column(
+                                        //       crossAxisAlignment: CrossAxisAlignment.start,
+                                        //       children: [
+                                        //         Text(
+                                        //           // "App Home Page Design",
+                                        //           "",
+                                        //           style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                                        //         ),
+                                        //         SizedBox(height: 5),
+                                        //         Text(
+                                        //           // "+2 more projects",
+                                        //           "",
+                                        //           style: TextStyle(fontSize: 12, color: Colors.black54),
+                                        //         ),
+                                        //       ],
+                                        //     ),
+                                        //     Column(
+                                        //       crossAxisAlignment: CrossAxisAlignment.end,
+                                        //       children: [
+                                        //         Text(
+                                        //           // "\$220",
+                                        //           "",
+                                        //           style: TextStyle(
+                                        //               fontSize: 15,
+                                        //               fontWeight: FontWeight.w500,
+                                        //               color: Colors.deepOrangeAccent),
+                                        //         ),
+                                        //         SizedBox(height: 5),
+                                        //         Text(
+                                        //           // "Pending",
+                                        //           "",
+                                        //           style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                                        //         ),
+                                        //       ],
+                                        //     ),
+                                        //   ],
+                                        // )
                                       ],
                                     ),
                                   ),
