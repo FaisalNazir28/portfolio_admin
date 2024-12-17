@@ -28,6 +28,17 @@ class _AddNewProjectState extends State<AddNewProject> {
 
   List<Uint8List?> images = List.filled(22, null);
 
+  bool builtForAndroid = false;
+  bool builtForIOS = false;
+
+  String? selectedPlatform;
+
+  void updatePlatform(String? value) {
+    setState(() {
+      selectedPlatform = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -58,12 +69,13 @@ class _AddNewProjectState extends State<AddNewProject> {
                         style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
                       ),
                       InkWell(
-                          onTap: () => widget.onClose(),
-                          overlayColor: WidgetStateProperty.all(Colors.transparent),
-                          child: const Icon(
-                            Ionicons.close_circle_outline,
-                            size: 30,
-                          ))
+                        onTap: () => widget.onClose(),
+                        overlayColor: WidgetStateProperty.all(Colors.transparent),
+                        child: const Icon(
+                          Ionicons.close_circle_outline,
+                          size: 30,
+                        ),
+                      )
                     ],
                   ),
                   const SizedBox(
@@ -158,139 +170,263 @@ class _AddNewProjectState extends State<AddNewProject> {
                                 ],
                               ),
                               const SizedBox(height: 30),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    flex: 1,
-                                    child: TextFormField(
-                                      cursorColor: Colors.black87,
-                                      controller: _nameController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Project Budget',
-                                        labelStyle: const TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.black54,
+                              IntrinsicHeight(
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      child: TextFormField(
+                                        cursorColor: Colors.black87,
+                                        controller: _nameController,
+                                        decoration: InputDecoration(
+                                          labelText: 'Project Budget',
+                                          labelStyle: const TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.black54,
+                                          ),
+                                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(6),
+                                            borderSide: const BorderSide(color: Colors.black, width: 2.0),
+                                          ),
                                         ),
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-                                        focusedBorder: OutlineInputBorder(
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Project Budget is missing';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                                        height: double.infinity,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: Colors.black54, width: 1),
                                           borderRadius: BorderRadius.circular(6),
-                                          borderSide: const BorderSide(color: Colors.black, width: 2.0),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            const Text(
+                                              'Project Platform: ',
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                color: Colors.black54,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 20),
+                                            Radio<String>(
+                                              overlayColor: WidgetStateProperty.all(Colors.transparent),
+                                              activeColor: Colors.black87,
+                                              value: 'Web',
+                                              groupValue: selectedPlatform,
+                                              onChanged: updatePlatform,
+                                            ),
+                                            const Text(
+                                              'Web',
+                                              style: TextStyle(
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 15),
+                                            Radio<String>(
+                                              overlayColor: WidgetStateProperty.all(Colors.transparent),
+                                              activeColor: Colors.black87,
+                                              value: 'Mobile',
+                                              groupValue: selectedPlatform,
+                                              onChanged: updatePlatform,
+                                            ),
+                                            const Text(
+                                              'Mobile',
+                                              style: TextStyle(
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 15),
+                                            Radio<String>(
+                                              overlayColor: WidgetStateProperty.all(Colors.transparent),
+                                              activeColor: Colors.black87,
+                                              value: 'Hybrid',
+                                              groupValue: selectedPlatform,
+                                              onChanged: updatePlatform,
+                                            ),
+                                            const Text(
+                                              'Hybrid',
+                                              style: TextStyle(
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Project Budget is missing';
-                                        }
-                                        return null;
-                                      },
                                     ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                    flex: 2,
-                                    child: TextFormField(
-                                      cursorColor: Colors.black87,
-                                      controller: _nameController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Project Platform',
-                                        labelStyle: const TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.black54,
-                                        ),
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(6),
-                                          borderSide: const BorderSide(color: Colors.black, width: 2.0),
-                                        ),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Project Platform is missing';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                               const SizedBox(height: 30),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: TextFormField(
-                                      cursorColor: Colors.black87,
-                                      controller: _nameController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Project Status',
-                                        labelStyle: const TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.black54,
+                              IntrinsicHeight(
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: TextFormField(
+                                        cursorColor: Colors.black87,
+                                        controller: _nameController,
+                                        decoration: InputDecoration(
+                                          labelText: 'Project Status',
+                                          labelStyle: const TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.black54,
+                                          ),
+                                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(6),
+                                            borderSide: const BorderSide(color: Colors.black, width: 2.0),
+                                          ),
                                         ),
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-                                        focusedBorder: OutlineInputBorder(
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Project Status is missing';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: TextFormField(
+                                        cursorColor: Colors.black87,
+                                        controller: _nameController,
+                                        decoration: InputDecoration(
+                                          labelText: 'Project Type',
+                                          labelStyle: const TextStyle(
+                                            fontSize: 16.0,
+                                            color: Colors.black54,
+                                          ),
+                                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.circular(6),
+                                            borderSide: const BorderSide(color: Colors.black, width: 2.0),
+                                          ),
+                                        ),
+                                        validator: (value) {
+                                          if (value!.isEmpty) {
+                                            return 'Project Type is missing';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                                        height: double.infinity,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: Colors.black54, width: 1),
                                           borderRadius: BorderRadius.circular(6),
-                                          borderSide: const BorderSide(color: Colors.black, width: 2.0),
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            const Text(
+                                              'Built For: ',
+                                              style: TextStyle(
+                                                fontSize: 16.0,
+                                                color: Colors.black54,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  builtForAndroid = !builtForAndroid;
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 20,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: builtForAndroid ? Colors.green : Colors.transparent,
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(
+                                                        color: builtForAndroid ? Colors.green : Colors.grey)),
+                                                padding: const EdgeInsets.all(2),
+                                                child: Icon(
+                                                  Ionicons.checkmark,
+                                                  color: builtForAndroid ? Colors.white : Colors.transparent,
+                                                  size: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 5),
+                                            const Text(
+                                              'Android',
+                                              style: TextStyle(
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 15),
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  builtForIOS = !builtForIOS;
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 20,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: builtForIOS ? Colors.green : Colors.transparent,
+                                                    shape: BoxShape.circle,
+                                                    border:
+                                                        Border.all(color: builtForIOS ? Colors.green : Colors.grey)),
+                                                padding: const EdgeInsets.all(2),
+                                                child: Icon(
+                                                  Ionicons.checkmark,
+                                                  color: builtForIOS ? Colors.white : Colors.transparent,
+                                                  size: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 5),
+                                            const Text(
+                                              'iOS',
+                                              style: TextStyle(
+                                                color: Colors.black87,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Project Status is missing';
-                                        }
-                                        return null;
-                                      },
                                     ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                    child: TextFormField(
-                                      cursorColor: Colors.black87,
-                                      controller: _nameController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Project Type',
-                                        labelStyle: const TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.black54,
-                                        ),
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(6),
-                                          borderSide: const BorderSide(color: Colors.black, width: 2.0),
-                                        ),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Project Type is missing';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                    child: TextFormField(
-                                      cursorColor: Colors.black87,
-                                      controller: _nameController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Built for',
-                                        labelStyle: const TextStyle(
-                                          fontSize: 16.0,
-                                          color: Colors.black54,
-                                        ),
-                                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(6),
-                                          borderSide: const BorderSide(color: Colors.black, width: 2.0),
-                                        ),
-                                      ),
-                                      validator: (value) {
-                                        if (value!.isEmpty) {
-                                          return 'Built for is missing';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                                  ),
-                                ],
+                                    // Expanded(
+                                    //   child: TextFormField(
+                                    //     cursorColor: Colors.black87,
+                                    //     controller: _nameController,
+                                    //     decoration: InputDecoration(
+                                    //       labelText: 'Built for',
+                                    //       labelStyle: const TextStyle(
+                                    //         fontSize: 16.0,
+                                    //         color: Colors.black54,
+                                    //       ),
+                                    //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+                                    //       focusedBorder: OutlineInputBorder(
+                                    //         borderRadius: BorderRadius.circular(6),
+                                    //         borderSide: const BorderSide(color: Colors.black, width: 2.0),
+                                    //       ),
+                                    //     ),
+                                    //     validator: (value) {
+                                    //       if (value!.isEmpty) {
+                                    //         return 'Built for is missing';
+                                    //       }
+                                    //       return null;
+                                    //     },
+                                    //   ),
+                                    // ),
+                                  ],
+                                ),
                               ),
                               const SizedBox(height: 30),
                               TextFormField(

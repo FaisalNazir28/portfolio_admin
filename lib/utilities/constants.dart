@@ -2,7 +2,7 @@ import 'dart:ui_web' as ui;
 
 class AppConstants {
   ///app version
-  static String appVersion = '3.0';
+  static String appVersion = '3.1';
 
   /// resume path
   static String resume = 'assets/resume/resume.pdf';
