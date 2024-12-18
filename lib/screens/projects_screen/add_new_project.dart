@@ -15,12 +15,19 @@ class AddNewProject extends StatefulWidget {
 
 class _AddNewProjectState extends State<AddNewProject> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _companyController = TextEditingController();
-  final TextEditingController _designationController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+
+  final TextEditingController _projectNameController = TextEditingController();
+  final TextEditingController _projectDateController = TextEditingController();
+  final TextEditingController _projectDurationController = TextEditingController();
+  final TextEditingController _projectBudgetController = TextEditingController();
+  final TextEditingController _projectStatusController = TextEditingController();
+  final TextEditingController _projectTypeController = TextEditingController();
+  final TextEditingController _projectShortBioController = TextEditingController();
+  final TextEditingController _projectDescriptionController = TextEditingController();
+  final TextEditingController _projectChallengesFacedController = TextEditingController();
+  final TextEditingController _projectResultsAndImpactsController = TextEditingController();
+  final TextEditingController _projectClientReviewController = TextEditingController();
+
   bool loading = false;
   bool? hasImage;
 
@@ -30,6 +37,10 @@ class _AddNewProjectState extends State<AddNewProject> {
 
   bool builtForAndroid = false;
   bool builtForIOS = false;
+
+  bool mainImageDarkBG = true;
+  bool secondaryImageDarkBG = true;
+  bool thirdImageDarkBG = true;
 
   String? selectedPlatform;
 
@@ -96,7 +107,7 @@ class _AddNewProjectState extends State<AddNewProject> {
                                   Expanded(
                                     child: TextFormField(
                                       cursorColor: Colors.black87,
-                                      controller: _nameController,
+                                      controller: _projectNameController,
                                       decoration: InputDecoration(
                                         labelText: 'Project Name',
                                         labelStyle: const TextStyle(
@@ -121,7 +132,7 @@ class _AddNewProjectState extends State<AddNewProject> {
                                   Expanded(
                                     child: TextFormField(
                                       cursorColor: Colors.black87,
-                                      controller: _nameController,
+                                      controller: _projectDateController,
                                       decoration: InputDecoration(
                                         labelText: 'Project Date',
                                         labelStyle: const TextStyle(
@@ -146,7 +157,7 @@ class _AddNewProjectState extends State<AddNewProject> {
                                   Expanded(
                                     child: TextFormField(
                                       cursorColor: Colors.black87,
-                                      controller: _nameController,
+                                      controller: _projectDurationController,
                                       decoration: InputDecoration(
                                         labelText: 'Project Duration',
                                         labelStyle: const TextStyle(
@@ -177,7 +188,7 @@ class _AddNewProjectState extends State<AddNewProject> {
                                       flex: 1,
                                       child: TextFormField(
                                         cursorColor: Colors.black87,
-                                        controller: _nameController,
+                                        controller: _projectBudgetController,
                                         decoration: InputDecoration(
                                           labelText: 'Project Budget',
                                           labelStyle: const TextStyle(
@@ -273,7 +284,7 @@ class _AddNewProjectState extends State<AddNewProject> {
                                     Expanded(
                                       child: TextFormField(
                                         cursorColor: Colors.black87,
-                                        controller: _nameController,
+                                        controller: _projectStatusController,
                                         decoration: InputDecoration(
                                           labelText: 'Project Status',
                                           labelStyle: const TextStyle(
@@ -298,7 +309,7 @@ class _AddNewProjectState extends State<AddNewProject> {
                                     Expanded(
                                       child: TextFormField(
                                         cursorColor: Colors.black87,
-                                        controller: _nameController,
+                                        controller: _projectTypeController,
                                         decoration: InputDecoration(
                                           labelText: 'Project Type',
                                           labelStyle: const TextStyle(
@@ -348,10 +359,10 @@ class _AddNewProjectState extends State<AddNewProject> {
                                                 width: 20,
                                                 height: 20,
                                                 decoration: BoxDecoration(
-                                                    color: builtForAndroid ? Colors.green : Colors.transparent,
+                                                    color: builtForAndroid ? Colors.black87 : Colors.transparent,
                                                     shape: BoxShape.circle,
                                                     border: Border.all(
-                                                        color: builtForAndroid ? Colors.green : Colors.grey)),
+                                                        color: builtForAndroid ? Colors.black87 : Colors.grey)),
                                                 padding: const EdgeInsets.all(2),
                                                 child: Icon(
                                                   Ionicons.checkmark,
@@ -378,10 +389,10 @@ class _AddNewProjectState extends State<AddNewProject> {
                                                 width: 20,
                                                 height: 20,
                                                 decoration: BoxDecoration(
-                                                    color: builtForIOS ? Colors.green : Colors.transparent,
+                                                    color: builtForIOS ? Colors.black87 : Colors.transparent,
                                                     shape: BoxShape.circle,
                                                     border:
-                                                        Border.all(color: builtForIOS ? Colors.green : Colors.grey)),
+                                                        Border.all(color: builtForIOS ? Colors.black87 : Colors.grey)),
                                                 padding: const EdgeInsets.all(2),
                                                 child: Icon(
                                                   Ionicons.checkmark,
@@ -401,37 +412,13 @@ class _AddNewProjectState extends State<AddNewProject> {
                                         ),
                                       ),
                                     ),
-                                    // Expanded(
-                                    //   child: TextFormField(
-                                    //     cursorColor: Colors.black87,
-                                    //     controller: _nameController,
-                                    //     decoration: InputDecoration(
-                                    //       labelText: 'Built for',
-                                    //       labelStyle: const TextStyle(
-                                    //         fontSize: 16.0,
-                                    //         color: Colors.black54,
-                                    //       ),
-                                    //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
-                                    //       focusedBorder: OutlineInputBorder(
-                                    //         borderRadius: BorderRadius.circular(6),
-                                    //         borderSide: const BorderSide(color: Colors.black, width: 2.0),
-                                    //       ),
-                                    //     ),
-                                    //     validator: (value) {
-                                    //       if (value!.isEmpty) {
-                                    //         return 'Built for is missing';
-                                    //       }
-                                    //       return null;
-                                    //     },
-                                    //   ),
-                                    // ),
                                   ],
                                 ),
                               ),
                               const SizedBox(height: 30),
                               TextFormField(
                                 cursorColor: Colors.black87,
-                                controller: _emailController,
+                                controller: _projectShortBioController,
                                 decoration: InputDecoration(
                                   labelText: 'Project Short Bio',
                                   labelStyle: const TextStyle(
@@ -456,7 +443,7 @@ class _AddNewProjectState extends State<AddNewProject> {
                               ),
                               TextFormField(
                                 cursorColor: Colors.black87,
-                                controller: _phoneController,
+                                controller: _projectDescriptionController,
                                 decoration: InputDecoration(
                                   labelText: 'Project Description',
                                   labelStyle: const TextStyle(
@@ -481,7 +468,7 @@ class _AddNewProjectState extends State<AddNewProject> {
                               ),
                               TextFormField(
                                 cursorColor: Colors.black87,
-                                controller: _designationController,
+                                controller: _projectChallengesFacedController,
                                 decoration: InputDecoration(
                                   labelText: 'Project Challenges Faced',
                                   labelStyle: const TextStyle(
@@ -506,7 +493,7 @@ class _AddNewProjectState extends State<AddNewProject> {
                               ),
                               TextFormField(
                                 cursorColor: Colors.black87,
-                                controller: _companyController,
+                                controller: _projectResultsAndImpactsController,
                                 decoration: InputDecoration(
                                   labelText: 'Project Results & Impacts',
                                   labelStyle: const TextStyle(
@@ -531,7 +518,7 @@ class _AddNewProjectState extends State<AddNewProject> {
                               ),
                               TextFormField(
                                 cursorColor: Colors.black87,
-                                controller: _passwordController,
+                                controller: _projectClientReviewController,
                                 obscureText: true,
                                 decoration: InputDecoration(
                                   labelText: 'Client Review',
@@ -567,48 +554,208 @@ class _AddNewProjectState extends State<AddNewProject> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: SingleChildScrollView(
-                              child: Wrap(
-                                alignment: WrapAlignment.center,
-                                spacing: 30,
-                                runSpacing: 30,
-                                children: List.generate(images.length, (index) {
-                                  return InkWell(
-                                    onTap: () async {
-                                      await selectImage(index);
-                                    },
-                                    child: Stack(
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 80),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Container(
-                                          width: 200,
-                                          height: 120,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(color: Colors.black87),
-                                            borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: images[index] == null
-                                              ? Center(child: Text(imageTextPlaceHolders(index)))
-                                              : Image.memory(images[index]!),
-                                        ),
-                                        if (images[index] != null)
-                                          Positioned(
-                                            top: 5,
-                                            right: 10,
-                                            child: InkWell(
+                                        Row(
+                                          children: [
+                                            const Text('Main Image BG:'),
+                                            const SizedBox(width: 15),
+                                            InkWell(
                                               onTap: () {
                                                 setState(() {
-                                                  images[index] = null;
+                                                  mainImageDarkBG = true;
                                                 });
                                               },
-                                              child: const Icon(
-                                                Ionicons.close_outline,
-                                                color: Colors.white,
+                                              child: Container(
+                                                width: 20,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black87,
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(color: Colors.black26)),
+                                                padding: const EdgeInsets.all(2),
+                                                child: Icon(
+                                                  Ionicons.checkmark,
+                                                  color: mainImageDarkBG ? Colors.white : Colors.transparent,
+                                                  size: 15,
+                                                ),
                                               ),
                                             ),
-                                          ),
+                                            const SizedBox(width: 10),
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  mainImageDarkBG = false;
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 20,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(color: Colors.black87)),
+                                                padding: const EdgeInsets.all(2),
+                                                child: Icon(
+                                                  Ionicons.checkmark,
+                                                  color: !mainImageDarkBG ? Colors.black87 : Colors.transparent,
+                                                  size: 15,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Text('Secondary Image BG:'),
+                                            const SizedBox(width: 15),
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  secondaryImageDarkBG = true;
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 20,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black87,
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(color: Colors.black26)),
+                                                padding: const EdgeInsets.all(2),
+                                                child: Icon(
+                                                  Ionicons.checkmark,
+                                                  color: secondaryImageDarkBG ? Colors.white : Colors.transparent,
+                                                  size: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  secondaryImageDarkBG = false;
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 20,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(color: Colors.black87)),
+                                                padding: const EdgeInsets.all(2),
+                                                child: Icon(
+                                                  Ionicons.checkmark,
+                                                  color: !secondaryImageDarkBG ? Colors.black87 : Colors.transparent,
+                                                  size: 15,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Text('Third Image BG:'),
+                                            const SizedBox(width: 15),
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  thirdImageDarkBG = true;
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 20,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black87,
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(color: Colors.black26)),
+                                                padding: const EdgeInsets.all(2),
+                                                child: Icon(
+                                                  Ionicons.checkmark,
+                                                  color: thirdImageDarkBG ? Colors.white : Colors.transparent,
+                                                  size: 15,
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  thirdImageDarkBG = false;
+                                                });
+                                              },
+                                              child: Container(
+                                                width: 20,
+                                                height: 20,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    shape: BoxShape.circle,
+                                                    border: Border.all(color: Colors.black87)),
+                                                padding: const EdgeInsets.all(2),
+                                                child: Icon(
+                                                  Ionicons.checkmark,
+                                                  color: !thirdImageDarkBG ? Colors.black87 : Colors.transparent,
+                                                  size: 15,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ],
                                     ),
-                                  );
-                                }),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  Wrap(
+                                    alignment: WrapAlignment.center,
+                                    spacing: 30,
+                                    runSpacing: 30,
+                                    children: List.generate(images.length, (index) {
+                                      return InkWell(
+                                        onTap: () async {
+                                          await selectImage(index);
+                                        },
+                                        child: Stack(
+                                          children: [
+                                            Container(
+                                              width: 200,
+                                              height: 120,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(color: Colors.black87),
+                                                borderRadius: BorderRadius.circular(10),
+                                              ),
+                                              child: images[index] == null
+                                                  ? Center(child: Text(imageTextPlaceHolders(index)))
+                                                  : Image.memory(images[index]!),
+                                            ),
+                                            if (images[index] != null)
+                                              Positioned(
+                                                top: 5,
+                                                right: 10,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      images[index] = null;
+                                                    });
+                                                  },
+                                                  child: const Icon(
+                                                    Ionicons.close_outline,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -833,11 +980,16 @@ class _AddNewProjectState extends State<AddNewProject> {
   }
 
   void clearValues() {
-    _nameController.clear();
-    _emailController.clear();
-    _phoneController.clear();
-    _passwordController.clear();
-    _designationController.clear();
-    _companyController.clear();
+    _projectNameController.clear();
+    _projectDateController.clear();
+    _projectDurationController.clear();
+    _projectBudgetController.clear();
+    _projectStatusController.clear();
+    _projectTypeController.clear();
+    _projectShortBioController.clear();
+    _projectDescriptionController.clear();
+    _projectChallengesFacedController.clear();
+    _projectResultsAndImpactsController.clear();
+    _projectClientReviewController.clear();
   }
 }
