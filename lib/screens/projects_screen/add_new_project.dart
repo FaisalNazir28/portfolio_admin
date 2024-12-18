@@ -422,6 +422,7 @@ class _AddNewProjectState extends State<AddNewProject> {
                                 decoration: InputDecoration(
                                   labelText: 'Project Short Bio',
                                   labelStyle: const TextStyle(
+
                                     fontSize: 16.0,
                                     color: Colors.black54,
                                   ),
