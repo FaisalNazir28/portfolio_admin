@@ -72,6 +72,13 @@ class ProjectsController extends GetxController {
     return [];
   }
 
+  // Function to get projects by client name
+  List<ProjectsModel> getProjectsByClient(String clientName) {
+    return allProjects
+        .where((project) => project.clientName.toString().toLowerCase() == clientName.toLowerCase())
+        .toList();
+  }
+
   static Future<void> updateCount(String projectID, String field, int oldValue) async {
     try {
       int newValue = oldValue + 1;
