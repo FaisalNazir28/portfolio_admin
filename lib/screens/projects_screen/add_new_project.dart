@@ -1,7 +1,11 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:portfolio_admin/controllers/projects_controller.dart';
 import 'dart:html' as html;
+
+import 'package:portfolio_admin/models/projects_model.dart';
 
 class AddNewProject extends StatefulWidget {
   final Function() onClose;
@@ -16,6 +20,8 @@ class AddNewProject extends StatefulWidget {
 class _AddNewProjectState extends State<AddNewProject> {
   final _formKey = GlobalKey<FormState>();
 
+  final projectsController = Get.find<ProjectsController>();
+
   final TextEditingController _projectNameController = TextEditingController();
   final TextEditingController _projectDateController = TextEditingController();
   final TextEditingController _projectDurationController = TextEditingController();
@@ -29,11 +35,9 @@ class _AddNewProjectState extends State<AddNewProject> {
   final TextEditingController _projectClientReviewController = TextEditingController();
 
   bool loading = false;
-  bool? hasImage;
-
-  String? imageName;
 
   List<Uint8List?> images = List.filled(22, null);
+  List<String?> imageNames = List.filled(22, null);
 
   bool builtForAndroid = false;
   bool builtForIOS = false;
@@ -481,12 +485,6 @@ class _AddNewProjectState extends State<AddNewProject> {
                                     borderSide: const BorderSide(color: Colors.black, width: 2.0),
                                   ),
                                 ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Project Challenges Faced is missing';
-                                  }
-                                  return null;
-                                },
                               ),
                               const SizedBox(
                                 height: 30,
@@ -506,12 +504,6 @@ class _AddNewProjectState extends State<AddNewProject> {
                                     borderSide: const BorderSide(color: Colors.black, width: 2.0),
                                   ),
                                 ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Project Results & Impacts is missing';
-                                  }
-                                  return null;
-                                },
                               ),
                               const SizedBox(
                                 height: 30,
@@ -532,12 +524,6 @@ class _AddNewProjectState extends State<AddNewProject> {
                                     borderSide: const BorderSide(color: Colors.black, width: 2.0),
                                   ),
                                 ),
-                                validator: (value) {
-                                  if (value!.isEmpty) {
-                                    return 'Client Review is missing';
-                                  }
-                                  return null;
-                                },
                               ),
                             ],
                           ),
@@ -737,16 +723,33 @@ class _AddNewProjectState extends State<AddNewProject> {
                                             if (images[index] != null)
                                               Positioned(
                                                 top: 5,
-                                                right: 10,
-                                                child: InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      images[index] = null;
-                                                    });
-                                                  },
-                                                  child: const Icon(
-                                                    Ionicons.close_outline,
-                                                    color: Colors.white,
+                                                right: 15,
+                                                child: Container(
+                                                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black,
+                                                    borderRadius: BorderRadius.circular(20),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
+                                                      Text(
+                                                        imageNames[index]!,
+                                                        style: const TextStyle(color: Colors.white, fontSize: 12),
+                                                      ),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          setState(() {
+                                                            images[index] = null;
+                                                          });
+                                                        },
+                                                        child: const Icon(
+                                                          Ionicons.close_outline,
+                                                          color: Colors.white,
+                                                          size: 16,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
@@ -760,65 +763,6 @@ class _AddNewProjectState extends State<AddNewProject> {
                             ),
                           ),
                         )
-                        // Expanded(
-                        //   child: Column(
-                        //     children: [
-                        //       Stack(
-                        //         alignment: Alignment.bottomCenter,
-                        //         children: [
-                        //           Column(
-                        //             children: [
-                        //               Container(
-                        //                 width: 350,
-                        //                 height: 450,
-                        //                 decoration: BoxDecoration(
-                        //                   color: Colors.white,
-                        //                   border: hasImage != null && hasImage == false
-                        //                       ? Border.all(
-                        //                           color: Colors.red,
-                        //                           width: 1,
-                        //                         )
-                        //                       : null,
-                        //                 ),
-                        //                 padding: const EdgeInsets.fromLTRB(40, 40, 40, 100),
-                        //                 child: _imageData != null
-                        //                     ? Column(
-                        //                         mainAxisSize: MainAxisSize.min,
-                        //                         children: [
-                        //                           Image.memory(_imageData!),
-                        //                           const SizedBox(
-                        //                             height: 10,
-                        //                           ),
-                        //                           Text(
-                        //                             imageName!,
-                        //                             style: const TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
-                        //                           ),
-                        //                         ],
-                        //                       )
-                        //                     : Container(
-                        //                         color: Colors.black,
-                        //                       ),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //           Positioned(
-                        //             bottom: 35,
-                        //             child: InkWell(
-                        //               onTap: () async {
-                        //                 await selectImage();
-                        //               },
-                        //               overlayColor: WidgetStateProperty.all(Colors.transparent),
-                        //               child: const Text(
-                        //                 "Upload Picture",
-                        //                 style: TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       ),
-                        //     ],
-                        //   ),
-                        // )
                       ],
                     ),
                   ),
@@ -830,40 +774,44 @@ class _AddNewProjectState extends State<AddNewProject> {
                         onTap: loading
                             ? () {}
                             : () async {
-                                // UserModel userModel = UserModel(
-                                //   email: _emailController.text,
-                                //   name: _nameController.text,
-                                //   phone: _phoneController.text,
-                                //   designation: _designationController.text,
-                                //   company: _companyController.text,
-                                // );
-                                // if (_formKey.currentState!.validate() && _imageData != null) {
-                                //   setState(() {
-                                //     loading = true;
-                                //     ClientController().registerUser(
-                                //       userModel: userModel,
-                                //       password: _passwordController.text,
-                                //       imageData: _imageData!,
-                                //       fileName: imageName!,
-                                //       onSuccess: () {
-                                //         setState(() {
-                                //           loading = false;
-                                //           widget.onRegisterProject();
-                                //           clearValues();
-                                //         });
-                                //       },
-                                //       onError: () {
-                                //         setState(() {
-                                //           loading = false;
-                                //         });
-                                //       },
-                                //     );
-                                //   });
-                                // } else if (_imageData == null) {
-                                //   setState(() {
-                                //     hasImage = false;
-                                //   });
-                                // }
+                                ProjectsModel projectModel = ProjectsModel(
+                                  projectName: _projectNameController.text,
+                                  projectPlatform: selectedPlatform,
+                                  projectShortBio: _projectShortBioController.text,
+                                  projectDescription: _projectDescriptionController.text,
+                                  projectDate: _projectDateController.text,
+                                  projectType: _projectTypeController.text,
+                                  projectDuration: _projectDurationController.text,
+                                  projectBudget: _projectBudgetController.text,
+                                  projectStatus: _projectStatusController.text,
+                                  darkMainImageBG: mainImageDarkBG,
+                                  darkSecondImageBG: secondaryImageDarkBG,
+                                  darkThirdImageBG: thirdImageDarkBG,
+                                  builtForAndroid: builtForAndroid,
+                                  builtForApple: builtForIOS,
+                                );
+                                if (_formKey.currentState!.validate() && selectedPlatform != null) {
+                                  setState(() {
+                                    loading = true;
+                                    projectsController.registerNewProject(
+                                      projectModel: projectModel,
+                                      images: images,
+                                      imageNames: imageNames,
+                                      onSuccess: () {
+                                        setState(() {
+                                          loading = false;
+                                          widget.onRegisterProject();
+                                          clearValues();
+                                        });
+                                      },
+                                      onError: () {
+                                        setState(() {
+                                          loading = false;
+                                        });
+                                      },
+                                    );
+                                  });
+                                }
                               },
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
@@ -970,8 +918,7 @@ class _AddNewProjectState extends State<AddNewProject> {
 
         setState(() {
           images[index] = data;
-          // imageName = file.name;
-          // hasImage = true;
+          imageNames[index] = file.name;
         });
       });
     });

@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portfolio_admin/models/projects_model.dart';
 import 'package:portfolio_admin/services/firebase_collections.dart';
+import 'package:portfolio_admin/utilities/custom_snack_bar.dart';
+import 'package:uuid/uuid.dart';
 
 class ProjectsController extends GetxController {
   var allProjects = <ProjectsModel>[].obs;
@@ -88,6 +91,212 @@ class ProjectsController extends GetxController {
 
   static void updateLoveCount(String projectID, int oldValue) {
     updateCount(projectID, "loveCount", oldValue);
+  }
+
+  Future<void> registerNewProject({
+    required ProjectsModel projectModel,
+    required Function() onSuccess,
+    required Function() onError,
+    required List<Uint8List?> images,
+    required List<String?> imageNames,
+  }) async {
+    String folderName = projectModel.projectName.toString().toLowerCase().replaceAll(' ', '_');
+
+    try {
+      String appIcon = '';
+      String mainImage = '';
+      String secondImage = '';
+      String thirdImage = '';
+      String extraImage1 = '';
+      String extraImage2 = '';
+      String extraImage3 = '';
+      String extraImage4 = '';
+      String extraImage5 = '';
+      String extraImage6 = '';
+      String extraImage7 = '';
+      String extraImage8 = '';
+      String extraImage9 = '';
+      String extraImage10 = '';
+      String extraImage11 = '';
+      String extraImage12 = '';
+      String extraImage13 = '';
+      String extraImage14 = '';
+      String extraImage15 = '';
+      String extraImage16 = '';
+      String extraImage17 = '';
+      String mobileView = '';
+
+      if (images[0] != null) {
+        appIcon = await uploadProfile(data: images[0]!, fileName: imageNames[0]!, folderName: folderName);
+      }
+      if (images[1] != null) {
+        mainImage = await uploadProfile(data: images[1]!, fileName: imageNames[1]!, folderName: folderName);
+      }
+      if (images[2] != null) {
+        secondImage = await uploadProfile(data: images[2]!, fileName: imageNames[2]!, folderName: folderName);
+      }
+      if (images[3] != null) {
+        thirdImage = await uploadProfile(data: images[3]!, fileName: imageNames[3]!, folderName: folderName);
+      }
+      if (images[4] != null) {
+        extraImage1 = await uploadProfile(data: images[4]!, fileName: imageNames[4]!, folderName: folderName);
+      }
+      if (images[5] != null) {
+        extraImage2 = await uploadProfile(data: images[5]!, fileName: imageNames[5]!, folderName: folderName);
+      }
+      if (images[6] != null) {
+        extraImage3 = await uploadProfile(data: images[6]!, fileName: imageNames[6]!, folderName: folderName);
+      }
+      if (images[7] != null) {
+        extraImage4 = await uploadProfile(data: images[7]!, fileName: imageNames[7]!, folderName: folderName);
+      }
+      if (images[8] != null) {
+        extraImage5 = await uploadProfile(data: images[8]!, fileName: imageNames[8]!, folderName: folderName);
+      }
+      if (images[9] != null) {
+        extraImage6 = await uploadProfile(data: images[9]!, fileName: imageNames[9]!, folderName: folderName);
+      }
+      if (images[10] != null) {
+        extraImage7 = await uploadProfile(data: images[10]!, fileName: imageNames[10]!, folderName: folderName);
+      }
+      if (images[11] != null) {
+        extraImage8 = await uploadProfile(data: images[11]!, fileName: imageNames[11]!, folderName: folderName);
+      }
+      if (images[12] != null) {
+        extraImage9 = await uploadProfile(data: images[12]!, fileName: imageNames[12]!, folderName: folderName);
+      }
+      if (images[13] != null) {
+        extraImage10 = await uploadProfile(data: images[13]!, fileName: imageNames[13]!, folderName: folderName);
+      }
+      if (images[14] != null) {
+        extraImage11 = await uploadProfile(data: images[14]!, fileName: imageNames[14]!, folderName: folderName);
+      }
+      if (images[15] != null) {
+        extraImage12 = await uploadProfile(data: images[15]!, fileName: imageNames[15]!, folderName: folderName);
+      }
+      if (images[16] != null) {
+        extraImage13 = await uploadProfile(data: images[16]!, fileName: imageNames[16]!, folderName: folderName);
+      }
+      if (images[17] != null) {
+        extraImage14 = await uploadProfile(data: images[17]!, fileName: imageNames[17]!, folderName: folderName);
+      }
+      if (images[18] != null) {
+        extraImage15 = await uploadProfile(data: images[18]!, fileName: imageNames[18]!, folderName: folderName);
+      }
+      if (images[19] != null) {
+        extraImage16 = await uploadProfile(data: images[19]!, fileName: imageNames[19]!, folderName: folderName);
+      }
+      if (images[20] != null) {
+        extraImage17 = await uploadProfile(data: images[20]!, fileName: imageNames[20]!, folderName: folderName);
+      }
+      if (images[21] != null) {
+        mobileView = await uploadProfile(data: images[21]!, fileName: imageNames[21]!, folderName: folderName);
+      }
+
+      var lastProjectIndex = await getHighestProjectIndex();
+
+      var uuid = const Uuid();
+      String projectUID = uuid.v4();
+
+      ProjectsModel project = ProjectsModel(
+        projectIndex: (lastProjectIndex + 1).toString(),
+        clientUID: "",
+        projectUID: projectUID,
+        clientName: "",
+        clientCompany: "",
+        projectName: projectModel.projectName,
+        projectPlatform: projectModel.projectPlatform,
+        projectShortBio: projectModel.projectShortBio,
+        projectDescription: projectModel.projectDescription,
+        projectDate: projectModel.projectDate,
+        projectType: projectModel.projectType,
+        projectDuration: projectModel.projectDuration,
+        projectBudget: projectModel.projectBudget,
+        projectChallengesFaced: "",
+        projectResultsAndImpacts: "",
+        projectStatus: projectModel.projectStatus,
+        darkMainImageBG: projectModel.darkMainImageBG,
+        darkSecondImageBG: projectModel.darkSecondImageBG,
+        darkThirdImageBG: projectModel.darkThirdImageBG,
+        mainImage: mainImage,
+        secondImage: secondImage,
+        thirdImage: thirdImage,
+        extraImage1: extraImage1,
+        extraImage2: extraImage2,
+        extraImage3: extraImage3,
+        extraImage4: extraImage4,
+        extraImage5: extraImage5,
+        extraImage6: extraImage6,
+        extraImage7: extraImage7,
+        extraImage8: extraImage8,
+        extraImage9: extraImage9,
+        extraImage10: extraImage10,
+        extraImage11: extraImage11,
+        extraImage12: extraImage12,
+        extraImage13: extraImage13,
+        extraImage14: extraImage14,
+        extraImage15: extraImage15,
+        extraImage16: extraImage16,
+        extraImage17: extraImage17,
+        mobileView: mobileView,
+        likesCount: "0",
+        starsCount: "0",
+        loveCount: "0",
+        appIcon: appIcon,
+        iconPadding: appIcon.isEmpty ? true : false,
+        appThemeColor: "",
+        builtForAndroid: projectModel.builtForAndroid,
+        builtForApple: projectModel.builtForApple,
+        projectIsCompleted: false,
+        clientReview: "",
+      );
+
+      FbCollections.projects.doc(projectUID).set(project.toJson());
+
+      CustomSnackBar.showSnackBar(message: "Project Registered Successfully");
+      onSuccess();
+    } catch (e) {
+      onError();
+      CustomSnackBar.showSnackBar(message: e.toString(), color: Colors.red);
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<String> uploadProfile({
+    required Uint8List data,
+    required String fileName,
+    required String folderName,
+  }) async {
+    try {
+      // Create a reference to the Firebase Storage location
+      final storageRef = FirebaseStorage.instance.ref().child('projectShowcase/$folderName/$fileName');
+
+      // Upload the image data
+      final uploadTask = storageRef.putData(data);
+
+      final snapshot = await uploadTask;
+
+      final downloadUrl = await snapshot.ref.getDownloadURL();
+      return downloadUrl;
+    } catch (error) {
+      debugPrint('Upload failed: $error');
+      rethrow;
+    }
+  }
+
+  Future<int> getHighestProjectIndex() async {
+    int highestProjectIndex = 0;
+    try {
+      var newProjects = List.from(allProjects);
+
+      newProjects.sort((b, a) => int.parse(a.projectIndex).compareTo(int.parse(b.projectIndex)));
+
+      highestProjectIndex = int.parse(newProjects[0].projectIndex);
+      return highestProjectIndex;
+    } catch (e) {
+      print("Error fetching highest project index: $e");
+    }
+    return highestProjectIndex;
   }
 
   Future<void> getDownloadUrl() async {

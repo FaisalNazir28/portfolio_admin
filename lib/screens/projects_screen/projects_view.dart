@@ -321,7 +321,12 @@ class _ProjectsViewState extends State<ProjectsView> {
                   newProjectView = false;
                 });
               },
-              onRegisterProject: () {},
+              onRegisterProject: () {
+                setState(() {
+                  projectsController.getAllProjects();
+                  newProjectView = false;
+                });
+              },
             )
         ],
       );
