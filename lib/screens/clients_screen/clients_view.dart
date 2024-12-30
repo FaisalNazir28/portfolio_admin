@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:portfolio_admin/controllers/client_controller.dart';
+import 'package:portfolio_admin/controllers/projects_controller.dart';
 import 'package:portfolio_admin/screens/clients_screen/add_new_client.dart';
 import 'package:portfolio_admin/screens/clients_screen/client_details_view.dart';
 import 'package:portfolio_admin/utilities/custom_dialog_box.dart';
@@ -22,6 +23,7 @@ class _ClientsViewState extends State<ClientsView> {
   int? selectedProjectIndex;
 
   final clientController = Get.find<ClientController>();
+  final projectsController = Get.find<ProjectsController>();
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +59,11 @@ class _ClientsViewState extends State<ClientsView> {
                               ),
                               itemCount: clientController.allClients.length,
                               itemBuilder: (context, index) {
+                                var clientsProject = projectsController.allProjects
+                                    .where((project) =>
+                                        project.clientName.toString().toLowerCase() ==
+                                        clientController.allClients[index].name.toLowerCase())
+                                    .toList();
                                 return InkWell(
                                   overlayColor: WidgetStateProperty.all(Colors.transparent),
                                   onTap: () => setState(() {
@@ -160,57 +167,58 @@ class _ClientsViewState extends State<ClientsView> {
                                         const SizedBox(height: 15),
                                         const Divider(height: 5),
                                         const SizedBox(height: 15),
-                                        const Center(
-                                          child: Text(
-                                            'Project not assigned yet!\nAssign new or bind the existing project!',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.black87,
-                                              fontStyle: FontStyle.normal,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                        // const Row(
-                                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        //   children: [
-                                        //     Column(
-                                        //       crossAxisAlignment: CrossAxisAlignment.start,
-                                        //       children: [
-                                        //         Text(
-                                        //           // "App Home Page Design",
-                                        //           "",
-                                        //           style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                                        //         ),
-                                        //         SizedBox(height: 5),
-                                        //         Text(
-                                        //           // "+2 more projects",
-                                        //           "",
-                                        //           style: TextStyle(fontSize: 12, color: Colors.black54),
-                                        //         ),
-                                        //       ],
-                                        //     ),
-                                        //     Column(
-                                        //       crossAxisAlignment: CrossAxisAlignment.end,
-                                        //       children: [
-                                        //         Text(
-                                        //           // "\$220",
-                                        //           "",
-                                        //           style: TextStyle(
-                                        //               fontSize: 15,
-                                        //               fontWeight: FontWeight.w500,
-                                        //               color: Colors.deepOrangeAccent),
-                                        //         ),
-                                        //         SizedBox(height: 5),
-                                        //         Text(
-                                        //           // "Pending",
-                                        //           "",
-                                        //           style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                                        //         ),
-                                        //       ],
-                                        //     ),
-                                        //   ],
-                                        // )
+                                        clientsProject.isEmpty
+                                            ? const Center(
+                                                child: Text(
+                                                  'Project not assigned yet!\nAssign new or bind the existing project!',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black87,
+                                                    fontStyle: FontStyle.normal,
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              )
+                                            : Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Text(
+                                                        clientsProject[0].projectName,
+                                                        style:
+                                                            const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                                                      ),
+                                                      const SizedBox(height: 5),
+                                                      Text(
+                                                        clientsProject.length == 1
+                                                            ? "1 project only"
+                                                            : "+${clientsProject.length - 1} more projects",
+                                                        style: const TextStyle(fontSize: 12, color: Colors.black54),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Column(
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                        clientsProject[0].projectBudget,
+                                                        style: const TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight: FontWeight.w500,
+                                                            color: Colors.deepOrangeAccent),
+                                                      ),
+                                                      const SizedBox(height: 5),
+                                                      Text(
+                                                        clientsProject[0].projectStatus,
+                                                        style:
+                                                            const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
                                       ],
                                     ),
                                   ),
