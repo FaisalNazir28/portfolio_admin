@@ -61,8 +61,8 @@ class _ClientsViewState extends State<ClientsView> {
                               itemBuilder: (context, index) {
                                 var clientsProject = projectsController.allProjects
                                     .where((project) =>
-                                        project.clientName.toString().toLowerCase() ==
-                                        clientController.allClients[index].name.toLowerCase())
+                                        project.clientUID.toString().toLowerCase() ==
+                                        clientController.allClients[index].uid.toLowerCase())
                                     .toList();
                                 return Obx(() {
                                   return InkWell(

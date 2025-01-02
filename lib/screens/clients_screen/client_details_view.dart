@@ -39,7 +39,7 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
 
   @override
   void initState() {
-    clientProjects = projectsController.getProjectsByClient(widget.clientDetails.name);
+    clientProjects = projectsController.getProjectsByClient(widget.clientDetails.uid);
     super.initState();
   }
 

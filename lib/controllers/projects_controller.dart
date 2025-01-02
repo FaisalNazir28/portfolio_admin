@@ -73,9 +73,9 @@ class ProjectsController extends GetxController {
   }
 
   // Function to get projects by client name
-  List<ProjectsModel> getProjectsByClient(String clientName) {
+  List<ProjectsModel> getProjectsByClient(String clientUID) {
     return allProjects
-        .where((project) => project.clientName.toString().toLowerCase() == clientName.toLowerCase())
+        .where((project) => project.clientUID.toString().toLowerCase() == clientUID.toLowerCase())
         .toList();
   }
 
