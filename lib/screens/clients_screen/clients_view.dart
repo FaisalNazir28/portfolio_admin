@@ -64,165 +64,168 @@ class _ClientsViewState extends State<ClientsView> {
                                         project.clientName.toString().toLowerCase() ==
                                         clientController.allClients[index].name.toLowerCase())
                                     .toList();
-                                return InkWell(
-                                  overlayColor: WidgetStateProperty.all(Colors.transparent),
-                                  onTap: () => setState(() {
-                                    selectedProjectIndex = index;
-                                    clientDetailsView = true;
-                                  }),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15),
-                                      border: Border.all(color: Colors.black45, width: 1),
-                                    ),
-                                    padding: const EdgeInsets.all(20),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          children: [
-                                            CircleAvatar(
-                                              radius: 30,
-                                              backgroundImage:
-                                                  NetworkImage(clientController.allClients[index].profilePicture),
-                                            ),
-                                            const SizedBox(
-                                              width: 20,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      clientController.allClients[index].name,
-                                                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                                                    ),
-                                                    const SizedBox(width: 5),
-                                                    if (clientController.allClients[index].isAdmin)
-                                                      const Icon(
-                                                        CupertinoIcons.checkmark_shield_fill,
-                                                        size: 22,
-                                                        color: Colors.blueAccent,
-                                                      )
-                                                  ],
-                                                ),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Text(
-                                                  clientController.allClients[index].email,
-                                                  style: const TextStyle(fontSize: 12),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 15),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Container(
-                                              width: 8,
-                                              height: 8,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: clientController.allClients[index].isActive
-                                                    ? Colors.green
-                                                    : Colors.red,
+                                return Obx(() {
+                                  return InkWell(
+                                    overlayColor: WidgetStateProperty.all(Colors.transparent),
+                                    onTap: () => setState(() {
+                                      selectedProjectIndex = index;
+                                      clientDetailsView = true;
+                                    }),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        border: Border.all(color: Colors.black45, width: 1),
+                                      ),
+                                      padding: const EdgeInsets.all(20),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              CircleAvatar(
+                                                radius: 30,
+                                                backgroundImage:
+                                                    NetworkImage(clientController.allClients[index].profilePicture),
                                               ),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              clientController.allClients[index].isActive ? 'Active' : 'Inactive',
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: clientController.allClients[index].isActive
-                                                      ? Colors.green
-                                                      : Colors.red),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 5),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              clientController.allClients[index].designation,
-                                              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                                            ),
-                                            Text(
-                                              " - ${clientController.allClients[index].company}",
-                                              style: const TextStyle(fontSize: 12),
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(height: 15),
-                                        const Divider(height: 5),
-                                        const SizedBox(height: 15),
-                                        clientsProject.isEmpty
-                                            ? const Center(
-                                                child: Text(
-                                                  'Project not assigned yet!\nAssign new or bind the existing project!',
-                                                  style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.black87,
-                                                    fontStyle: FontStyle.normal,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              )
-                                            : Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              const SizedBox(
+                                                width: 20,
+                                              ),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                  Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
                                                     children: [
                                                       Text(
-                                                        clientsProject[0].projectName,
+                                                        clientController.allClients[index].name,
                                                         style:
-                                                            const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                                                            const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
                                                       ),
-                                                      const SizedBox(height: 5),
-                                                      Text(
-                                                        clientsProject.length == 1
-                                                            ? "1 project only"
-                                                            : "+${clientsProject.length - 1} more projects",
-                                                        style: const TextStyle(fontSize: 12, color: Colors.black54),
-                                                      ),
+                                                      const SizedBox(width: 5),
+                                                      if (clientController.allClients[index].isAdmin)
+                                                        const Icon(
+                                                          CupertinoIcons.checkmark_shield_fill,
+                                                          size: 22,
+                                                          color: Colors.blueAccent,
+                                                        )
                                                     ],
                                                   ),
-                                                  Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.end,
-                                                    children: [
-                                                      Text(
-                                                        clientsProject[0].projectBudget,
-                                                        style: const TextStyle(
-                                                            fontSize: 15,
-                                                            fontWeight: FontWeight.w500,
-                                                            color: Colors.deepOrangeAccent),
-                                                      ),
-                                                      const SizedBox(height: 5),
-                                                      Text(
-                                                        clientsProject[0].projectStatus,
-                                                        style:
-                                                            const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                                                      ),
-                                                    ],
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text(
+                                                    clientController.allClients[index].email,
+                                                    style: const TextStyle(fontSize: 12),
                                                   ),
                                                 ],
                                               ),
-                                      ],
+                                            ],
+                                          ),
+                                          const SizedBox(height: 15),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Container(
+                                                width: 8,
+                                                height: 8,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  color: clientController.allClients[index].isActive
+                                                      ? Colors.green
+                                                      : Colors.red,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                clientController.allClients[index].isActive ? 'Active' : 'Inactive',
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: clientController.allClients[index].isActive
+                                                        ? Colors.green
+                                                        : Colors.red),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                clientController.allClients[index].designation,
+                                                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                                              ),
+                                              Text(
+                                                " - ${clientController.allClients[index].company}",
+                                                style: const TextStyle(fontSize: 12),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 15),
+                                          const Divider(height: 5),
+                                          const SizedBox(height: 15),
+                                          clientsProject.isEmpty
+                                              ? const Center(
+                                                  child: Text(
+                                                    'Project not assigned yet!\nAssign new or bind the existing project!',
+                                                    style: TextStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.black87,
+                                                      fontStyle: FontStyle.normal,
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                )
+                                              : Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          clientsProject[0].projectName,
+                                                          style: const TextStyle(
+                                                              fontSize: 15, fontWeight: FontWeight.w500),
+                                                        ),
+                                                        const SizedBox(height: 5),
+                                                        Text(
+                                                          clientsProject.length == 1
+                                                              ? "1 project only"
+                                                              : "+${clientsProject.length - 1} more projects",
+                                                          style: const TextStyle(fontSize: 12, color: Colors.black54),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                                      children: [
+                                                        Text(
+                                                          clientsProject[0].projectBudget,
+                                                          style: const TextStyle(
+                                                              fontSize: 15,
+                                                              fontWeight: FontWeight.w500,
+                                                              color: Colors.deepOrangeAccent),
+                                                        ),
+                                                        const SizedBox(height: 5),
+                                                        Text(
+                                                          clientsProject[0].projectStatus,
+                                                          style: const TextStyle(
+                                                              fontSize: 12, fontWeight: FontWeight.w600),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
+                                  );
+                                });
                               },
                             ),
                           ),
