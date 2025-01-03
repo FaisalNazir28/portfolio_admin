@@ -36,13 +36,28 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
   Uint8List? _imageData;
 
   var clientProjects = List<ProjectsModel>.empty(growable: true);
+  var unAssignedProjects = List<ProjectsModel>.empty(growable: true);
 
   bool bindProject = false;
 
+  ProjectsModel? _selectedItem;
+
+  TextEditingController projectUIDController = TextEditingController();
+  TextEditingController projectNameController = TextEditingController();
+  TextEditingController projectDateController = TextEditingController();
+  TextEditingController projectStatusController = TextEditingController();
+  TextEditingController projectPlatformController = TextEditingController();
+
   @override
   void initState() {
-    clientProjects = projectsController.getProjectsByClient(widget.clientDetails.uid);
+    loadProjects();
     super.initState();
+  }
+
+  void loadProjects() {
+    clientProjects = projectsController.getProjectsByClient(widget.clientDetails.uid);
+    unAssignedProjects =
+        projectsController.allProjects.where((project) => project.clientUID.toString().isEmpty).toList();
   }
 
   @override
@@ -649,9 +664,7 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 40,
-              ),
+              const SizedBox(width: 40),
               Container(
                 width: MediaQuery.of(context).size.width * .15,
                 constraints: BoxConstraints(
@@ -680,6 +693,7 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                     onTap: () {
                                       setState(() {
                                         bindProject = false;
+                                        clearControllers();
                                       });
                                     },
                                     child: const Row(
@@ -699,8 +713,157 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(
-                                    height: 20,
+                                  const SizedBox(height: 20),
+                                  DropdownButtonFormField<ProjectsModel>(
+                                    isExpanded: true,
+                                    value: _selectedItem,
+                                    onChanged: (ProjectsModel? projectValues) {
+                                      setState(() {
+                                        _selectedItem = projectValues;
+                                        projectUIDController.text = projectValues!.projectUID;
+                                        projectNameController.text = projectValues.projectName;
+                                        projectDateController.text = projectValues.projectDate;
+                                        projectStatusController.text = projectValues.projectStatus;
+                                        projectPlatformController.text = projectValues.projectPlatform;
+                                      });
+                                    },
+                                    decoration: InputDecoration(
+                                      labelText: 'Select Project',
+                                      labelStyle: const TextStyle(color: Colors.black87),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: const BorderSide(
+                                          color: Colors.black87,
+                                          width: 2,
+                                        ),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                        borderSide: const BorderSide(
+                                          color: Colors.black87,
+                                          width: 2,
+                                        ),
+                                      ),
+                                      contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+                                      filled: true,
+                                      fillColor: Colors.white,
+                                    ),
+                                    items: unAssignedProjects
+                                        .map<DropdownMenuItem<ProjectsModel>>((ProjectsModel project) {
+                                      return DropdownMenuItem<ProjectsModel>(
+                                        value: project,
+                                        child: Text(project.projectName),
+                                      );
+                                    }).toList(),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  TextField(
+                                    controller: projectUIDController,
+                                    enabled: false,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.black87,
+                                    ),
+                                    decoration: InputDecoration(
+                                      labelText: 'Project UID',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black54,
+                                      ),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  TextField(
+                                    controller: projectNameController,
+                                    enabled: false,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.black87,
+                                    ),
+                                    decoration: InputDecoration(
+                                      labelText: 'Project Name',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black54,
+                                      ),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  TextField(
+                                    controller: projectDateController,
+                                    enabled: false,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.black87,
+                                    ),
+                                    decoration: InputDecoration(
+                                      labelText: 'Project Date',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black54,
+                                      ),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  TextField(
+                                    controller: projectPlatformController,
+                                    enabled: false,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.black87,
+                                    ),
+                                    decoration: InputDecoration(
+                                      labelText: 'Project Platform',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black54,
+                                      ),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  TextField(
+                                    controller: projectStatusController,
+                                    enabled: false,
+                                    style: const TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.black87,
+                                    ),
+                                    decoration: InputDecoration(
+                                      labelText: 'Project Status',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 16.0,
+                                        color: Colors.black54,
+                                      ),
+                                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(6)),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  InkWell(
+                                    onTap: () {
+                                      if (_selectedItem != null) {
+                                        ProjectsController.bindProjectWithClient(
+                                                projectID: _selectedItem!.projectUID,
+                                                clientUID: widget.clientDetails.uid)
+                                            .then((v) => loadProjects());
+                                        setState(() {});
+                                      }
+                                    },
+                                    overlayColor: WidgetStateProperty.all(Colors.transparent),
+                                    child: Center(
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                                        decoration: BoxDecoration(
+                                            color: Colors.black87, borderRadius: BorderRadius.circular(15)),
+                                        child: const Text(
+                                          'Bind this project',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -808,6 +971,7 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                               icon: Ionicons.link_outline,
                               title: "Bind Project",
                               onTap: () {
+                                clearControllers();
                                 bindProject = true;
                               }),
                         addButton(icon: Ionicons.code_working_outline, title: "New Project", onTap: () {}),
@@ -832,6 +996,15 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
         ),
       ),
     ]);
+  }
+
+  void clearControllers() {
+    _selectedItem = null;
+    projectNameController.clear();
+    projectPlatformController.clear();
+    projectStatusController.clear();
+    projectDateController.clear();
+    projectUIDController.clear();
   }
 
   Future<void> selectImage() async {

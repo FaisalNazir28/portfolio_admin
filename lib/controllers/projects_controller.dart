@@ -100,6 +100,14 @@ class ProjectsController extends GetxController {
     updateCount(projectID, "loveCount", oldValue);
   }
 
+  static Future<void> bindProjectWithClient({required String projectID, required String clientUID}) async {
+    try {
+      await FbCollections.projects.doc(projectID).update({'clientUID': clientUID});
+    } catch (e) {
+      debugPrint("Error Updating Document: $e");
+    }
+  }
+
   Future<void> registerNewProject({
     required ProjectsModel projectModel,
     required Function() onSuccess,
