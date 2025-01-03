@@ -39,6 +39,7 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
   var unAssignedProjects = List<ProjectsModel>.empty(growable: true);
 
   bool bindProject = false;
+  bool isBindingProject = false;
 
   ProjectsModel? _selectedItem;
 
@@ -844,12 +845,21 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                   const SizedBox(height: 20),
                                   InkWell(
                                     onTap: () {
+                                      setState(() {
+                                        isBindingProject = true;
+                                      });
                                       if (_selectedItem != null) {
                                         ProjectsController.bindProjectWithClient(
-                                                projectID: _selectedItem!.projectUID,
-                                                clientUID: widget.clientDetails.uid)
-                                            .then((v) => loadProjects());
-                                        setState(() {});
+                                          projectID: _selectedItem!.projectUID,
+                                          clientUID: widget.clientDetails.uid,
+                                          onSuccess: () async {
+                                            await projectsController.getAllProjects();
+                                            loadProjects();
+                                            isBindingProject = false;
+                                            bindProject = false;
+                                            setState(() {});
+                                          },
+                                        );
                                       }
                                     },
                                     overlayColor: WidgetStateProperty.all(Colors.transparent),
@@ -858,10 +868,16 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                                         decoration: BoxDecoration(
                                             color: Colors.black87, borderRadius: BorderRadius.circular(15)),
-                                        child: const Text(
-                                          'Bind this project',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
+                                        child: isBindingProject
+                                            ? const SizedBox(
+                                                width: 20,
+                                                height: 20,
+                                                child: CircularProgressIndicator(color: Colors.white),
+                                              )
+                                            : const Text(
+                                                'Bind this project',
+                                                style: TextStyle(color: Colors.white),
+                                              ),
                                       ),
                                     ),
                                   ),

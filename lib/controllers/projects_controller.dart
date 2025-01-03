@@ -100,9 +100,15 @@ class ProjectsController extends GetxController {
     updateCount(projectID, "loveCount", oldValue);
   }
 
-  static Future<void> bindProjectWithClient({required String projectID, required String clientUID}) async {
+  static Future<void> bindProjectWithClient({
+    required String projectID,
+    required String clientUID,
+    required Function onSuccess,
+  }) async {
     try {
       await FbCollections.projects.doc(projectID).update({'clientUID': clientUID});
+      CustomSnackBar.showSnackBar(message: "Project Assigned Successfully");
+      onSuccess();
     } catch (e) {
       debugPrint("Error Updating Document: $e");
     }
