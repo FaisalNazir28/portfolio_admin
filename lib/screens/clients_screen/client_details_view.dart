@@ -146,10 +146,16 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                                     child: Image.memory(_imageData!),
                                                   )
                                                 : CircleAvatar(
-                                                    backgroundImage: NetworkImage(
-                                                      widget.clientDetails.profilePicture,
-                                                    ),
                                                     radius: 50,
+                                                    backgroundImage: NetworkImage(widget.clientDetails.profilePicture),
+                                                    backgroundColor: Colors.black54,
+                                                    child: widget.clientDetails.profilePicture.isEmpty
+                                                        ? const Icon(
+                                                            CupertinoIcons.person,
+                                                            color: Colors.white,
+                                                            size: 40,
+                                                          )
+                                                        : null,
                                                   ),
                                             if (isHover)
                                               Container(

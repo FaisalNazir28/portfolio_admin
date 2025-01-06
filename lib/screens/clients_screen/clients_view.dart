@@ -88,6 +88,13 @@ class _ClientsViewState extends State<ClientsView> {
                                                 radius: 30,
                                                 backgroundImage:
                                                     NetworkImage(clientController.allClients[index].profilePicture),
+                                                backgroundColor: Colors.black54,
+                                                child: clientController.allClients[index].profilePicture.isEmpty
+                                                    ? const Icon(
+                                                        CupertinoIcons.person,
+                                                        color: Colors.white,
+                                                      )
+                                                    : null,
                                               ),
                                               const SizedBox(
                                                 width: 20,
