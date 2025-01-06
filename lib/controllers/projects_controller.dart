@@ -114,6 +114,19 @@ class ProjectsController extends GetxController {
     }
   }
 
+  static Future<void> unBindProjectFromClient({
+    required String projectID,
+    required Function onSuccess,
+  }) async {
+    try {
+      await FbCollections.projects.doc(projectID).update({'clientUID': ''});
+      CustomSnackBar.showSnackBar(message: "Project UnBind Successfully");
+      onSuccess();
+    } catch (e) {
+      debugPrint("Error Updating Document: $e");
+    }
+  }
+
   Future<void> registerNewProject({
     required ProjectsModel projectModel,
     required Function() onSuccess,

@@ -562,6 +562,7 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                   children: [
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         CircleAvatar(
                                           radius: 30,
@@ -588,6 +589,23 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                             ),
                                           ],
                                         ),
+                                        const Spacer(),
+                                        InkWell(
+                                          onTap: () {
+                                            ProjectsController.unBindProjectFromClient(
+                                              projectID: clientProjects[index].projectUID,
+                                              onSuccess: () async {
+                                                await projectsController.getAllProjects();
+                                                loadProjects();
+                                                setState(() {});
+                                              },
+                                            );
+                                          },
+                                          child: const Tooltip(
+                                            message: 'Unbind project',
+                                            child: Icon(Ionicons.unlink_outline),
+                                          ),
+                                        )
                                       ],
                                     ),
                                     const SizedBox(height: 15),
