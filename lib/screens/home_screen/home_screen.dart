@@ -148,8 +148,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           email: _emailController.text,
                                           password: _passwordController.text,
                                           onSuccess: () {
-                                            AuthController.userModel.isAdmin == true &&
-                                                    AuthController.userModel.isActive == true
+                                            AuthController.adminModel.isAdmin == true &&
+                                                    AuthController.adminModel.isActive == true
                                                 ? setState(() {
                                                     Navigator.pushNamed(context, Routes.dashboard);
                                                     loading = false;
@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 : setState(() {
                                                     loading = false;
                                                     showError();
-                                                    AuthController.userModel = UserModel();
+                                                    AuthController.adminModel = AdminModel();
                                                     AuthController().logOutUser();
                                                   });
                                           },

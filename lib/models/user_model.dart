@@ -1,4 +1,4 @@
-class UserModel {
+class AdminModel {
   String uid;
   String email;
   String name;
@@ -9,7 +9,7 @@ class UserModel {
   bool isActive;
   bool isAdmin;
 
-  UserModel({
+  AdminModel({
     this.uid = "",
     this.email = "",
     this.name = "",
@@ -21,7 +21,7 @@ class UserModel {
     this.isAdmin = false,
   });
 
-  factory UserModel.fromJson(dynamic json) {
+  factory AdminModel.fromJson(dynamic json) {
     if (json != null) {
       final uid = json['uid'] ?? "";
       final email = json['email'] ?? "";
@@ -33,7 +33,7 @@ class UserModel {
       final isActive = json['isActive'] ?? false;
       final isAdmin = json['isAdmin'] ?? false;
 
-      return UserModel(
+      return AdminModel(
         uid: uid,
         email: email,
         name: name,
@@ -45,7 +45,7 @@ class UserModel {
         isAdmin: isAdmin,
       );
     }
-    return UserModel();
+    return AdminModel();
   }
 
   Map<String, dynamic> toJson() {
@@ -63,7 +63,7 @@ class UserModel {
   }
 
   // The copyWith method allows creating a new instance with some updated fields
-  UserModel copyWith({
+  AdminModel copyWith({
     String? name,
     String? phone,
     String? designation,
@@ -71,7 +71,7 @@ class UserModel {
     bool? status,
     String? profilePicture,
   }) {
-    return UserModel(
+    return AdminModel(
       uid: uid,
       email: email,
       name: name ?? this.name,

@@ -12,7 +12,7 @@ import 'dart:typed_data';
 class ClientDetailsView extends StatefulWidget {
   final Function() onClose;
   final Function() onDeleteClient;
-  final UserModel clientDetails;
+  final AdminModel clientDetails;
 
   const ClientDetailsView({
     super.key,

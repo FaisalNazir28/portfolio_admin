@@ -10,7 +10,7 @@ import 'package:portfolio_admin/utilities/custom_snack_bar.dart';
 
 class ClientController extends GetxController {
   final auth = FirebaseAuth.instance;
-  static UserModel userModel = UserModel();
+  static AdminModel userModel = AdminModel();
 
   final FirebaseStorage _storage = FirebaseStorage.instance;
 
@@ -22,10 +22,10 @@ class ClientController extends GetxController {
   TextEditingController companyController = TextEditingController();
   RxBool statusController = true.obs;
 
-  RxList<UserModel> allClients = List<UserModel>.empty(growable: true).obs;
+  RxList<AdminModel> allClients = List<AdminModel>.empty(growable: true).obs;
 
   Future<void> registerUser({
-    required UserModel userModel,
+    required AdminModel userModel,
     required String password,
     required Function() onSuccess,
     required Function() onError,
@@ -41,7 +41,7 @@ class ClientController extends GetxController {
 
         var userID = auth.currentUser!.uid;
 
-        UserModel client = UserModel(
+        AdminModel client = AdminModel(
           uid: userID,
           email: userModel.email,
           name: userModel.name,
@@ -66,7 +66,7 @@ class ClientController extends GetxController {
   }
 
   Future<void> updateClientData({
-    required UserModel userModel,
+    required AdminModel userModel,
     Uint8List? imageData,
     String? fileName,
   }) async {
@@ -181,7 +181,7 @@ class ClientController extends GetxController {
     QuerySnapshot querySnapshot = await FbCollections.users.get();
 
     if (querySnapshot.size > 0) {
-      allClients.value = querySnapshot.docs.map((doc) => UserModel.fromJson(doc.data())).toList();
+      allClients.value = querySnapshot.docs.map((doc) => AdminModel.fromJson(doc.data())).toList();
     }
   }
 }

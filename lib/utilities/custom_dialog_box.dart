@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:portfolio_admin/models/user_model.dart';
 
 class CustomDialogBox extends StatelessWidget {
-  final UserModel userModel;
+  final AdminModel userModel;
   final Function() onSuccess;
   const CustomDialogBox({required this.onSuccess, required this.userModel, super.key});
 

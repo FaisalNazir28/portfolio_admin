@@ -309,7 +309,7 @@ class _AddNewClientState extends State<AddNewClient> {
                         onTap: loading
                             ? () {}
                             : () async {
-                                UserModel userModel = UserModel(
+                                AdminModel userModel = AdminModel(
                                   email: _emailController.text,
                                   name: _nameController.text,
                                   phone: _phoneController.text,

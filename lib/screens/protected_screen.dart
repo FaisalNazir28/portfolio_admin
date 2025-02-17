@@ -14,7 +14,7 @@ class ProtectedScreen extends StatefulWidget {
 class _ProtectedScreenState extends State<ProtectedScreen> {
   @override
   Widget build(BuildContext context) {
-    return AuthController().userState() == true && AuthController.userModel.isAdmin == true
+    return AuthController().userState() == true && AuthController.adminModel.isAdmin == true
         ? Scaffold(
             body: widget.child,
           )

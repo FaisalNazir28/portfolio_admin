@@ -8,7 +8,7 @@ import 'package:portfolio_admin/services/firebase_collections.dart';
 class AuthController {
   final auth = FirebaseAuth.instance;
   final storage = FirebaseStorage.instance;
-  static UserModel userModel = UserModel();
+  static AdminModel adminModel = AdminModel();
   static String imager = "";
 
   Future<void> loginUser({
@@ -30,7 +30,7 @@ class AuthController {
     }
   }
 
-  Future<void> registerUser(UserModel userModel) async {
+  Future<void> registerUser(AdminModel userModel) async {
     UserCredential userCredential =
         await auth.createUserWithEmailAndPassword(email: 'dummy@123.com', password: '123456789');
 
@@ -44,7 +44,7 @@ class AuthController {
 
   Future<void> getData(String uid) async {
     await FbCollections.users.doc(uid).get().then((DocumentSnapshot ds) {
-      userModel = UserModel.fromJson(ds.data() as Map<String, dynamic>);
+      adminModel = AdminModel.fromJson(ds.data() as Map<String, dynamic>);
     }, onError: (e) => debugPrint("Error fetching Data: $e"));
   }
 
@@ -62,11 +62,11 @@ class AuthController {
 
   void logOutUser() async {
     await auth.signOut();
-    userModel = UserModel();
+    adminModel = AdminModel();
   }
 
   bool userState() {
-    if (auth.currentUser != null) {
+    if (adminModel.email.isNotEmpty && adminModel.isAdmin == true) {
       return true;
     } else {
       return false;
