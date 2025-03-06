@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:portfolio_admin/controllers/projects_controller.dart';
+import 'package:portfolio_admin/models/projects_model.dart';
 import 'package:portfolio_admin/screens/projects_screen/add_new_project.dart';
+import 'package:portfolio_admin/screens/projects_screen/project_details_view.dart';
 
 class ProjectsView extends StatefulWidget {
   const ProjectsView({super.key});
@@ -14,9 +16,11 @@ class ProjectsView extends StatefulWidget {
 class _ProjectsViewState extends State<ProjectsView> {
   bool newClientView = false;
   bool newProjectView = false;
-  bool clientDetailsView = false;
+  bool projectDetailsView = false;
 
   final projectsController = Get.find<ProjectsController>();
+
+  ProjectsModel projectModel = ProjectsModel();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +28,7 @@ class _ProjectsViewState extends State<ProjectsView> {
       return Stack(
         alignment: Alignment.topLeft,
         children: [
-          if (!newProjectView)
+          if (!newProjectView && !projectDetailsView)
             Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.start,
@@ -55,8 +59,8 @@ class _ProjectsViewState extends State<ProjectsView> {
                                 return InkWell(
                                   overlayColor: WidgetStateProperty.all(Colors.transparent),
                                   onTap: () => setState(() {
-                                    // selectedProjectIndex = index;
-                                    // clientDetailsView = true;
+                                    projectDetailsView = true;
+                                    projectModel = projectsController.allProjects[index];
                                   }),
                                   child: Container(
                                     decoration: BoxDecoration(
@@ -327,7 +331,22 @@ class _ProjectsViewState extends State<ProjectsView> {
                   newProjectView = false;
                 });
               },
-            )
+            ),
+          if (projectDetailsView)
+            ProjectDetailsView(
+              onClose: () {
+                setState(() {
+                  projectDetailsView = false;
+                });
+              },
+              onRegisterProject: () {
+                setState(() {
+                  projectsController.getAllProjects();
+                  newProjectView = false;
+                });
+              },
+              projectsModel: projectModel,
+            ),
         ],
       );
     });
