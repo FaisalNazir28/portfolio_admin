@@ -300,12 +300,6 @@ class _ProjectsViewState extends State<ProjectsView> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           addButton(
-                              icon: Ionicons.person_add_outline,
-                              title: "New Client",
-                              onTap: () {
-                                // newClientView = true;
-                              }),
-                          addButton(
                               icon: Ionicons.code_working_outline,
                               title: "New Project",
                               onTap: () {

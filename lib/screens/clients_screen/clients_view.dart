@@ -353,7 +353,6 @@ class _ClientsViewState extends State<ClientsView> {
                               onTap: () {
                                 newClientView = true;
                               }),
-                          addButton(icon: Ionicons.code_working_outline, title: "New Project", onTap: () {}),
                         ],
                       ),
                     ],
