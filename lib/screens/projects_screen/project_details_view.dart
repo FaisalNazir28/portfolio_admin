@@ -127,10 +127,81 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                           projectModel.projectName,
                           style: const TextStyle(fontSize: 60, fontWeight: FontWeight.w600, color: Colors.black),
                         ),
-                        const SizedBox(height: 2),
-                        Text(
-                          projectModel.clientCompany,
-                          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w300, color: Colors.black),
+                        Container(
+                          margin: const EdgeInsets.only(top: 20, right: 100),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.grey,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Client Name: ${projectModel.clientName}",
+                                    style:
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black),
+                                  ),
+                                  Text(
+                                    "Client Company: ${projectModel.clientCompany}",
+                                    style:
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black),
+                                  ),
+                                  Text(
+                                    "Client UID: ${projectModel.clientUID}",
+                                    style:
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Client Name: ${projectModel.clientName}",
+                                    style:
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black),
+                                  ),
+                                  Text(
+                                    "Project Platform: ${projectModel.projectPlatform}",
+                                    style:
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black),
+                                  ),
+                                  Text(
+                                    "Project UID: ${projectModel.projectUID}",
+                                    style:
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 15),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "Project Completed: ${projectModel.projectIsCompleted ? "Completed" : "Incomplete"}",
+                                    style:
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black),
+                                  ),
+                                  Text(
+                                    "Project Status: ${projectModel.projectStatus}",
+                                    style:
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black),
+                                  ),
+                                  Text(
+                                    "Project Budget: ${projectModel.projectBudget.toString().isNotEmpty ? projectModel.projectBudget : "N/A"}",
+                                    style:
+                                        const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                         if (projectModel.projectPlatform == 'Mobile')
                           Container(
