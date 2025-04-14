@@ -23,18 +23,6 @@ class ProjectDetailsView extends StatefulWidget {
 class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   final projectsController = Get.find<ProjectsController>();
 
-  final TextEditingController _projectNameController = TextEditingController();
-  final TextEditingController _projectDateController = TextEditingController();
-  final TextEditingController _projectDurationController = TextEditingController();
-  final TextEditingController _projectBudgetController = TextEditingController();
-  final TextEditingController _projectStatusController = TextEditingController();
-  final TextEditingController _projectTypeController = TextEditingController();
-  final TextEditingController _projectShortBioController = TextEditingController();
-  final TextEditingController _projectDescriptionController = TextEditingController();
-  final TextEditingController _projectChallengesFacedController = TextEditingController();
-  final TextEditingController _projectResultsAndImpactsController = TextEditingController();
-  final TextEditingController _projectClientReviewController = TextEditingController();
-
   final ScrollController horizontalScrollController = ScrollController();
 
   bool loading = false;
@@ -88,16 +76,47 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         if (projectsController.isProjectEditView.value)
-                          Container(
-                            margin: const EdgeInsets.only(right: 30),
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: Colors.black87,
-                            ),
-                            child: const Text(
-                              "Update Project",
-                              style: TextStyle(color: Colors.white),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                loading = true;
+                                projectsController.updateProject(
+                                  projectsModel: widget.projectsModel,
+                                  onSuccess: () {
+                                    setState(() {
+                                      loading = false;
+                                      widget.onRegisterProject();
+                                      clearValues();
+                                    });
+                                  },
+                                  onError: () {
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                  },
+                                );
+                              });
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(right: 30),
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                color: Colors.black87,
+                              ),
+                              child: loading
+                                  ? const SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 4,
+                                      ),
+                                    )
+                                  : const Text(
+                                      "Update Project",
+                                      style: TextStyle(color: Colors.white),
+                                    ),
                             ),
                           ),
                         Text(projectsController.isProjectEditView.value ? "Switch to View Mode" : "Switch to Edit Mode")
@@ -174,7 +193,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                                   ),
                                   contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                                 ),
-                                controller: _projectNameController,
+                                controller: projectsController.projectNameController,
                                 style: const TextStyle(fontSize: 60, fontWeight: FontWeight.w600, color: Colors.black),
                               )
                             : Text(
@@ -411,7 +430,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                                     ),
                                     contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                                   ),
-                                  controller: _projectDateController,
+                                  controller: projectsController.projectDateController,
                                   style: const TextStyle(fontSize: 18),
                                 )
                               : Text(
@@ -452,7 +471,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                                     ),
                                     contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                                   ),
-                                  controller: _projectTypeController,
+                                  controller: projectsController.projectTypeController,
                                   style: const TextStyle(fontSize: 18),
                                 )
                               : Text(
@@ -493,7 +512,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                                     ),
                                     contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                                   ),
-                                  controller: _projectDurationController,
+                                  controller: projectsController.projectDurationController,
                                   style: const TextStyle(fontSize: 18),
                                 )
                               : Text(
@@ -524,7 +543,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                               ),
                               contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                             ),
-                            controller: _projectShortBioController,
+                            controller: projectsController.projectShortBioController,
                             style: const TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w400,
@@ -570,7 +589,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                             ),
                             contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                           ),
-                          controller: _projectDescriptionController,
+                          controller: projectsController.projectDescriptionController,
                           style: const TextStyle(
                             color: Colors.black54,
                             fontSize: 17,
@@ -627,7 +646,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                             ),
                             contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                           ),
-                          controller: _projectChallengesFacedController,
+                          controller: projectsController.projectChallengesFacedController,
                           style: const TextStyle(
                             color: Colors.black54,
                             fontSize: 17,
@@ -668,7 +687,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                             ),
                             contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                           ),
-                          controller: _projectResultsAndImpactsController,
+                          controller: projectsController.projectResultsAndImpactsController,
                           style: const TextStyle(
                             color: Colors.black54,
                             fontSize: 17,
@@ -709,7 +728,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                             ),
                             contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                           ),
-                          controller: _projectClientReviewController,
+                          controller: projectsController.projectClientReviewController,
                           style: const TextStyle(
                             color: Colors.black54,
                             fontSize: 17,
@@ -943,30 +962,30 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
   }
 
   void assignProjectValues() {
-    _projectNameController.text = widget.projectsModel.projectName;
-    _projectDateController.text = widget.projectsModel.projectDate;
-    _projectDurationController.text = widget.projectsModel.projectDuration;
-    _projectBudgetController.text = widget.projectsModel.projectBudget;
-    _projectStatusController.text = widget.projectsModel.projectStatus;
-    _projectTypeController.text = widget.projectsModel.projectType;
-    _projectShortBioController.text = widget.projectsModel.projectShortBio;
-    _projectDescriptionController.text = widget.projectsModel.projectDescription;
-    _projectChallengesFacedController.text = widget.projectsModel.projectChallengesFaced;
-    _projectResultsAndImpactsController.text = widget.projectsModel.projectResultsAndImpacts;
-    _projectClientReviewController.text = widget.projectsModel.clientReview;
+    projectsController.projectNameController.text = widget.projectsModel.projectName;
+    projectsController.projectDateController.text = widget.projectsModel.projectDate;
+    projectsController.projectDurationController.text = widget.projectsModel.projectDuration;
+    projectsController.projectBudgetController.text = widget.projectsModel.projectBudget;
+    projectsController.projectStatusController.text = widget.projectsModel.projectStatus;
+    projectsController.projectTypeController.text = widget.projectsModel.projectType;
+    projectsController.projectShortBioController.text = widget.projectsModel.projectShortBio;
+    projectsController.projectDescriptionController.text = widget.projectsModel.projectDescription;
+    projectsController.projectChallengesFacedController.text = widget.projectsModel.projectChallengesFaced;
+    projectsController.projectResultsAndImpactsController.text = widget.projectsModel.projectResultsAndImpacts;
+    projectsController.projectClientReviewController.text = widget.projectsModel.clientReview;
   }
 
   void clearValues() {
-    _projectNameController.clear();
-    _projectDateController.clear();
-    _projectDurationController.clear();
-    _projectBudgetController.clear();
-    _projectStatusController.clear();
-    _projectTypeController.clear();
-    _projectShortBioController.clear();
-    _projectDescriptionController.clear();
-    _projectChallengesFacedController.clear();
-    _projectResultsAndImpactsController.clear();
-    _projectClientReviewController.clear();
+    projectsController.projectNameController.clear();
+    projectsController.projectDateController.clear();
+    projectsController.projectDurationController.clear();
+    projectsController.projectBudgetController.clear();
+    projectsController.projectStatusController.clear();
+    projectsController.projectTypeController.clear();
+    projectsController.projectShortBioController.clear();
+    projectsController.projectDescriptionController.clear();
+    projectsController.projectChallengesFacedController.clear();
+    projectsController.projectResultsAndImpactsController.clear();
+    projectsController.projectClientReviewController.clear();
   }
 }

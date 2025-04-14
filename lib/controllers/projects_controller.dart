@@ -26,6 +26,18 @@ class ProjectsController extends GetxController {
   RxInt mobileProjectsToShow = 5.obs;
   RxInt hybridProjectsToShow = 5.obs;
 
+  final TextEditingController projectNameController = TextEditingController();
+  final TextEditingController projectDateController = TextEditingController();
+  final TextEditingController projectDurationController = TextEditingController();
+  final TextEditingController projectBudgetController = TextEditingController();
+  final TextEditingController projectStatusController = TextEditingController();
+  final TextEditingController projectTypeController = TextEditingController();
+  final TextEditingController projectShortBioController = TextEditingController();
+  final TextEditingController projectDescriptionController = TextEditingController();
+  final TextEditingController projectChallengesFacedController = TextEditingController();
+  final TextEditingController projectResultsAndImpactsController = TextEditingController();
+  final TextEditingController projectClientReviewController = TextEditingController();
+
   RxBool isProjectEditView = false.obs;
 
   Future<void> getAllProjects() async {
@@ -295,6 +307,94 @@ class ProjectsController extends GetxController {
       onError();
       CustomSnackBar.showSnackBar(message: e.toString(), color: Colors.red);
       debugPrint(e.toString());
+    }
+  }
+
+  Future<void> updateProject({
+    required ProjectsModel projectsModel,
+    required Function() onSuccess,
+    required Function() onError,
+  }) async {
+    final updatedProject = ProjectsModel(
+      projectIndex: projectsModel.projectIndex,
+      clientUID: projectsModel.clientUID,
+      projectUID: projectsModel.projectUID,
+      clientName: projectsModel.clientName,
+      clientCompany: projectsModel.clientName,
+      projectName: projectNameController.text,
+      projectPlatform: projectsModel.projectPlatform,
+      projectShortBio: projectShortBioController.text,
+      projectDescription: projectDescriptionController.text,
+      projectDate: projectDateController.text,
+      projectType: projectTypeController.text,
+      projectDuration: projectDurationController.text,
+      projectBudget: projectBudgetController.text,
+      projectChallengesFaced: projectChallengesFacedController.text,
+      projectResultsAndImpacts: projectResultsAndImpactsController.text,
+      projectStatus: projectStatusController.text,
+      darkMainImageBG: projectsModel.darkMainImageBG,
+      darkSecondImageBG: projectsModel.darkSecondImageBG,
+      darkThirdImageBG: projectsModel.darkThirdImageBG,
+      mainImage: projectsModel.mainImage,
+      secondImage: projectsModel.secondImage,
+      thirdImage: projectsModel.thirdImage,
+      extraImage1: projectsModel.extraImage1,
+      extraImage2: projectsModel.extraImage2,
+      extraImage3: projectsModel.extraImage3,
+      extraImage4: projectsModel.extraImage4,
+      extraImage5: projectsModel.extraImage5,
+      extraImage6: projectsModel.extraImage6,
+      extraImage7: projectsModel.extraImage7,
+      extraImage8: projectsModel.extraImage8,
+      extraImage9: projectsModel.extraImage9,
+      extraImage10: projectsModel.extraImage10,
+      extraImage11: projectsModel.extraImage11,
+      extraImage12: projectsModel.extraImage12,
+      extraImage13: projectsModel.extraImage13,
+      extraImage14: projectsModel.extraImage14,
+      extraImage15: projectsModel.extraImage15,
+      extraImage16: projectsModel.extraImage16,
+      extraImage17: projectsModel.extraImage17,
+      mobileView: projectsModel.mobileView,
+      likesCount: projectsModel.likesCount,
+      starsCount: projectsModel.starsCount,
+      loveCount: projectsModel.loveCount,
+      appIcon: projectsModel.appIcon,
+      iconPadding: projectsModel.iconPadding,
+      appThemeColor: projectsModel.appThemeColor,
+      builtForAndroid: projectsModel.builtForAndroid,
+      builtForApple: projectsModel.builtForApple,
+      projectIsCompleted: projectsModel.projectIsCompleted,
+      clientReview: projectClientReviewController.text,
+    );
+
+    try {
+      await FbCollections.projects.doc(projectsModel.projectUID).update(updatedProject.toJson());
+
+      int index = allProjects.indexWhere((project) => project.projectUID == projectsModel.projectUID);
+
+      allProjects[index] = allProjects[index].copyWith(
+        projectName: projectNameController.text,
+        projectShortBio: projectShortBioController.text,
+        projectDescription: projectDescriptionController.text,
+        projectDate: projectDateController.text,
+        projectType: projectTypeController.text,
+        projectDuration: projectDurationController.text,
+        projectBudget: projectBudgetController.text,
+        projectChallengesFaced: projectChallengesFacedController.text,
+        projectResultsAndImpacts: projectResultsAndImpactsController.text,
+        projectStatus: projectStatusController.text,
+        clientReview: projectClientReviewController.text,
+      );
+
+      Get.forceAppUpdate();
+      CustomSnackBar.showSnackBar(message: "Project Details Updated Successfully");
+      debugPrint('Project data updated successfully.');
+      onSuccess();
+    } catch (e) {
+      onError();
+      CustomSnackBar.showSnackBar(message: "Error updating project data: $e", color: Colors.red);
+      debugPrint("Error updating project data: $e");
     }
   }
 
