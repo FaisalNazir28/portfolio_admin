@@ -78,27 +78,65 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
             ),
             padding: const EdgeInsets.all(30),
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () => widget.onClose(),
-                        overlayColor: WidgetStateProperty.all(Colors.transparent),
-                        child: const Icon(
-                          Ionicons.close_circle_outline,
-                          size: 30,
+              child: Obx(
+                () => Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        if (projectsController.isProjectEditView.value)
+                          Container(
+                            margin: const EdgeInsets.only(right: 30),
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.black87,
+                            ),
+                            child: const Text(
+                              "Update Project",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        Text(projectsController.isProjectEditView.value ? "Switch to View Mode" : "Switch to Edit Mode")
+                            .marginOnly(right: 1),
+                        Transform.scale(
+                          scale: 0.7,
+                          child: SizedBox(
+                            child: Switch(
+                              value: projectsController.isProjectEditView.value,
+                              onChanged: (v) {
+                                projectsController.isProjectEditView.value = v;
+                                v == true ? assignProjectValues() : clearValues();
+                              },
+                              overlayColor: null,
+                              activeColor: Colors.black87,
+                              inactiveThumbColor: Colors.black87,
+                              activeTrackColor: Colors.green,
+                              inactiveTrackColor: Colors.transparent,
+                              splashRadius: 0,
+                            ).marginOnly(right: 30),
+                          ),
                         ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 40),
-                  appShowcase(widget.projectsModel)
-                ],
+                        InkWell(
+                          onTap: () {
+                            projectsController.isProjectEditView.value = false;
+                            widget.onClose();
+                          },
+                          overlayColor: WidgetStateProperty.all(Colors.transparent),
+                          child: const Icon(
+                            Ionicons.close_circle_outline,
+                            size: 30,
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 40),
+                    appShowcase(widget.projectsModel)
+                  ],
+                ),
               ),
             ),
           ),
@@ -123,10 +161,26 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          projectModel.projectName,
-                          style: const TextStyle(fontSize: 60, fontWeight: FontWeight.w600, color: Colors.black),
-                        ),
+                        projectsController.isProjectEditView.value
+                            ? TextField(
+                                cursorColor: Colors.black87,
+                                decoration: const InputDecoration(
+                                  isCollapsed: true,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.black54),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                                ),
+                                controller: _projectNameController,
+                                style: const TextStyle(fontSize: 60, fontWeight: FontWeight.w600, color: Colors.black),
+                              )
+                            : Text(
+                                projectModel.projectName,
+                                style: const TextStyle(fontSize: 60, fontWeight: FontWeight.w600, color: Colors.black),
+                              ),
                         Container(
                           margin: const EdgeInsets.only(top: 20, right: 100),
                           decoration: BoxDecoration(
@@ -343,12 +397,29 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                             style: TextStyle(fontSize: 12, color: Colors.grey),
                           ),
                           const SizedBox(height: 6),
-                          Text(
-                            projectModel.projectDate,
-                            style: const TextStyle(
-                              fontSize: 18,
-                            ),
-                          ),
+                          projectsController.isProjectEditView.value
+                              ? TextField(
+                                  cursorColor: Colors.black87,
+                                  decoration: const InputDecoration(
+                                    isCollapsed: true,
+                                    constraints: BoxConstraints(maxWidth: 200),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.black54),
+                                    ),
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                                  ),
+                                  controller: _projectDateController,
+                                  style: const TextStyle(fontSize: 18),
+                                )
+                              : Text(
+                                  projectModel.projectDate,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                ),
                         ],
                       ),
                     ),
@@ -367,12 +438,29 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                             style: TextStyle(fontSize: 12, color: Colors.grey),
                           ),
                           const SizedBox(height: 6),
-                          Text(
-                            projectModel.projectType,
-                            style: const TextStyle(
-                              fontSize: 18,
-                            ),
-                          ),
+                          projectsController.isProjectEditView.value
+                              ? TextField(
+                                  cursorColor: Colors.black87,
+                                  decoration: const InputDecoration(
+                                    isCollapsed: true,
+                                    constraints: BoxConstraints(maxWidth: 200),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.black54),
+                                    ),
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                                  ),
+                                  controller: _projectTypeController,
+                                  style: const TextStyle(fontSize: 18),
+                                )
+                              : Text(
+                                  projectModel.projectType,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                  ),
+                                ),
                         ],
                       ),
                     ),
@@ -391,10 +479,27 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                           const SizedBox(
                             height: 6,
                           ),
-                          Text(
-                            projectModel.projectDuration,
-                            style: const TextStyle(fontSize: 18),
-                          ),
+                          projectsController.isProjectEditView.value
+                              ? TextField(
+                                  cursorColor: Colors.black87,
+                                  decoration: const InputDecoration(
+                                    isCollapsed: true,
+                                    constraints: BoxConstraints(maxWidth: 200),
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.grey),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.black54),
+                                    ),
+                                    contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                                  ),
+                                  controller: _projectDurationController,
+                                  style: const TextStyle(fontSize: 18),
+                                )
+                              : Text(
+                                  projectModel.projectDuration,
+                                  style: const TextStyle(fontSize: 18),
+                                ),
                         ],
                       ),
                     ),
@@ -406,15 +511,36 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Expanded(
-                    child: Text(
-                      projectModel.projectShortBio,
-                      style: const TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                    child: projectsController.isProjectEditView.value
+                        ? TextField(
+                            cursorColor: Colors.black87,
+                            decoration: const InputDecoration(
+                              isCollapsed: true,
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.grey),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.black54),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                            ),
+                            controller: _projectShortBioController,
+                            style: const TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.center,
+                          )
+                        : Text(
+                            projectModel.projectShortBio,
+                            style: const TextStyle(
+                              fontSize: 30,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                   ),
                 ],
               ),
@@ -431,14 +557,34 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  Text(
-                    projectModel.projectDescription,
-                    style: const TextStyle(
-                      color: Colors.black54,
-                      fontSize: 17,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
+                  projectsController.isProjectEditView.value
+                      ? TextField(
+                          cursorColor: Colors.black87,
+                          decoration: const InputDecoration(
+                            isCollapsed: true,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black54),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                          ),
+                          controller: _projectDescriptionController,
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 17,
+                          ),
+                          textAlign: TextAlign.justify,
+                        )
+                      : Text(
+                          projectModel.projectDescription,
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 17,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
                 ],
               ),
               const SizedBox(height: 80),
@@ -468,14 +614,34 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  Text(
-                    projectModel.projectChallengesFaced,
-                    style: const TextStyle(
-                      color: Colors.black54,
-                      fontSize: 17,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
+                  projectsController.isProjectEditView.value
+                      ? TextField(
+                          cursorColor: Colors.black87,
+                          decoration: const InputDecoration(
+                            isCollapsed: true,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black54),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                          ),
+                          controller: _projectChallengesFacedController,
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 17,
+                          ),
+                          textAlign: TextAlign.justify,
+                        )
+                      : Text(
+                          projectModel.projectChallengesFaced,
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 17,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
                 ],
               ),
               const SizedBox(height: 80),
@@ -489,14 +655,34 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  Text(
-                    projectModel.projectResultsAndImpacts,
-                    style: const TextStyle(
-                      color: Colors.black54,
-                      fontSize: 17,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
+                  projectsController.isProjectEditView.value
+                      ? TextField(
+                          cursorColor: Colors.black87,
+                          decoration: const InputDecoration(
+                            isCollapsed: true,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black54),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                          ),
+                          controller: _projectResultsAndImpactsController,
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 17,
+                          ),
+                          textAlign: TextAlign.justify,
+                        )
+                      : Text(
+                          projectModel.projectResultsAndImpacts,
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 17,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
                 ],
               ),
               const SizedBox(height: 80),
@@ -510,16 +696,36 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  Text(
-                    projectModel.projectResultsAndImpacts.toString().isNotEmpty
-                        ? projectModel.projectResultsAndImpacts
-                        : 'Not reviewed yet!.',
-                    style: const TextStyle(
-                      color: Colors.black54,
-                      fontSize: 17,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
+                  projectsController.isProjectEditView.value
+                      ? TextField(
+                          cursorColor: Colors.black87,
+                          decoration: const InputDecoration(
+                            isCollapsed: true,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black54),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                          ),
+                          controller: _projectClientReviewController,
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 17,
+                          ),
+                          textAlign: TextAlign.justify,
+                        )
+                      : Text(
+                          projectModel.clientReview.toString().isNotEmpty
+                              ? projectModel.clientReview
+                              : 'Not reviewed yet!.',
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 17,
+                          ),
+                          textAlign: TextAlign.justify,
+                        ),
                 ],
               ),
             ],
@@ -734,6 +940,20 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
     });
 
     uploadInput.click(); // Trigger the file picker
+  }
+
+  void assignProjectValues() {
+    _projectNameController.text = widget.projectsModel.projectName;
+    _projectDateController.text = widget.projectsModel.projectDate;
+    _projectDurationController.text = widget.projectsModel.projectDuration;
+    _projectBudgetController.text = widget.projectsModel.projectBudget;
+    _projectStatusController.text = widget.projectsModel.projectStatus;
+    _projectTypeController.text = widget.projectsModel.projectType;
+    _projectShortBioController.text = widget.projectsModel.projectShortBio;
+    _projectDescriptionController.text = widget.projectsModel.projectDescription;
+    _projectChallengesFacedController.text = widget.projectsModel.projectChallengesFaced;
+    _projectResultsAndImpactsController.text = widget.projectsModel.projectResultsAndImpacts;
+    _projectClientReviewController.text = widget.projectsModel.clientReview;
   }
 
   void clearValues() {

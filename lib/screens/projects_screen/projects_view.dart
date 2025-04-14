@@ -59,6 +59,7 @@ class _ProjectsViewState extends State<ProjectsView> {
                                 return InkWell(
                                   overlayColor: WidgetStateProperty.all(Colors.transparent),
                                   onTap: () => setState(() {
+                                    projectsController.isProjectEditView.value = false;
                                     projectDetailsView = true;
                                     projectModel = projectsController.allProjects[index];
                                   }),

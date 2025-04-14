@@ -26,6 +26,8 @@ class ProjectsController extends GetxController {
   RxInt mobileProjectsToShow = 5.obs;
   RxInt hybridProjectsToShow = 5.obs;
 
+  RxBool isProjectEditView = false.obs;
+
   Future<void> getAllProjects() async {
     allProjects.value = await _getProjects();
   }
