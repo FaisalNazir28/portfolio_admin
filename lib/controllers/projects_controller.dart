@@ -398,6 +398,17 @@ class ProjectsController extends GetxController {
     }
   }
 
+  Future<bool> deleteProject(String projectId) async {
+    try {
+      await FbCollections.projects.doc(projectId).delete();
+      CustomSnackBar.showSnackBar(message: "Project Deleted Successfully");
+      return true;
+    } catch (e) {
+      CustomSnackBar.showSnackBar(message: "Error Deleting Project: $e", color: Colors.red);
+      return false;
+    }
+  }
+
   Future<String> uploadProfile({
     required Uint8List data,
     required String fileName,
@@ -430,7 +441,7 @@ class ProjectsController extends GetxController {
       highestProjectIndex = int.parse(newProjects[0].projectIndex);
       return highestProjectIndex;
     } catch (e) {
-      print("Error fetching highest project index: $e");
+      debugPrint("Error fetching highest project index: $e");
     }
     return highestProjectIndex;
   }

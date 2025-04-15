@@ -7,14 +7,21 @@ import 'package:portfolio_admin/controllers/projects_controller.dart';
 import 'dart:html' as html;
 
 import 'package:portfolio_admin/models/projects_model.dart';
+import 'package:portfolio_admin/utilities/delete_project_dialog_box.dart';
 
 class ProjectDetailsView extends StatefulWidget {
   final Function() onClose;
-  final Function() onRegisterProject;
+  final Function() onUpdateProject;
+  final Function() onDeleteProject;
   final ProjectsModel projectsModel;
 
-  const ProjectDetailsView(
-      {super.key, required this.onClose, required this.onRegisterProject, required this.projectsModel});
+  const ProjectDetailsView({
+    super.key,
+    required this.onClose,
+    required this.onUpdateProject,
+    required this.onDeleteProject,
+    required this.projectsModel,
+  });
 
   @override
   State<ProjectDetailsView> createState() => _ProjectDetailsViewState();
@@ -85,7 +92,7 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                                   onSuccess: () {
                                     setState(() {
                                       loading = false;
-                                      widget.onRegisterProject();
+                                      widget.onUpdateProject();
                                       clearValues();
                                     });
                                   },
@@ -119,6 +126,22 @@ class _ProjectDetailsViewState extends State<ProjectDetailsView> {
                                     ),
                             ),
                           ),
+                        InkWell(
+                          onTap: () {
+                            Get.dialog(
+                              DeleteProjectDialogBox(
+                                projectsModel: widget.projectsModel,
+                                onSuccess: () {
+                                  widget.onDeleteProject();
+                                },
+                              ),
+                            );
+                          },
+                          child: Text(
+                            "Delete this project!",
+                            style: TextStyle(color: Colors.red.shade600),
+                          ).marginOnly(right: 20),
+                        ),
                         Text(projectsController.isProjectEditView.value ? "Switch to View Mode" : "Switch to Edit Mode")
                             .marginOnly(right: 1),
                         Transform.scale(

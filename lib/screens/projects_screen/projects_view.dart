@@ -334,10 +334,20 @@ class _ProjectsViewState extends State<ProjectsView> {
                   projectDetailsView = false;
                 });
               },
-              onRegisterProject: () {
+              onUpdateProject: () {
                 setState(() {
                   projectsController.getAllProjects();
                   projectDetailsView = false;
+                });
+              },
+              onDeleteProject: () {
+                projectsController.deleteProject(projectModel.projectUID).then((v) {
+                  if (v == true) {
+                    setState(() {
+                      projectsController.getAllProjects();
+                      projectDetailsView = false;
+                    });
+                  }
                 });
               },
               projectsModel: projectModel,
