@@ -163,7 +163,7 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                                 height: 100,
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(50),
-                                                  color: Colors.black54.withOpacity(0.40),
+                                                  color: Colors.black54.withValues(alpha: 0.40),
                                                 ),
                                                 child: const Column(
                                                   mainAxisSize: MainAxisSize.min,
