@@ -535,155 +535,159 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                         constraints: BoxConstraints(
                           maxHeight: MediaQuery.of(context).size.height * 0.4,
                         ),
-                        child: GridView.builder(
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 25,
-                            mainAxisSpacing: 25,
-                            childAspectRatio: 1.8775,
-                          ),
-                          itemCount: clientProjects.length,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              overlayColor: WidgetStateProperty.all(Colors.transparent),
-                              onTap: () => setState(() {
-                                // selectedProjectIndex = index;
-                                // clientDetailsView = true;
-                              }),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    border: Border.all(color: Colors.black45, width: 1),
-                                    color: Colors.white),
-                                padding: const EdgeInsets.all(20),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 30,
-                                          backgroundImage: NetworkImage(
-                                            clientProjects[index].appIcon ?? clientProjects[index].mainImage,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 20,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              clientProjects[index].projectName,
-                                              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              clientProjects[index].clientName,
-                                              style: const TextStyle(fontSize: 12),
-                                            ),
-                                          ],
-                                        ),
-                                        const Spacer(),
-                                        InkWell(
-                                          onTap: () {
-                                            ProjectsController.unBindProjectFromClient(
-                                              projectID: clientProjects[index].projectUID,
-                                              onSuccess: () async {
-                                                await projectsController.getAllProjects();
-                                                loadProjects();
-                                                setState(() {});
-                                              },
-                                            );
-                                          },
-                                          child: const Tooltip(
-                                            message: 'Unbind project',
-                                            child: Icon(Ionicons.unlink_outline),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    const SizedBox(height: 15),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          clientProjects[index].projectIsCompleted ? 'Completed' : 'Incomplete',
-                                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                                        ),
-                                        Text(
-                                          " - ${clientProjects[index].projectStatus}",
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          clientProjects[index].projectType,
-                                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                                        ),
-                                        Text(
-                                          " - ${clientProjects[index].projectPlatform}",
-                                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 15),
-                                    const Divider(height: 5),
-                                    const SizedBox(height: 15),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              clientProjects[index].projectDate,
-                                              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                                            ),
-                                            const SizedBox(height: 5),
-                                            const Text(
-                                              "deadline",
-                                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          children: [
-                                            Text(
-                                              clientProjects[index].projectBudget,
-                                              style: const TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Colors.deepOrangeAccent),
-                                            ),
-                                            const SizedBox(height: 5),
-                                            const Text(
-                                              'Total Budget',
-                                              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                  ],
+                        child: clientProjects.isEmpty
+                            ? const Center(
+                                child: Text("Client has no projects assigned!"),
+                              ).marginOnly(bottom: 200)
+                            : GridView.builder(
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 25,
+                                  mainAxisSpacing: 25,
+                                  childAspectRatio: 1.8775,
                                 ),
+                                itemCount: clientProjects.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    overlayColor: WidgetStateProperty.all(Colors.transparent),
+                                    onTap: () => setState(() {
+                                      // selectedProjectIndex = index;
+                                      // clientDetailsView = true;
+                                    }),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(15),
+                                          border: Border.all(color: Colors.black45, width: 1),
+                                          color: Colors.white),
+                                      padding: const EdgeInsets.all(20),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              CircleAvatar(
+                                                radius: 30,
+                                                backgroundImage: NetworkImage(
+                                                  clientProjects[index].appIcon ?? clientProjects[index].mainImage,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 20,
+                                              ),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    clientProjects[index].projectName,
+                                                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 5,
+                                                  ),
+                                                  Text(
+                                                    clientProjects[index].clientName,
+                                                    style: const TextStyle(fontSize: 12),
+                                                  ),
+                                                ],
+                                              ),
+                                              const Spacer(),
+                                              InkWell(
+                                                onTap: () {
+                                                  ProjectsController.unBindProjectFromClient(
+                                                    projectID: clientProjects[index].projectUID,
+                                                    onSuccess: () async {
+                                                      await projectsController.getAllProjects();
+                                                      loadProjects();
+                                                      setState(() {});
+                                                    },
+                                                  );
+                                                },
+                                                child: const Tooltip(
+                                                  message: 'Unbind project',
+                                                  child: Icon(Ionicons.unlink_outline),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                          const SizedBox(height: 15),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                clientProjects[index].projectIsCompleted ? 'Completed' : 'Incomplete',
+                                                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                                              ),
+                                              Text(
+                                                " - ${clientProjects[index].projectStatus}",
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                clientProjects[index].projectType,
+                                                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                                              ),
+                                              Text(
+                                                " - ${clientProjects[index].projectPlatform}",
+                                                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(height: 15),
+                                          const Divider(height: 5),
+                                          const SizedBox(height: 15),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    clientProjects[index].projectDate,
+                                                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  const Text(
+                                                    "deadline",
+                                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                                                  ),
+                                                ],
+                                              ),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    clientProjects[index].projectBudget,
+                                                    style: const TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: Colors.deepOrangeAccent),
+                                                  ),
+                                                  const SizedBox(height: 5),
+                                                  const Text(
+                                                    'Total Budget',
+                                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
                       ),
                     ],
                   ),
@@ -875,7 +879,7 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                       if (_selectedItem != null) {
                                         ProjectsController.bindProjectWithClient(
                                           projectID: _selectedItem!.projectUID,
-                                          clientUID: widget.clientDetails.uid,
+                                          clientDetails: widget.clientDetails,
                                           onSuccess: () async {
                                             await projectsController.getAllProjects();
                                             loadProjects();

@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:portfolio_admin/models/projects_model.dart';
+import 'package:portfolio_admin/models/user_model.dart';
 import 'package:portfolio_admin/services/firebase_collections.dart';
 import 'package:portfolio_admin/utilities/custom_snack_bar.dart';
 import 'package:uuid/uuid.dart';
@@ -116,11 +117,15 @@ class ProjectsController extends GetxController {
 
   static Future<void> bindProjectWithClient({
     required String projectID,
-    required String clientUID,
+    required AdminModel clientDetails,
     required Function onSuccess,
   }) async {
     try {
-      await FbCollections.projects.doc(projectID).update({'clientUID': clientUID});
+      await FbCollections.projects.doc(projectID).update({
+        'clientUID': clientDetails.uid,
+        'clientName': clientDetails.name,
+        'clientCompany': clientDetails.company,
+      });
       CustomSnackBar.showSnackBar(message: "Project Assigned Successfully");
       onSuccess();
     } catch (e) {
