@@ -782,6 +782,7 @@ class _AddNewProjectState extends State<AddNewProject> {
                                   projectDate: _projectDateController.text,
                                   projectType: _projectTypeController.text,
                                   projectDuration: _projectDurationController.text,
+                                  unPaidAmount: _projectBudgetController.text,
                                   projectBudget: _projectBudgetController.text,
                                   projectStatus: _projectStatusController.text,
                                   darkMainImageBG: mainImageDarkBG,

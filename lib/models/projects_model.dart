@@ -11,6 +11,9 @@ class ProjectsModel {
   dynamic projectDate;
   dynamic projectType;
   dynamic projectDuration;
+  dynamic paidAmount;
+  dynamic unPaidAmount;
+  dynamic discountedAmount;
   dynamic projectBudget;
   dynamic projectChallengesFaced;
   dynamic projectResultsAndImpacts;
@@ -63,6 +66,9 @@ class ProjectsModel {
     this.projectDate = "",
     this.projectType = "",
     this.projectDuration = "",
+    this.paidAmount = "",
+    this.unPaidAmount = "",
+    this.discountedAmount = "",
     this.projectBudget = "",
     this.projectChallengesFaced = "",
     this.projectResultsAndImpacts = "",
@@ -117,6 +123,9 @@ class ProjectsModel {
       final projectDate = json['projectDate'] ?? "";
       final projectType = json['projectType'] ?? "";
       final projectDuration = json['projectDuration'] ?? "";
+      final paidAmount = json['paidAmount'] ?? "";
+      final unPaidAmount = json['unPaidAmount'] ?? "";
+      final discountedAmount = json['discountedAmount'] ?? "";
       final projectBudget = json['projectBudget'] ?? "";
       final projectChallengesFaced = json['projectChallengesFaced'] ?? "";
       final projectResultsAndImpacts = json['projectResultsAndImpacts'] ?? "";
@@ -169,6 +178,9 @@ class ProjectsModel {
         projectDate: projectDate,
         projectType: projectType,
         projectDuration: projectDuration,
+        paidAmount: paidAmount,
+        unPaidAmount: unPaidAmount,
+        discountedAmount: discountedAmount,
         projectBudget: projectBudget,
         projectChallengesFaced: projectChallengesFaced,
         projectResultsAndImpacts: projectResultsAndImpacts,
@@ -226,6 +238,9 @@ class ProjectsModel {
       'projectDate': projectDate,
       'projectType': projectType,
       'projectDuration': projectDuration,
+      'paidAmount': paidAmount,
+      'unPaidAmount': unPaidAmount,
+      'discountedAmount': discountedAmount,
       'projectBudget': projectBudget,
       'projectChallengesFaced': projectChallengesFaced,
       'projectResultsAndImpacts': projectResultsAndImpacts,
@@ -281,6 +296,9 @@ class ProjectsModel {
     dynamic projectDate,
     dynamic projectType,
     dynamic projectDuration,
+    dynamic paidAmount,
+    dynamic unPaidAmount,
+    dynamic discountedAmount,
     dynamic projectBudget,
     dynamic projectChallengesFaced,
     dynamic projectResultsAndImpacts,
@@ -333,6 +351,9 @@ class ProjectsModel {
       projectDate: projectDate ?? this.projectDate,
       projectType: projectType ?? this.projectType,
       projectDuration: projectDuration ?? this.projectDuration,
+      paidAmount: paidAmount ?? this.paidAmount,
+      unPaidAmount: unPaidAmount ?? this.unPaidAmount,
+      discountedAmount: discountedAmount ?? this.discountedAmount,
       projectBudget: projectBudget ?? this.projectBudget,
       projectChallengesFaced: projectChallengesFaced ?? this.projectChallengesFaced,
       projectResultsAndImpacts: projectResultsAndImpacts ?? this.projectResultsAndImpacts,

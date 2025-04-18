@@ -667,16 +667,16 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                                 crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: [
                                                   Text(
-                                                    clientProjects[index].projectBudget,
+                                                    'Pending: ${clientProjects[index].unPaidAmount}',
                                                     style: const TextStyle(
                                                         fontSize: 15,
                                                         fontWeight: FontWeight.w500,
                                                         color: Colors.deepOrangeAccent),
                                                   ),
                                                   const SizedBox(height: 5),
-                                                  const Text(
-                                                    'Total Budget',
-                                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                                                  Text(
+                                                    'Total Budget: ${clientProjects[index].projectBudget}',
+                                                    style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                                                   ),
                                                 ],
                                               ),

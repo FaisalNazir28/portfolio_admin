@@ -24,6 +24,14 @@ class _ProjectsViewState extends State<ProjectsView> {
 
   @override
   Widget build(BuildContext context) {
+    final int totalBalance = projectsController.allProjects.fold<int>(
+      0,
+      (sum, project) {
+        var amountString = project.unPaidAmount.replaceAll('\$', '').trim();
+        var amount = int.tryParse(amountString) ?? 0;
+        return sum + amount;
+      },
+    );
     return Obx(() {
       return Stack(
         alignment: Alignment.topLeft,
@@ -161,16 +169,16 @@ class _ProjectsViewState extends State<ProjectsView> {
                                               crossAxisAlignment: CrossAxisAlignment.end,
                                               children: [
                                                 Text(
-                                                  projectsController.allProjects[index].projectBudget,
+                                                  'Pending: ${projectsController.allProjects[index].unPaidAmount}',
                                                   style: const TextStyle(
                                                       fontSize: 15,
                                                       fontWeight: FontWeight.w500,
                                                       color: Colors.deepOrangeAccent),
                                                 ),
                                                 const SizedBox(height: 5),
-                                                const Text(
-                                                  'Total Budget',
-                                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                                                Text(
+                                                  'Total Budget: ${projectsController.allProjects[index].projectBudget}',
+                                                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                                                 ),
                                               ],
                                             ),
@@ -209,21 +217,22 @@ class _ProjectsViewState extends State<ProjectsView> {
                               border: Border.all(color: Colors.black45, width: 1),
                             ),
                             padding: const EdgeInsets.all(20),
-                            child: const Column(
+                            child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   "Total balance",
                                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 Text(
-                                  "\$0",
-                                  style: TextStyle(fontSize: 19, color: Colors.green, fontWeight: FontWeight.w600),
+                                  "\$${totalBalance.toString()}",
+                                  style:
+                                      const TextStyle(fontSize: 19, color: Colors.green, fontWeight: FontWeight.w600),
                                 ),
                               ],
                             ),
