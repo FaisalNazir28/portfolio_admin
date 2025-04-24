@@ -8,6 +8,7 @@ import 'package:portfolio_admin/models/projects_model.dart';
 import 'package:portfolio_admin/models/user_model.dart';
 import 'dart:html' as html;
 import 'dart:typed_data';
+import 'package:portfolio_admin/utilities/amount_container.dart';
 
 class ClientDetailsView extends StatefulWidget {
   final Function() onClose;
@@ -49,9 +50,14 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
   TextEditingController projectStatusController = TextEditingController();
   TextEditingController projectPlatformController = TextEditingController();
 
+  int? totalBalance;
+  int? availableBalance;
+  int? pendingBalance;
+
   @override
   void initState() {
     loadProjects();
+    calculateBudgets();
     super.initState();
   }
 
@@ -925,21 +931,25 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                               border: Border.all(color: Colors.black45, width: 1),
                             ),
                             padding: const EdgeInsets.all(20),
-                            child: const Column(
+                            child: Column(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Total balance",
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "\$0",
-                                  style: TextStyle(fontSize: 19, color: Colors.green, fontWeight: FontWeight.w600),
+                                AmountContainer(
+                                  title: "Total Balance",
+                                  amount: totalBalance.toString(),
+                                  amountColor: Colors.blue,
+                                ).marginOnly(bottom: 15),
+                                AmountContainer(
+                                  title: "Available Balance",
+                                  amount: availableBalance.toString(),
+                                  amountColor: Colors.green,
+                                ).marginOnly(bottom: 15),
+                                AmountContainer(
+                                  title: "Pending Balance",
+                                  amount: pendingBalance.toString(),
+                                  amountColor: Colors.deepOrangeAccent,
                                 ),
                               ],
                             ),
@@ -965,7 +975,7 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      clientController.allClients.length.toString(),
+                                      clientProjects.length.toString(),
                                       style: const TextStyle(fontSize: 19),
                                     ),
                                   ],
@@ -981,7 +991,7 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      clientController.allClients.where((e) => e.isActive == true).length.toString(),
+                                      clientProjects.where((e) => e.projectIsCompleted == false).length.toString(),
                                       style: const TextStyle(fontSize: 19),
                                     ),
                                   ],
@@ -997,7 +1007,7 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
                                       style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                                     ),
                                     Text(
-                                      clientController.allClients.where((e) => e.isActive == false).length.toString(),
+                                      clientProjects.where((e) => e.projectIsCompleted == true).length.toString(),
                                       style: const TextStyle(fontSize: 19),
                                     ),
                                   ],
@@ -1040,6 +1050,35 @@ class _ClientDetailsViewState extends State<ClientDetailsView> {
         ),
       ),
     ]);
+  }
+
+  void calculateBudgets() {
+    totalBalance = clientProjects.fold<int>(
+      0,
+      (sum, project) {
+        var amountString = project.projectBudget.replaceAll('\$', '').trim();
+        var amount = int.tryParse(amountString) ?? 0;
+        return sum + amount;
+      },
+    );
+
+    availableBalance = clientProjects.fold<int>(
+      0,
+      (sum, project) {
+        var amountString = project.paidAmount.replaceAll('\$', '').trim();
+        var amount = int.tryParse(amountString) ?? 0;
+        return sum + amount;
+      },
+    );
+
+    pendingBalance = clientProjects.fold<int>(
+      0,
+      (sum, project) {
+        var amountString = project.unPaidAmount.replaceAll('\$', '').trim();
+        var amount = int.tryParse(amountString) ?? 0;
+        return sum + amount;
+      },
+    );
   }
 
   void clearControllers() {

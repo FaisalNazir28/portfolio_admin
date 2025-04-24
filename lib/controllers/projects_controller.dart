@@ -474,4 +474,37 @@ class ProjectsController extends GetxController {
       // return ''; // Return an empty string or handle error as needed
     }
   }
+
+  RxInt totalBalance = 0.obs;
+  RxInt availableBalance = 0.obs;
+  RxInt pendingBalance = 0.obs;
+
+  void calculateBudgets() {
+    totalBalance.value = allProjects.fold<int>(
+      0,
+      (totalAmount, project) {
+        var amountString = project.projectBudget.replaceAll('\$', '').trim();
+        var amount = int.tryParse(amountString) ?? 0;
+        return totalAmount + amount;
+      },
+    );
+
+    availableBalance.value = allProjects.fold<int>(
+      0,
+      (totalAmount, project) {
+        var amountString = project.paidAmount.replaceAll('\$', '').trim();
+        var amount = int.tryParse(amountString) ?? 0;
+        return totalAmount + amount;
+      },
+    );
+
+    pendingBalance.value = allProjects.fold<int>(
+      0,
+      (totalAmount, project) {
+        var amountString = project.unPaidAmount.replaceAll('\$', '').trim();
+        var amount = int.tryParse(amountString) ?? 0;
+        return totalAmount + amount;
+      },
+    );
+  }
 }

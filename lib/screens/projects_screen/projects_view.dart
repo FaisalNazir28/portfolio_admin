@@ -5,6 +5,7 @@ import 'package:portfolio_admin/controllers/projects_controller.dart';
 import 'package:portfolio_admin/models/projects_model.dart';
 import 'package:portfolio_admin/screens/projects_screen/add_new_project.dart';
 import 'package:portfolio_admin/screens/projects_screen/project_details_view.dart';
+import 'package:portfolio_admin/utilities/amount_container.dart';
 
 class ProjectsView extends StatefulWidget {
   const ProjectsView({super.key});
@@ -24,15 +25,8 @@ class _ProjectsViewState extends State<ProjectsView> {
 
   @override
   Widget build(BuildContext context) {
-    final int totalBalance = projectsController.allProjects.fold<int>(
-      0,
-      (sum, project) {
-        var amountString = project.unPaidAmount.replaceAll('\$', '').trim();
-        var amount = int.tryParse(amountString) ?? 0;
-        return sum + amount;
-      },
-    );
     return Obx(() {
+      projectsController.calculateBudgets();
       return Stack(
         alignment: Alignment.topLeft,
         children: [
@@ -222,17 +216,20 @@ class _ProjectsViewState extends State<ProjectsView> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                const Text(
-                                  "Total balance",
-                                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "\$${totalBalance.toString()}",
-                                  style:
-                                      const TextStyle(fontSize: 19, color: Colors.green, fontWeight: FontWeight.w600),
+                                AmountContainer(
+                                  title: "Total Balance",
+                                  amount: projectsController.totalBalance.toString(),
+                                  amountColor: Colors.blue,
+                                ).marginOnly(bottom: 15),
+                                AmountContainer(
+                                  title: "Available Balance",
+                                  amount: projectsController.availableBalance.toString(),
+                                  amountColor: Colors.green,
+                                ).marginOnly(bottom: 15),
+                                AmountContainer(
+                                  title: "Pending Balance",
+                                  amount: projectsController.pendingBalance.toString(),
+                                  amountColor: Colors.deepOrangeAccent,
                                 ),
                               ],
                             ),
